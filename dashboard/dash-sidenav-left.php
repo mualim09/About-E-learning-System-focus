@@ -12,7 +12,7 @@
                 </div>
             </div>
             <!-- #User Info -->
-            <div class="panel-group full-body" id="accordion_6" role="tablist" aria-multiselectable="true">
+    <!--         <div class="panel-group full-body" id="accordion_6" role="tablist" aria-multiselectable="true">
                         <div class="panel panel-success">
                             <div class="panel-heading" role="tab" id="headingOne_6">
                                 <h4 class="panel-title">
@@ -57,7 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
             <!-- Menu -->
             <div class="menu">
                  

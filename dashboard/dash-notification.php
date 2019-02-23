@@ -4,7 +4,7 @@
                             <i class="material-icons">notifications</i>
                             <span class="label-count">7</span>
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu"  style=" margin-top: 1px !important; ">
                             <li class="header">NOTIFICATIONS</li>
                             <li class="body">
                                 <ul class="menu">
