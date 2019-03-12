@@ -1,8 +1,13 @@
 $(function () {
     //CKEditor
-    CKEDITOR.replace('ckeditor');
-    CKEDITOR.config.height = 300;
-
+   
+    CKEDITOR.replace( 'ckeditor', {
+            height: 300,
+            // filebrowserUploadUrl: "/fileupload.php",
+            filebrowserBrowseUrl: '/browser/browse.php',
+            filebrowserUploadUrl: '/uploader/upload.php'
+            
+        } );
     //TinyMCE
     tinymce.init({
         selector: "textarea#tinymce",

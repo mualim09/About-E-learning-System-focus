@@ -3,9 +3,9 @@
     include('dash-global-function.php');
 
    
-    $pagename = "Table Management";
+    $pagename = "Section";
     $username = $_SESSION['user_Name'];
-    $script_for_specific_page = "jquery";
+    $script_for_specific_page = "index";
     $user_img = "../assets/images/user.png";
     $user_email = "mail@gmail.com";
     if(isset($_SESSION['login_level']) )
@@ -13,7 +13,7 @@
         $login_level = $_SESSION['login_level'];
         if ($login_level != 3) {
          
-          header('location: error404.php');
+          header('location:error404.php');
         }
          
     }
