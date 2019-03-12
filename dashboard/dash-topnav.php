@@ -14,11 +14,12 @@
                     <!-- Notifications -->
                     <li class="dropdown">
                         <a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button">
-                            <div class="demo-google-material-icon"> <i class="material-icons">person_pin</i></div>
+                            <div class="demo-google-material-icon"><i class="material-icons">person_pin</i></div>
                         </a>
                         <ul class="dropdown-menu"  style=" margin-top: 1px !important; ">
                             <li class="header">Account</li>
-                            <li class="header">Logout</li>
+                             <li class="header"><a href="profile"><i class="material-icons">details</i>Profile</a></li>
+                            <li class="header"><a href="../logout.php"> <i class="material-icons">power_settings_new</i>Logout</a></li>
                             
                         </ul>
                     </li>
