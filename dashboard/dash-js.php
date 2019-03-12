@@ -57,9 +57,9 @@
     <!-- Custom Js -->
     <script src="../assets/js/admin.js"></script>
     
-    
+     <script src="../assets/js/pages/examples/profile.js"></script>
     <?php 
-    if ($page == 'table') {
+    if ($script_for_specific_page == 'jquery') {
         ?>
         <script src="../assets/js/pages/tables/jquery-datatable.js"></script>
         <?php
@@ -76,6 +76,7 @@
     <script src="../assets/js/pages/cards/colored.js"></script>
     <!-- Demo Js -->
     <script src="../assets/js/demo.js"></script>
-
+    
+   
 
 
