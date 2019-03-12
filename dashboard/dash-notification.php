@@ -7,7 +7,7 @@
                         <ul class="dropdown-menu"  style=" margin-top: 1px !important; ">
                             <li class="header">NOTIFICATIONS</li>
                             <li class="body">
-                                <ul class="menu">
+                                <ul class="menu" style="list-style-type: none;">
                                     <li>
                                         <a href="javascript:void(0);">
                                             <div class="icon-circle bg-light-green">
