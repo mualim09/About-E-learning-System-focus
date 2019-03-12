@@ -1,9 +1,27 @@
 ﻿ <?php 
+    include('../session.php');
     include('dash-global-function.php');
-    $_SESSION['page'] = "dashboard";
+
+   
     $pagename = "Dashboard";
-    $page = $_SESSION['page'];
-    $userlevel = 1;
+    $username = $_SESSION['login_user'];
+    $user_img = "../assets/images/user.png";
+    $user_email = "mail@gmail.com";
+    $script_for_specific_page = "index";
+    if(isset($_SESSION['login_level']) )
+    {      
+    echo $login_level = $_SESSION['login_level'];
+       
+         
+    }
+
+
+    if (empty($_REQUEST['page'])) {
+        $page = "";
+    }
+    else{
+        $page = $_REQUEST['page'];
+    }
 ?>
 <!DOCTYPE html>
 <html>
@@ -57,8 +75,9 @@
             <?php
               echo '<pre>';
             var_dump($_SESSION);
+             error_reporting( E_ALL );
             echo '</pre>';
-            ?>
+             ?>
             <!-- Widgets -->
             <div class="row clearfix">
                 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
