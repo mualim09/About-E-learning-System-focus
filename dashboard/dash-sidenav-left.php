@@ -108,7 +108,7 @@
                         
                     <?php endif ?>
                      >
-                         <a href="classroom">
+                         <a href="query-simulator">
                             <i class="material-icons">save</i>
                             <span>Query Simulator</span>
                         </a>
