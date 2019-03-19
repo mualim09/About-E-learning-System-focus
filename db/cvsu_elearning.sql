@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2019 at 04:21 PM
+-- Generation Time: Mar 19, 2019 at 08:08 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -407,11 +407,11 @@ INSERT INTO `ref_suffixname` (`suffix_ID`, `suffix`, `suffix_Name`) VALUES
 --
 
 CREATE TABLE `user_accounts` (
-  `user_ID` bigint(20) UNSIGNED NOT NULL,
+  `user_ID` int(11) UNSIGNED NOT NULL,
   `level_ID` tinyint(11) UNSIGNED DEFAULT NULL COMMENT 'user level',
-  `user_Name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `user_Pass` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
-  `user_Email` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '',
+  `user_Name` varchar(60) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_Pass` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_Email` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `user_Registered` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `user_status` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -421,19 +421,19 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_Name`, `user_Pass`, `user_Email`, `user_Registered`, `user_status`) VALUES
-(1, 3, 'rhalp10', '$P$BCAA1YEnm0BZ.DJ2X/cXEil0XJcfVM0', 'rhalpdarrencabrera@gmail.com', '2018-10-20 00:58:10', 1),
-(2, 2, '19874546', 'XnCOFXzvzFGHXS/GZ5kVEZ9PAE2N+oCeqydK87yGuwo=', '', '2019-02-19 17:13:44', 0),
-(3, 2, '19874548', 'Yl1K09d95jpJ1DheIeAi/61UUccd9tATJ9GKkAXiAX8=', '', '2019-02-19 17:21:46', 0),
-(4, 3, 'admin', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'admin@gmail.com', '2019-02-28 16:37:27', 0),
-(6, NULL, '578', '', '', '2019-03-10 18:08:27', 0),
-(7, NULL, 'admin', 'admin', '', '2019-03-10 18:26:16', 0),
-(8, 1, 'au2', '', '12s@g.c', '2019-03-10 18:30:15', 1),
-(9, 1, 'asdasd', '', '321312@gmail.com', '2019-03-12 13:48:49', 1),
-(10, 3, '12ui3yusad', '', '123123@gmail.com', '2019-03-12 13:50:57', 2),
-(11, NULL, 'alexander', '', 'alex@gmail.com', '2019-03-12 14:28:56', 2),
-(12, NULL, '321312', '', 'rhalpdarrencabrera@gmail.com', '2019-03-12 14:42:28', 0),
-(13, NULL, 'Rhalp Darren Cabrera', '', 'rhalpdarrencabrera@gmail.com', '2019-03-12 14:46:04', 1),
-(14, NULL, 'Rhalp Darren Cabrera121', '', 'rhalpdarrencabrera@gmail.com', '2019-03-12 14:46:59', 0);
+(1, 3, 'rhalp10', '$P$BCAA1YEnm0BZ.DJ2X/cXEil0XJcfVM0', 'email@gmail.com', '2018-10-20 00:58:10', 1),
+(2, 2, '19874546', 'XnCOFXzvzFGHXS/GZ5kVEZ9PAE2N+oCeqydK87yGuwo=', 'email@gmail.com', '2019-02-19 17:13:44', 0),
+(3, 2, '19874548', 'Yl1K09d95jpJ1DheIeAi/61UUccd9tATJ9GKkAXiAX8=', 'email@gmail.com', '2019-02-19 17:21:46', 0),
+(4, 3, 'admin', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-02-28 16:37:27', 1),
+(6, 2, 'instructor', 'Pds40EmB+V/6xvKy2SFGjkoVLTwzmjfbRI2QGpPmGz0=', 'email@gmail.com', '2019-03-10 18:08:27', 0),
+(7, 1, '201310656', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-03-10 18:26:16', 0),
+(13, 3, 'raizen21', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-03-12 14:46:04', 1),
+(18, 1, 'xzc798z7xc97z89x7c897', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 16:52:01', 1),
+(19, 1, 'newuser31', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 17:35:53', 1),
+(23, 2, 'new2121212121221', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:38:05', 2),
+(25, 1, 'zxc7987zx8c97', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:53:56', 1),
+(26, 3, '6as47d878', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:54:07', 1),
+(28, 2, '8789asd987', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:56:02', 2);
 
 -- --------------------------------------------------------
 
@@ -442,7 +442,7 @@ INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_Name`, `user_Pass`, `u
 --
 
 CREATE TABLE `user_level` (
-  `level_ID` int(11) UNSIGNED NOT NULL,
+  `level_ID` tinyint(11) UNSIGNED NOT NULL,
   `level_name` varchar(50) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -453,7 +453,7 @@ CREATE TABLE `user_level` (
 INSERT INTO `user_level` (`level_ID`, `level_name`) VALUES
 (0, 'unregister'),
 (1, 'student'),
-(2, 'teacher'),
+(2, 'instructor'),
 (3, 'admin');
 
 -- --------------------------------------------------------
@@ -728,12 +728,12 @@ ALTER TABLE `ref_suffixname`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_ID` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
 ALTER TABLE `user_level`
-  MODIFY `level_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `level_ID` tinyint(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `user_notification`
 --
