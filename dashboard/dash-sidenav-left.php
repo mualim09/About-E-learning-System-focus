@@ -83,9 +83,33 @@
                         
                     <?php endif ?>
                     >
-                        <a href="account">
+                        <a href="manage-account">
                             <i class="material-icons">account_box</i>
                             <span>Account</span>
+                        </a>
+                    </li>
+                     <li
+                    <?php if ($pagename == "Student Management"): ?>
+                        class="active"
+                    <?php else: ?>
+                        
+                    <?php endif ?>
+                    >
+                        <a href="manage-student">
+                            <i class="material-icons">account_box</i>
+                            <span>Student Management</span>
+                        </a>
+                    </li>
+                     <li
+                    <?php if ($pagename == "Instructor Management"): ?>
+                        class="active"
+                    <?php else: ?>
+                        
+                    <?php endif ?>
+                    >
+                        <a href="manage-instructor">
+                            <i class="material-icons">account_box</i>
+                            <span>Instructor Management</span>
                         </a>
                     </li>
                     <li
