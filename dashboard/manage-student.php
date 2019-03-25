@@ -68,7 +68,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Biogas Data Mapper
+                    Student Management
                 </h2>
             </div>
 
@@ -80,7 +80,7 @@
                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                            <div class="card">
                                <div class="header">
-                                   <h2>LIST OF ACCOUNT</h2>
+                                   <h2>LIST OF STUDENT</h2>
                                    <div class="btn-group pull-right">
                                    <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#account_modal">ADD STUDENT</button>
                                    </div>

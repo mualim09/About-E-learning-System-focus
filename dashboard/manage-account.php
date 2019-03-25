@@ -68,7 +68,7 @@
         <div class="container-fluid">
             <div class="block-header">
                 <h2>
-                    Biogas Data Mapper
+                    Account Management
                 </h2>
             </div>
 
