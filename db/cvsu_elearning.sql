@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 19, 2019 at 08:08 PM
+-- Generation Time: Mar 26, 2019 at 12:44 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -172,79 +172,15 @@ CREATE TABLE `class_topic` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cvsu_college`
---
-
-CREATE TABLE `cvsu_college` (
-  `colleges_ID` int(11) UNSIGNED NOT NULL,
-  `college_name` varchar(150) DEFAULT NULL,
-  `college_acronym` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cvsu_college`
---
-
-INSERT INTO `cvsu_college` (`colleges_ID`, `college_name`, `college_acronym`) VALUES
-(1, 'College of Engineering and Information Technology', 'CEIT'),
-(2, 'College of Art and Sciences', 'CAS');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cvsu_course`
---
-
-CREATE TABLE `cvsu_course` (
-  `course_ID` int(11) UNSIGNED NOT NULL,
-  `course_departmentID` int(11) UNSIGNED DEFAULT NULL,
-  `course_name` varchar(100) DEFAULT NULL,
-  `course_acronym` varchar(10) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cvsu_course`
---
-
-INSERT INTO `cvsu_course` (`course_ID`, `course_departmentID`, `course_name`, `course_acronym`) VALUES
-(1, 2, 'Bachelor of Science in Information Technology', 'BSIT'),
-(2, 2, 'Bachelor of Science in Computer Science', 'BSCS'),
-(3, 2, 'Bachelor of Science in Office Administration', 'BSOA');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `cvsu_department`
---
-
-CREATE TABLE `cvsu_department` (
-  `department_ID` int(11) UNSIGNED NOT NULL,
-  `department_collegeID` int(11) UNSIGNED DEFAULT NULL,
-  `department_name` varchar(100) DEFAULT NULL,
-  `department_acronym` varchar(25) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `cvsu_department`
---
-
-INSERT INTO `cvsu_department` (`department_ID`, `department_collegeID`, `department_name`, `department_acronym`) VALUES
-(1, 1, 'Computer Science', 'COMSCI'),
-(2, 1, 'Information Technology', 'IT'),
-(3, 1, 'Office Administration', 'OA');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `record_admin_detail`
 --
 
 CREATE TABLE `record_admin_detail` (
   `rad_ID` int(11) UNSIGNED NOT NULL,
-  `rad_EmpID` varchar(25) NOT NULL,
-  `rad_FName` varchar(85) NOT NULL,
-  `rad_MName` varchar(85) NOT NULL,
-  `rad_LName` varchar(85) NOT NULL,
+  `rad_EmpID` varchar(25) DEFAULT NULL,
+  `rad_FName` varchar(85) DEFAULT NULL,
+  `rad_MName` varchar(85) DEFAULT NULL,
+  `rad_LName` varchar(85) DEFAULT NULL,
   `suffix_ID` int(11) UNSIGNED DEFAULT NULL,
   `rad_Sex` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -254,26 +190,31 @@ CREATE TABLE `record_admin_detail` (
 --
 
 INSERT INTO `record_admin_detail` (`rad_ID`, `rad_EmpID`, `rad_FName`, `rad_MName`, `rad_LName`, `suffix_ID`, `rad_Sex`) VALUES
-(0, '123548', 'teacher', 'teacher', 'teacher', NULL, 1);
+(1, '123548', 'teacher', 'teacher', 'teacher', NULL, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `record_student_contact`
+-- Table structure for table `record_instructor_detail`
 --
 
-CREATE TABLE `record_student_contact` (
-  `rsc_ID` int(11) UNSIGNED NOT NULL COMMENT 'contact_ID',
-  `rsd_ID` int(11) UNSIGNED DEFAULT NULL COMMENT 'student_ID',
-  `rsc_number` varchar(100) NOT NULL DEFAULT '{ "Home":"", "Work":"", "Mobile":""}' COMMENT 'student_contact_number'
+CREATE TABLE `record_instructor_detail` (
+  `rid_ID` int(11) UNSIGNED NOT NULL,
+  `rid_EmpID` varchar(25) DEFAULT NULL,
+  `rid_FName` varchar(85) DEFAULT NULL,
+  `rid_MName` varchar(85) DEFAULT NULL,
+  `rid_LName` varchar(85) DEFAULT NULL,
+  `suffix_ID` int(11) UNSIGNED DEFAULT NULL,
+  `rid_Sex` int(11) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `record_student_contact`
+-- Dumping data for table `record_instructor_detail`
 --
 
-INSERT INTO `record_student_contact` (`rsc_ID`, `rsd_ID`, `rsc_number`) VALUES
-(1, 0, '{ \"Home\":\"\", \"Work\":\"\", \"Mobile1\":\"\", \"Mobile2\":\"\" }');
+INSERT INTO `record_instructor_detail` (`rid_ID`, `rid_EmpID`, `rid_FName`, `rid_MName`, `rid_LName`, `suffix_ID`, `rid_Sex`) VALUES
+(1, '30215', 'Instructor 1', 'Instructor 1', 'Instructor 1', NULL, 1),
+(3, '30216', 'Instructor 2', 'Instructor 2', 'Instructor 2', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -289,33 +230,16 @@ CREATE TABLE `record_student_details` (
   `rsd_MName` varchar(85) NOT NULL,
   `rsd_LName` varchar(85) NOT NULL,
   `suffix_ID` int(11) UNSIGNED DEFAULT NULL,
-  `rsd_Sex` int(11) DEFAULT NULL,
-  `user_status` int(11) UNSIGNED DEFAULT '0'
+  `rsd_Sex` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `record_student_details`
 --
 
-INSERT INTO `record_student_details` (`rsd_ID`, `user_ID`, `rsd_StudNum`, `rsd_FName`, `rsd_MName`, `rsd_LName`, `suffix_ID`, `rsd_Sex`, `user_status`) VALUES
-(1, 2, '201310656', 'Rhalp Darren', 'Resuena', 'Cabrera', NULL, 1, 1),
-(2, 3, '201310657', 'Franzmarc', 'Resuena', 'Cabrera', NULL, 1, 1);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `record_teacher_detail`
---
-
-CREATE TABLE `record_teacher_detail` (
-  `rtd_ID` int(11) UNSIGNED NOT NULL,
-  `rtd_EmpID` varchar(25) NOT NULL,
-  `rtd_FName` varchar(85) NOT NULL,
-  `rtd_MName` varchar(85) NOT NULL,
-  `rtd_LName` varchar(85) NOT NULL,
-  `suffix_ID` int(11) UNSIGNED DEFAULT NULL,
-  `rsd_Sex` int(11) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `record_student_details` (`rsd_ID`, `user_ID`, `rsd_StudNum`, `rsd_FName`, `rsd_MName`, `rsd_LName`, `suffix_ID`, `rsd_Sex`) VALUES
+(1, 2, '201310656', 'Rhalp Darren', 'Resuena', 'Cabrera', NULL, 1),
+(2, 3, '201310657', 'Franzmarc', 'Resuena', 'Cabrera', NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -421,19 +345,9 @@ CREATE TABLE `user_accounts` (
 --
 
 INSERT INTO `user_accounts` (`user_ID`, `level_ID`, `user_Name`, `user_Pass`, `user_Email`, `user_Registered`, `user_status`) VALUES
-(1, 3, 'rhalp10', '$P$BCAA1YEnm0BZ.DJ2X/cXEil0XJcfVM0', 'email@gmail.com', '2018-10-20 00:58:10', 1),
-(2, 2, '19874546', 'XnCOFXzvzFGHXS/GZ5kVEZ9PAE2N+oCeqydK87yGuwo=', 'email@gmail.com', '2019-02-19 17:13:44', 0),
-(3, 2, '19874548', 'Yl1K09d95jpJ1DheIeAi/61UUccd9tATJ9GKkAXiAX8=', 'email@gmail.com', '2019-02-19 17:21:46', 0),
+(3, 1, '19874548', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-02-19 17:21:46', 1),
 (4, 3, 'admin', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-02-28 16:37:27', 1),
-(6, 2, 'instructor', 'Pds40EmB+V/6xvKy2SFGjkoVLTwzmjfbRI2QGpPmGz0=', 'email@gmail.com', '2019-03-10 18:08:27', 0),
-(7, 1, '201310656', 'M8+Cpt+zltZs3QpomFLRjEFCGvI0VGC+jjJzXH32Mtw=', 'email@gmail.com', '2019-03-10 18:26:16', 0),
-(13, 3, 'raizen21', 'QrUgcNdRjaE74hfEIeThKa/RaqA9N/KpBI+X7VeiyfE=', 'email@gmail.com', '2019-03-12 14:46:04', 1),
-(18, 1, 'xzc798z7xc97z89x7c897', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 16:52:01', 1),
-(19, 1, 'newuser31', '3ak+1iRRUC0atJloR35fTrcGweXqfPaO8BcTXXOWw7g=', 'email@gmail.com', '2019-03-19 17:35:53', 1),
-(23, 2, 'new2121212121221', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:38:05', 2),
-(25, 1, 'zxc7987zx8c97', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:53:56', 1),
-(26, 3, '6as47d878', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:54:07', 1),
-(28, 2, '8789asd987', 'PVKibfXGxoOxc+WlrZLFCQXErLOsHLCB8F9DsNFD+4s=', 'email@gmail.com', '2019-03-19 18:56:02', 2);
+(6, 2, 'instructor', 'Pds40EmB+V/6xvKy2SFGjkoVLTwzmjfbRI2QGpPmGz0=', 'email@gmail.com', '2019-03-10 18:08:27', 1);
 
 -- --------------------------------------------------------
 
@@ -556,26 +470,6 @@ ALTER TABLE `class_topic`
   ADD PRIMARY KEY (`classTopic_ID`);
 
 --
--- Indexes for table `cvsu_college`
---
-ALTER TABLE `cvsu_college`
-  ADD PRIMARY KEY (`colleges_ID`);
-
---
--- Indexes for table `cvsu_course`
---
-ALTER TABLE `cvsu_course`
-  ADD PRIMARY KEY (`course_ID`),
-  ADD KEY `course_departmentID` (`course_departmentID`);
-
---
--- Indexes for table `cvsu_department`
---
-ALTER TABLE `cvsu_department`
-  ADD PRIMARY KEY (`department_ID`),
-  ADD KEY `department_collegeID` (`department_collegeID`);
-
---
 -- Indexes for table `record_admin_detail`
 --
 ALTER TABLE `record_admin_detail`
@@ -583,10 +477,11 @@ ALTER TABLE `record_admin_detail`
   ADD UNIQUE KEY `rtd_EmpID` (`rad_EmpID`);
 
 --
--- Indexes for table `record_student_contact`
+-- Indexes for table `record_instructor_detail`
 --
-ALTER TABLE `record_student_contact`
-  ADD PRIMARY KEY (`rsc_ID`);
+ALTER TABLE `record_instructor_detail`
+  ADD PRIMARY KEY (`rid_ID`),
+  ADD UNIQUE KEY `rtd_EmpID` (`rid_EmpID`);
 
 --
 -- Indexes for table `record_student_details`
@@ -595,13 +490,6 @@ ALTER TABLE `record_student_details`
   ADD PRIMARY KEY (`rsd_ID`),
   ADD UNIQUE KEY `rsd_LRN` (`rsd_StudNum`),
   ADD KEY `suffix_ID` (`suffix_ID`);
-
---
--- Indexes for table `record_teacher_detail`
---
-ALTER TABLE `record_teacher_detail`
-  ADD PRIMARY KEY (`rtd_ID`),
-  ADD UNIQUE KEY `rtd_EmpID` (`rtd_EmpID`);
 
 --
 -- Indexes for table `ref_sex`
@@ -695,25 +583,15 @@ ALTER TABLE `class_teacher`
 ALTER TABLE `class_topic`
   MODIFY `classTopic_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `cvsu_college`
+-- AUTO_INCREMENT for table `record_admin_detail`
 --
-ALTER TABLE `cvsu_college`
-  MODIFY `colleges_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+ALTER TABLE `record_admin_detail`
+  MODIFY `rad_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
--- AUTO_INCREMENT for table `cvsu_course`
+-- AUTO_INCREMENT for table `record_instructor_detail`
 --
-ALTER TABLE `cvsu_course`
-  MODIFY `course_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `cvsu_department`
---
-ALTER TABLE `cvsu_department`
-  MODIFY `department_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
---
--- AUTO_INCREMENT for table `record_student_contact`
---
-ALTER TABLE `record_student_contact`
-  MODIFY `rsc_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'contact_ID', AUTO_INCREMENT=2;
+ALTER TABLE `record_instructor_detail`
+  MODIFY `rid_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `record_student_details`
 --
