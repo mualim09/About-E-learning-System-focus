@@ -11,10 +11,10 @@
     if(isset($_SESSION['login_level']) )
     {      
         $login_level = $_SESSION['login_level'];
-        if ($login_level != 3) {
+        // if ($login_level != 3) {
          
-          header('location: error404.php');
-        }
+        //   header('location: error404.php');
+        // }
          
     }
 
@@ -65,9 +65,9 @@
     <section class="content">
         <div class="container-fluid">
             <?php
-              echo '<pre>';
-            var_dump($_SESSION);
-            echo '</pre>';
+            //   echo '<pre>';
+            // var_dump($_SESSION);
+            // echo '</pre>';
             ?>
             <?php 
             if (isset($_REQUEST['code'])) {
