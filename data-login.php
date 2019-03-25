@@ -45,7 +45,8 @@ if (isset($_POST['submit_student'])) {
 			}
 		else
 		{
-			login();
+			$lvl = 1;
+			login($lvl);
 			
 		}
 }
@@ -61,7 +62,8 @@ if (isset($_POST['submit_instructor'])) {
 		
 		else
 		{
-			login();
+			$lvl = 2;
+			login($lvl);
 		}
 }
 if (isset($_POST['submit_admin'])) {
@@ -76,10 +78,11 @@ if (isset($_POST['submit_admin'])) {
 		
 		else
 		{
-			login();
+			$lvl = 3;
+			login($lvl);
 		}
 }
-function login(){
+function login($lvl){
 
 			include('dbconfig.php');
 			// Define $username and $password
@@ -95,7 +98,7 @@ function login(){
  			$input = "$password";
 			echo $encrypted = encryptIt($input);
 			// SQL query to fetch information of registerd users and finds user match.
-			$query = mysqli_query($conn,"SELECT * FROM `user_accounts` WHERE `user_Name` = '$username' AND `user_Pass` = '$encrypted'");
+			$query = mysqli_query($conn,"SELECT * FROM `user_accounts` WHERE `user_Name` = '$username' AND `user_Pass` = '$encrypted' AND level_ID = $lvl AND `user_status` = 1");
 			if (mysqli_num_rows($query) > 0) 
 			{
 				$rows = mysqli_fetch_assoc($query);
@@ -110,7 +113,7 @@ function login(){
 			}
 			else
 			{
-			 // error_credential();
+			 error_credential();
 			}
 			mysqli_close($conn); // Closing Connection
 }
