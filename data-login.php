@@ -6,7 +6,7 @@
  * @license    MIT License version or later; see licensing/LICENSE.txt
  */
 session_start(); // Starting Session
-print_r($_POST);
+// print_r($_POST);
 include('data-md5.php');
 $error=''; // Variable To Store Error Message
 function success(){
@@ -96,7 +96,7 @@ function login($lvl){
 			
 			
  			$input = "$password";
-			echo $encrypted = encryptIt($input);
+			 $encrypted = encryptIt($input);
 			// SQL query to fetch information of registerd users and finds user match.
 			$query = mysqli_query($conn,"SELECT * FROM `user_accounts` WHERE `user_Name` = '$username' AND `user_Pass` = '$encrypted' AND level_ID = $lvl AND `user_status` = 1");
 			if (mysqli_num_rows($query) > 0) 
