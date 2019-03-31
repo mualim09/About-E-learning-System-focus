@@ -49,7 +49,7 @@ include("inc/main-head.php");
                                 <i class="material-icons">person</i>
                             </span>
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" placeholder="Student Number" required autofocus>
+                                <input type="text" class="form-control" name="username" placeholder="Student Number" required autofocus onkeyup="numberInputOnly(this);">
                             </div>
                         </div>
                         <div class="input-group">
@@ -81,7 +81,7 @@ include("inc/main-head.php");
                                 <i class="material-icons">person</i>
                             </span>
                             <div class="form-line">
-                                <input type="text" class="form-control" name="username" placeholder="Instructor ID" required autofocus>
+                                <input type="text" class="form-control" name="username" placeholder="Instructor ID" required autofocus onkeyup="numberInputOnly(this);">
                             </div>
                         </div>
                         <div class="input-group">
@@ -150,6 +150,18 @@ include("inc/main-head.php");
     <?php
     include("inc/main-js.php");
     ?>
+    <script type="text/javascript">
+          //NUMBER ONLY
+  function numberInputOnly(elem) {
+                var validChars = /[0-9]/;
+                var strIn = elem.value;
+                var strOut = '';
+                for(var i=0; i < strIn.length; i++) {
+                  strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
+                }
+                elem.value = strOut;
+            }
+    </script>
 </body>
 
 </html>
