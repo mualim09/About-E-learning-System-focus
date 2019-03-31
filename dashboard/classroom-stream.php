@@ -1,16 +1,64 @@
-<b>Home Content</b>
-                                            <!-- CKEditor -->
-                                            <textarea id="ckeditor">
-                                                <h2>WYSIWYG Editor</h2>
-                                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam ullamcorper sapien non nisl facilisis bibendum in quis tellus. Duis in urna bibendum turpis pretium fringilla. Aenean neque velit, porta eget mattis ac, imperdiet quis nisi. Donec non dui et tortor vulputate luctus. Praesent consequat rhoncus velit, ut molestie arcu venenatis sodales.</p>
-                                                <h3>Lacinia</h3>
-                                                <ul>
-                                                    <li>Suspendisse tincidunt urna ut velit ullamcorper fermentum.</li>
-                                                    <li>Nullam mattis sodales lacus, in gravida sem auctor at.</li>
-                                                    <li>Praesent non lacinia mi.</li>
-                                                    <li>Mauris a ante neque.</li>
-                                                    <li>Aenean ut magna lobortis nunc feugiat sagittis.</li>
-                                                </ul>
-                                                <h3>Pellentesque adipiscing</h3>
-                                                <p>Maecenas quis ante ante. Nunc adipiscing rhoncus rutrum. Pellentesque adipiscing urna mi, ut tempus lacus ultrices ac. Pellentesque sodales, libero et mollis interdum, dui odio vestibulum dolor, eu pellentesque nisl nibh quis nunc. Sed porttitor leo adipiscing venenatis vehicula. Aenean quis viverra enim. Praesent porttitor ut ipsum id ornare.</p>
-                                            </textarea>
+<button type="button" class="btn btn-success btn-xs" data-toggle="modal" data-target="#CreatePostInClass"><i class="material-icons">add</i> Create Post</button>
+                            
+<br>
+<hr>
+<?PHP 
+
+$sql = 'SELECT (IF(ua.level_ID = 1, 
+    (
+        SELECT CONCAT(rsd.rsd_FName," ",rsd.rsd_MName," ",rsd.rsd_LName," ",(SELECT IF(`rsn`.suffix = "N/A", "", `rsn`.suffix))) 
+        FROM 
+        `record_student_details` `rsd` 
+        INNER JOIN `ref_suffixname` `rsn` ON `rsd`.suffix_ID = `rsn`.suffix_ID
+        WHERE `ua`.`user_Name` = `rsd`.`rsd_StudNum` 
+    ),
+    (
+        SELECT CONCAT(rid.rid_FName," ",rid.rid_MName," ",rid.rid_LName," ",(SELECT IF(`rsn`.suffix = "N/A", "", `rsn`.suffix)))
+         FROM `record_instructor_detail` `rid` 
+         INNER JOIN `ref_suffixname` `rsn` ON `rid`.suffix_ID = `rsn`.suffix_ID
+         WHERE `ua`.`user_Name` = `rid`.`rid_EmpID` 
+    )
+    ))  as `Name_of_user_who_post`,`cp`.* FROM `class_post` `cp`
+    INNER JOIN `user_accounts` `ua` ON `cp`.user_ID = `ua`.user_ID  
+    ORDER BY `cp`.`classPost_Date` DESC';
+    $query = mysqli_query($conn,$sql);
+    if (mysqli_num_rows($query) > 0) {
+        // output data of each row
+
+       while($classStream = mysqli_fetch_assoc($query)) {
+           
+          $classPost_ID = $classStream['classPost_ID'];
+          $classStream_Name = $classStream['Name_of_user_who_post'];
+
+          $classStream_postName = $classStream['classPost_Name'];
+          $classStream_Content = $classStream['classPost_Description'];
+          $classStream_Date = $classStream['classPost_Date'];
+          if (empty($classStream_postName)) {
+              $classStream_Title = $classStream_postName;
+          }
+          else{
+              $classStream_Title = $classStream_postName." Posted By ";
+          }
+       ?>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <?php 
+    echo $classStream_Title.$classStream_Name."<br>";
+    echo strftime("%b %e,%a %Y  at (%I:%M %p)", strtotime($classStream_Date));
+    
+    ?>
+    </div>
+  <div class="panel-body">
+    <?php echo $classStream_Content;?>
+
+  </div>
+  <div class="panel-footer" style="border:solid 1px #d9edf7;" onclick="showComment(<?php echo $classPost_ID;?>);this.onclick=null;" id="post_comment_<?php echo $classPost_ID;?>">
+      Add Comment
+  </div>
+</div>
+        <?php
+        }
+    }
+?>
+
+
