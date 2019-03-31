@@ -4,10 +4,12 @@
 
    
     $pagename = "Account Management";
+
     $username = $_SESSION['user_Name'];
+    $user_id = $_SESSION['login_id'];
+    $user_img = $_SESSION['user_img'];
+    $user_email = $_SESSION['user_Email'];
     $script_for_specific_page = "";
-    $user_img = "../assets/images/user.png";
-    $user_email = "mail@gmail.com";
     if(isset($_SESSION['login_level']) )
     {      
         $login_level = $_SESSION['login_level'];
@@ -18,12 +20,6 @@
          
     }
 
-    if (empty($_REQUEST['page'])) {
-        $page = "";
-    }
-    else{
-        $page = $_REQUEST['page'];
-    }
 ?>
 
 <!DOCTYPE html>
@@ -82,7 +78,7 @@
                                <div class="header">
                                    <h2>LIST OF ACCOUNT</h2>
                                    <div class="btn-group pull-right">
-                                   <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#account_modal">ADD ACCOUNT</button>
+                                   <button type="button" class="btn btn-success waves-effect add" data-toggle="modal" data-target="#account_modal">ADD ACCOUNT</button>
                                    </div>
                                    <br>
                                </div>
@@ -299,6 +295,7 @@ $(document).ready(function(){
 
   $(document).on('submit', '#account_form', function(event){
     event.preventDefault();
+   $('#username').prop("disabled", false);
     var username = $('#username').val();
     var level = $('#level').val();
     var email = $('#email').val();
@@ -344,7 +341,15 @@ $(document).ready(function(){
       alert("Fields are Required");
     }
   });
-
+  $(document).on('click', '.add', function () {
+       $('#username').prop("disabled", false);
+       $('#action').text("Add");
+       $('#operation').val("Add");
+       $('.modal-title').text("Add Account Info");
+       document.getElementById('account_form').reset();
+       $('#level').val('').change();
+       $('#status').val('').change();
+  });
   $(document).on('click', '.update', function(){
     var user_ID = $(this).attr("id");
     
@@ -367,8 +372,6 @@ $(document).ready(function(){
         $('#operation').val("Edit");
         $('.modal-title').text("Edit Account Info");
         $('#user_ID').val(user_ID);
-        // setSelectedValue(document.getElementById("level"),val_level);
-        // setSelectedValue(document.getElementById("status"),val_stat);
       }
     })
   });
