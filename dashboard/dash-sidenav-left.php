@@ -120,23 +120,28 @@ function side_query(){
                 <ul class="list">
                     <li class="header">MAIN NAVIGATION</li>
                     <?php 
+                    //student
                     if ($login_level == 1) {
                         side_dashboard();
                         side_class();
                         side_query();
                     }
+                    //instructor
                     else if ($login_level == 2) {
                         side_dashboard();
                         side_class();
                         side_query();
                     }
-                     else if ($login_level == 3) {
+                    //admin
+                    else if ($login_level == 3) {
+                        
                         side_dashboard();
                         side_accoutMngt();
                         side_studentMngt();
                         side_instrucMngt();
-                        side_class();
-                        side_query();
+                        // side_class();
+                        // side_query();
+                        
                     }
                     else{
 

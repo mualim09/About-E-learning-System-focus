@@ -1,5 +1,6 @@
-<!-- Jquery Core Js -->
+    <!-- Jquery Core Js -->
     <script src="../assets/plugins/jquery/jquery.min.js"></script>
+    
 
     <!-- Bootstrap Core Js -->
     <script src="../assets/plugins/bootstrap/js/bootstrap.js"></script>
