@@ -66,7 +66,7 @@
 </style>
 <?php 
 include('../dbconfig.php');
-// error_reporting(0);
+error_reporting(0);
 $classPost_ID = $_POST['classPost_ID'];
 
 $sql = "SELECT cc.*,ua.user_img FROM `class_comment` `cc`
