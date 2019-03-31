@@ -86,16 +86,14 @@
                                           <table id="account_data" class="table table-bordered table-striped">
                                             <thead>
                                               <tr>
-                                                <th width="10%">ID</th>
-                                                <th width="10%">Level</th>
-                                                <th width="10%">Username</th>
-                                                <th width="10%">Status</th>
-                                                <th width="10%">Register</th>
+                                                <th width="5%">ID</th>
+                                                <th width="5%">Student Number</th>
+                                                <th >Name</th>
+                                                <th width="10%">Sex</th>
                                                 <th width="10%">Action</th>
                                               </tr>
                                             </thead>
                                           </table>
-                                       
                                    </div>
                                </div>
                            </div>
@@ -280,7 +278,7 @@ $(document).ready(function(){
     "serverSide":true,
     "order":[],
     "ajax":{
-      url:"datatable/account/fetch.php",
+      url:"datatable/student/fetch.php",
       type:"POST"
     },
     "columnDefs":[

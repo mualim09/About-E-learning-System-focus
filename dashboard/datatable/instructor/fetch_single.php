@@ -1,12 +1,12 @@
 <?php
 include('db.php');
 include('function.php');
-if(isset($_POST["rsd_ID"]))
+if(isset($_POST["user_ID"]))
 {
 	$output = array();
 	$statement = $connection->prepare(
-		"SELECT * FROM `record_student_details`
-		WHERE rsd_ID = '".$_POST["rsd_ID"]."' 
+		"SELECT * FROM `user_accounts`
+		WHERE user_ID = '".$_POST["user_ID"]."' 
 		LIMIT 1"
 	);
 	$statement->execute();
