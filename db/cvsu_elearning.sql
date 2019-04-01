@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 31, 2019 at 10:50 PM
+-- Generation Time: Apr 01, 2019 at 01:23 PM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -59,7 +59,8 @@ INSERT INTO `class_comment` (`comment_ID`, `user_ID`, `class_ID`, `comment_conte
 (54, 6, 3, 'ddfgd', '2019-03-31 19:19:23'),
 (55, 3, 4, 'asdasd', '2019-03-31 19:21:54'),
 (56, 3, 4, '3232', '2019-03-31 19:21:59'),
-(57, 3, 4, 'sdfsdf', '2019-03-31 19:22:01');
+(57, 3, 4, 'sdfsdf', '2019-03-31 19:22:01'),
+(58, 3, 4, 'new comment', '2019-03-31 21:03:17');
 
 -- --------------------------------------------------------
 
@@ -205,7 +206,9 @@ CREATE TABLE `record_instructor_detail` (
 
 INSERT INTO `record_instructor_detail` (`rid_ID`, `rid_EmpID`, `rid_FName`, `rid_MName`, `rid_LName`, `suffix_ID`, `rid_Sex`) VALUES
 (1, '30203012', 'Instructor 1', 'Instructor 1', 'Instructor 1', 1, 1),
-(3, '30203013', 'Instructor 2', 'Instructor 2', 'Instructor 2', 1, 2);
+(3, '30203013', 'Instructor 2', 'Instructor 2', 'Instructor 2', 1, 2),
+(4, 'asd', 'asd', 'asd', 'asd', 2, 1),
+(5, '302030132', 'xxxx', 'xxxx', 'asdkjhjkh', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -230,7 +233,10 @@ CREATE TABLE `record_student_details` (
 
 INSERT INTO `record_student_details` (`rsd_ID`, `user_ID`, `rsd_StudNum`, `rsd_FName`, `rsd_MName`, `rsd_LName`, `suffix_ID`, `rsd_Sex`) VALUES
 (1, 2, '201310656', 'Student', 'Student', 'Student', 1, 1),
-(2, 3, '201310657', 'Student', 'Student', 'Student', 1, 1);
+(2, 3, '201310657', 'Student', 'Student', 'Student', 1, 1),
+(5, NULL, '20131065621', 'asjdghkj', 'kjhasd', 'asd', 1, 1),
+(6, NULL, '', '', '', '', NULL, NULL),
+(7, NULL, '201310656555', 'neww', 'new', 'new', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -523,7 +529,7 @@ ALTER TABLE `user_notif_type`
 -- AUTO_INCREMENT for table `class_comment`
 --
 ALTER TABLE `class_comment`
-  MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `comment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 --
 -- AUTO_INCREMENT for table `class_post`
 --
@@ -553,12 +559,12 @@ ALTER TABLE `record_admin_detail`
 -- AUTO_INCREMENT for table `record_instructor_detail`
 --
 ALTER TABLE `record_instructor_detail`
-  MODIFY `rid_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `rid_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `record_student_details`
 --
 ALTER TABLE `record_student_details`
-  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `ref_suffixname`
 --
@@ -568,7 +574,7 @@ ALTER TABLE `ref_suffixname`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
