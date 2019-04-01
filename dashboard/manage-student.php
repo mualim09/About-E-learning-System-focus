@@ -77,13 +77,13 @@
                                <div class="header">
                                    <h2>LIST OF STUDENT</h2>
                                    <div class="btn-group pull-right">
-                                   <button type="button" class="btn btn-success waves-effect" data-toggle="modal" data-target="#account_modal">ADD STUDENT</button>
+                                   <button type="button" class="btn btn-success waves-effect add" data-toggle="modal" data-target="#student_modal">ADD STUDENT</button>
                                    </div>
                                    <br>
                                </div>
                                <div class="body">
                                    <div class="table-responsive" style="overflow-x: hidden;">
-                                          <table id="account_data" class="table table-bordered table-striped">
+                                          <table id="student_data" class="table table-bordered table-striped">
                                             <thead>
                                               <tr>
                                                 <th width="5%">ID</th>
@@ -112,26 +112,26 @@
 
 
  <!-- add modal -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="account_modal">
+    <div class="modal fade" tabindex="-1" role="dialog" id="student_modal">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Account</h4>
+            <h4 class="modal-title"><span class="glyphicon glyphicon-plus-sign"></span> Add Student Info</h4>
           </div>
           
-          <form class="form-horizontal" action="php_action/create.php" method="POST" id="account_form" enctype="multipart/form-data">
+          <form class="form-horizontal" action="#" method="POST" id="student_form" enctype="multipart/form-data">
 
           <div class="modal-body">
             <div class="messages"></div>
               <div class="row clearfix">
                   <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="username">Username</label>
+                      <label for="student_num">Student Number</label>
                   </div>
                   <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                       <div class="form-group">
                           <div class="form-line">
-                              <input type="text" class="form-control" id="username" name="username" placeholder="username">
+                              <input type="text" class="form-control" id="student_num" name="student_num" placeholder="Student Number" onkeyup="numberInputOnly(this);">
                           </div>
                       </div>
                   </div>
@@ -139,56 +139,12 @@
               <br>
               <div class="row clearfix">
                   <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="level">Level</label>
+                      <label for="student_fname">First Name </label>
                   </div>
                   <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                       <div class="form-group">
                           <div class="form-line">
-                               <select class="form-control" name="level" id="level" >
-                                <option value="">~~SELECT~~</option>
-                                <option value="1">Student</option>
-                                <option value="2">Instructor</option>
-                                <option value="3">Admin</option>
-                              </select>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <br>
-               <div class="row clearfix">
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="email">Email</label>
-                  </div>
-                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                              <input type="text" class="form-control" id="email" name="email" placeholder="Email">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <br>
-               <div class="row clearfix">
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="pass">Password</label>
-                  </div>
-                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                              <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <br>
-               <div class="row clearfix">
-                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="con_pass">Retype</label>
-                  </div>
-                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                              <input type="password" class="form-control" id="con_pass" name="con_pass" placeholder="Confirm Your Password">
+                              <input type="text" class="form-control" id="student_fname" name="student_fname" placeholder="Student First Name" >
                           </div>
                       </div>
                   </div>
@@ -196,25 +152,99 @@
               <br>
               <div class="row clearfix">
                   <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                      <label for="status">Active</label>
+                      <label for="student_mname">Middle Name</label>
                   </div>
                   <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                       <div class="form-group">
                           <div class="form-line">
-                               <select class="form-control" name="status" id="status" >
+                              <input type="text" class="form-control" id="student_mname" name="student_mname" placeholder="Student Middle Name">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <br>
+              <div class="row clearfix">
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                      <label for="student_lname">Last Name</label>
+                  </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                              <input type="text" class="form-control" id="student_lname" name="student_lname" placeholder="Student Last Name">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <br>
+              <div class="row clearfix">
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                      <label for="student_suffix">Suffix</label>
+                  </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <select class="form-control" name="student_suffix" id="student_suffix" >
                                 <option value="">~~SELECT~~</option>
-                                <option value="1">Activate</option>
-                                <option value="0">Deactivate</option>
-                                <option value="2">Ban</option>
+                              <?php 
+
+                              $sql = "SELECT * FROM `ref_suffixname`";
+                              $query = mysqli_query($conn,$sql);
+                                             
+                                               
+                                if (mysqli_num_rows($query) > 0) {
+                                      // output data of each row
+
+                                    while($rsn = mysqli_fetch_assoc($query)) 
+                                    {
+                                    ?>
+                                    <option value="<?php echo $rsn['suffix_ID']; ?>"><?php echo $rsn['suffix']; ?></option>
+                                    <?php
+                                    }
+                                   }
+                              ?>
                               </select>
                           </div>
                       </div>
                   </div>
-              </div>                    
+              </div>
+              <br>
+              <div class="row clearfix">
+                  <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                      <label for="student_sex">Sex</label>
+                  </div>
+                  <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <select class="form-control" name="student_sex" id="student_sex" >
+                                <option value="">~~SELECT~~</option>
+                              <?php 
+
+                              $sql = "SELECT * FROM `ref_sex`";
+                              $query = mysqli_query($conn,$sql);
+                                             
+                                               
+                                if (mysqli_num_rows($query) > 0) {
+                                      // output data of each row
+
+                                    while($rsn = mysqli_fetch_assoc($query)) 
+                                    {
+                                    ?>
+                                    <option value="<?php echo $rsn['sex_ID']; ?>"><?php echo $rsn['sex_Name']; ?></option>
+                                    <?php
+                                    }
+                                   }
+                              ?>
+                              </select>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <br>
+                                 
 
           </div>
           <div class="modal-footer">
-          <input type="hidden" name="user_ID" id="user_ID" />
+          <input type="hidden" name="rsd_ID" id="rsd_ID" />
           <input type="hidden" name="operation" id="operation" value="Add" />
           <input type="submit" name="action" id="action" class="btn btn-success" value="Submit" />
             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -257,6 +287,16 @@
     <!-- Demo Js -->
     <script src="../assets/js/demo.js"></script>
     <script type="text/javascript" language="javascript" >
+       //NUMBER ONLY
+  function numberInputOnly(elem) {
+      var validChars = /[0-9]/;
+      var strIn = elem.value;
+      var strOut = '';
+      for(var i=0; i < strIn.length; i++) {
+        strOut += (validChars.test(strIn.charAt(i)))? strIn.charAt(i) : '';
+      }
+      elem.value = strOut;
+  }
 $(document).ready(function(){
 
   //select specific dropdown when updating 1 data
@@ -273,7 +313,7 @@ $(document).ready(function(){
 
 
 
-  var dataTable = $('#account_data').DataTable({
+  var dataTable = $('#student_data').DataTable({
     "processing":true,
     "serverSide":true,
     "order":[],
@@ -290,24 +330,18 @@ $(document).ready(function(){
 
   });
 
-  $(document).on('submit', '#account_form', function(event){
+  $(document).on('submit', '#student_form', function(event){
     event.preventDefault();
-    var username = $('#username').val();
-    var level = $('#level').val();
-    var email = $('#email').val();
-    var pass = $('#pass').val();
-    var con_pass = $('#con_pass').val();
-    var status = $('#status').val();
-    if(username != '' && level != '' && email != '' && pass != '' && con_pass != '' && status != '')
+    var student_num = $('#student_num').val();
+    var student_fname = $('#student_fname').val();
+    var student_mname = $('#student_mname').val();
+    var student_lname = $('#student_lname').val();
+    var student_suffix = $('#student_suffix').val();
+    var student_sex = $('#student_sex').val();
+    if(student_num != '' && student_fname != '' && student_mname != '' && student_lname != '' && student_suffix != '' && student_sex != '')
     {
-
-
-      if (pass == con_pass) 
-        {
-
-          if (pass.length > 6) {
             $.ajax({
-              url:"datatable/account/insert.php",
+              url:"datatable/student/insert.php",
               method:'POST',
               data:new FormData(this),
               contentType:false,
@@ -318,62 +352,62 @@ $(document).ready(function(){
                 $('#operation').val("Add");
 
                 alert(data);
-                $('#account_form')[0].reset();
-                $('#account_modal').modal('hide');
+                $('#student_form')[0].reset();
+                $('#student_modal').modal('hide');
                 dataTable.ajax.reload();
               }
             });
-          } 
-          else {
-            alert("Minumum Password Length is 6 Character");
-          }
-        } 
-        else {
-          alert("Password not match");
-        }
+      
+    
     }
     else
     {
       alert("Fields are Required");
     }
   });
-
+ $(document).on('click', '.add', function () {
+      
+       $('#action').text("Add");
+       $('#operation').val("Add");
+       $('.modal-title').text("Add Student Info");
+       $('#student_suffix').val('').change();
+       $('#student_sex').val('').change();
+       document.getElementById('student_form').reset();
+      
+  });
   $(document).on('click', '.update', function(){
-    var user_ID = $(this).attr("id");
+    var rsd_ID = $(this).attr("id");
     
     $.ajax({
-      url:"datatable/account/fetch_single.php",
+      url:"datatable/student/fetch_single.php",
       method:"POST",
-      data:{user_ID:user_ID},
+      data:{rsd_ID:rsd_ID},
       dataType:"json",
       success:function(data)
       {
-        $('#account_modal').modal('show');
-        $("#username").prop("disabled", true);
-        $('#username').val(data.user_Name);
-        $('#email').val(data.user_Email);
-        $('#pass').val(data.user_Pass);
-        $('#con_pass').val(data.user_Pass);
-        var val_level = $('#status').val(data.level_ID);
-        var val_stat = $('#status').val(data.user_status);
-        $('#action').val("Edit");
+        $('#student_modal').modal('show');
+        $('#student_num').val(data.student_num);
+        $('#student_fname').val(data.student_fname);
+        $('#student_mname').val(data.student_mname);
+        $('#student_lname').val(data.student_lname);
+        $('#student_suffix').val(data.student_suffix).change();
+        $('#student_sex').val(data.student_sex).change();
+        $('#action').val("Update");
         $('#operation').val("Edit");
-        $('.modal-title').text("Edit Account Info");
-        $('#user_ID').val(user_ID);
-        // setSelectedValue(document.getElementById("level"),val_level);
-        // setSelectedValue(document.getElementById("status"),val_stat);
+        $('.modal-title').text("Edit Student Info");
+        $('#rsd_ID').val(rsd_ID);
       }
     })
   });
   
   $(document).on('click', '.delete', function(){
-    var user_ID = $(this).attr("id");
+    var rsd_ID = $(this).attr("id");
     if(confirm("Are you sure you want to delete this?"))
     {
       $.ajax({
-        url:"datatable/account/delete.php",
+        url:"datatable/student/delete.php",
         method:"POST",
-        data:{user_ID:user_ID},
+        data:{rsd_ID:rsd_ID},
         success:function(data)
         {
           alert(data);
@@ -386,6 +420,7 @@ $(document).ready(function(){
       return false; 
     }
   });
+ 
   
   
 });

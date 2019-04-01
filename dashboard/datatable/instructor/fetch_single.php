@@ -1,12 +1,12 @@
 <?php
 include('db.php');
 include('function.php');
-if(isset($_POST["user_ID"]))
+if(isset($_POST["rid_ID"]))
 {
 	$output = array();
 	$statement = $connection->prepare(
-		"SELECT * FROM `user_accounts`
-		WHERE user_ID = '".$_POST["user_ID"]."' 
+		"SELECT * FROM `record_instructor_detail`
+		WHERE rid_ID = '".$_POST["rid_ID"]."' 
 		LIMIT 1"
 	);
 	$statement->execute();
@@ -14,11 +14,12 @@ if(isset($_POST["user_ID"]))
 	foreach($result as $row)
 	{
 
-		$output["level_ID"] = $row["level_ID"];
-		$output["user_Name"] = $row["user_Name"];
-		$output["user_Pass"] = decryptIt($row["user_Pass"]);
-		$output["user_Email"] = $row["user_Email"];
-		$output["user_status"] = $row["user_status"];
+		$output["instructor_num"] = $row["rid_EmpID"];
+		$output["instructor_fname"] = $row["rid_FName"];
+		$output["instructor_mname"] = $row["rid_MName"];
+		$output["instructor_lname"] = $row["rid_LName"];
+		$output["instructor_suffix"] = $row["suffix_ID"];
+		$output["instructor_sex"] = $row["rid_Sex"];
 	
 	}
 	echo json_encode($output);

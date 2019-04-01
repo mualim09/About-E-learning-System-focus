@@ -3,15 +3,15 @@
 include('db.php');
 include("function.php");
 
-if(isset($_POST["user_ID"]))
+if(isset($_POST["rsd_ID"]))
 {
 	
 	$statement = $connection->prepare(
-		"DELETE FROM `user_accounts` WHERE user_ID = :user_ID"
+		"DELETE FROM `record_student_details` WHERE rsd_ID = :rsd_ID"
 	);
 	$result = $statement->execute(
 		array(
-			':user_ID'	=>	$_POST["user_ID"]
+			':rsd_ID'	=>	$_POST["rsd_ID"]
 		)
 	);
 	
