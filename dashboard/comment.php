@@ -66,7 +66,7 @@
 </style>
 <?php 
 include('../dbconfig.php');
-error_reporting(0);
+// error_reporting(0);
 $classPost_ID = $_POST['classPost_ID'];
 
 $sql = "SELECT cc.*,ua.user_img FROM `class_comment` `cc`
@@ -94,8 +94,8 @@ $query3 = mysqli_query($conn,$sql);
                     else{
                       $comment_img = "../assets/images/user.png";
                     }
-		       		$classroom_comment = $classroom_comment["comment_content"];
-
+		       		$content = $classroom_comment["comment_content"];
+                    $classroom_commentDate = $classroom_comment["comment_Date"];
 
 		       		?>
 				    <li>
@@ -103,7 +103,7 @@ $query3 = mysqli_query($conn,$sql);
 		                  <img src="<?php echo $comment_img;?>" />
 		                </div>
 		                <div class="commentText">
-		                    <p class=""><?php echo $classroom_comment;?></p> <span class="date sub-text"><?php echo strftime("on %b %e, %Y  at (%I:%M %p)", strtotime($classroom_commentDate));?></span>
+		                    <p class=""><?php echo $content;?></p> <span class="date sub-text"><?php echo strftime("on %b %e, %Y  at (%I:%M %p)", strtotime($classroom_commentDate));?></span>
 
 		                </div>
 		            </li>
