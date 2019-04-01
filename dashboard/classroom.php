@@ -60,11 +60,6 @@
 
     <section class="content">
         <div class="container-fluid">
-            <?php
-            //   echo '<pre>';
-            // var_dump($_SESSION);
-            // echo '</pre>';
-            ?>
             <?php 
             if (isset($_REQUEST['code'])) {
                 include('classroom-code.php');

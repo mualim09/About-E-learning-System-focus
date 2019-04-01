@@ -1,4 +1,9 @@
-﻿  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+﻿<ol class="breadcrumb breadcrumb-bg-green">
+                <li><a href="index"><i class="material-icons">home</i> Dashboard</a></li>
+                <li><a href="classroom"><i class="material-icons ">account_box</i> Classrooms</a></li>
+                <li  class="active"><a href="classroom"><i class="material-icons ">account_box</i> <?php echo $_REQUEST['name']?></a></li>
+</ol>    
+  <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                     <div class="card">
                         <div class="header">
                             <h2>

@@ -1,3 +1,4 @@
+
 <style type="text/css">
 	#people_h2{
 		border-bottom: 1px solid #1e8e3e;
@@ -101,18 +102,24 @@ WHERE `class_ID` = $req_classID");
 					
 					<span><?php echo $student_name?></span>
 					<?php 
-					$sql = "SELECT * FROM `class_student` WHERE user_ID = '$rsd_user_ID' AND class_ID = '$req_classID' AND join_Stat = 0";
-					$query = mysqli_query($conn,$sql);
-					if (mysqli_num_rows($query) > 0) {
-						?>
-						<div style=" position: absolute;right: 150px;"><button class="btn btn-warning" id="uc_<?php echo $classStudent_ID?>" onclick="userclassDisable(<?php echo $classStudent_ID?>)">Disable</button></div>
-						<?php
+					if ($login_level == 1) {
+						# code...
 					}
-					else{?>
-						<div style=" position: absolute;right: 150px;"><button class="btn btn-success" id="uc_<?php echo $classStudent_ID?>"  onclick="userclassEnable(<?php echo $classStudent_ID?>)" >Enable</button></div>
-						<?php
+					else{
+						$sql = "SELECT * FROM `class_student` WHERE user_ID = '$rsd_user_ID' AND class_ID = '$req_classID' AND join_Stat = 0";
+						$query = mysqli_query($conn,$sql);
+						if (mysqli_num_rows($query) > 0) {
+							?>
+							<div style=" position: absolute;right: 150px;"><button class="btn btn-warning" id="uc_<?php echo $classStudent_ID?>" onclick="userclassDisable(<?php echo $classStudent_ID?>)">Disable</button></div>
+							<?php
+						}
+						else{?>
+							<div style=" position: absolute;right: 150px;"><button class="btn btn-success" id="uc_<?php echo $classStudent_ID?>"  onclick="userclassEnable(<?php echo $classStudent_ID?>)" >Enable</button></div>
+							<?php
 
+						}
 					}
+					
 					?>
 					
 				</div>
