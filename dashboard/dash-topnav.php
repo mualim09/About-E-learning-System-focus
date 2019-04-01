@@ -9,7 +9,7 @@
             <div class="collapse navbar-collapse" id="navbar-collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <?php 
-                    include("dash-notification.php");
+                    // include("dash-notification.php");
                     ?>
                     <!-- Notifications -->
                     <li class="dropdown">
@@ -29,3 +29,5 @@
         </div>
     </nav>
     <!-- #Top Bar -->
+
+   

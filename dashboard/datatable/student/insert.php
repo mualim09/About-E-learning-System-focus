@@ -83,7 +83,7 @@ if(isset($_POST["operation"]))
 		$statement->bindParam(':student_num', $student_num, PDO::PARAM_STR);
 		$result = $statement->execute();
 		$resultrows = $statement->rowCount();
-
+ 
 		if (empty($resultrows)) {
 
 				$sql ="UPDATE `record_student_details` SET 
@@ -160,7 +160,7 @@ if(isset($_POST["operation"]))
 			
 			else
 			{
-				// if Instructor ID is not available
+				// if Student ID is not available
 				echo 'Studentnum is Already Use';
 			}
 
