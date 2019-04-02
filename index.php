@@ -4,7 +4,10 @@
  *
  * @copyright  Copyright (C) 2019, All rights reserved.
  * @license    MIT License version or later; see licensing/LICENSE.txt
+ *  ᜍ᜔ᜑᜎ᜔ᜉ᜔ ᜇᜍ᜔ᜍᜒᜈ᜔ ᜍ᜔. cᜀᜊ᜔ᜍᜒᜍ 
+ *  ᜉcᜁᜊᜓᜂᜃ᜔.cᜂᜋ᜔:ᜑ᜔ᜆ᜔ᜆ᜔ᜉ᜔ᜐ᜔://ᜏ᜔ᜏ᜔ᜏ᜔.ᜉcᜁᜊᜓᜂᜃ᜔.cᜂᜋ᜔/ᜍ᜔ᜑᜎ᜔ᜉ᜔10
  */
+
 session_start();
 if(isset($_SESSION['login_user']))
 {      

@@ -11,7 +11,7 @@
     $script_for_specific_page = "index";
     if(isset($_SESSION['login_level']) )
     {      
-    echo $login_level = $_SESSION['login_level'];
+     $login_level = $_SESSION['login_level'];
        
          
     }
@@ -124,6 +124,11 @@
                 </div>
             </div>
             <?php
+                }
+                if ($login_level == 3) {
+                    ?>
+                    
+                    <?php
                 }
              ?>
         </div>
