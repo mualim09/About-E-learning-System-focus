@@ -21,7 +21,7 @@
                                     }
                                     else{
                                         ?>
-                                        <button type="button" class="btn bg-green waves-effect" data-toggle="modal" data-target="#CreateClass">    <i class="material-icons">add_circle</i> Create Class</button>
+                                        <button type="button" class="btn bg-green waves-effect add" data-toggle="modal" data-target="#CreateClass">    <i class="material-icons">add_circle</i> Create Class</button>
                                         <?php
                                     }
                                     ?>
@@ -74,7 +74,7 @@
                                         </a>
                                         <ul class="dropdown-menu pull-right">
 
-                                            <li><a href="javascript:void(0);">Edit</a></li>
+                                            <li><a href="javascript:void(0);"  onclick="editClassroom(<?php echo $class_ID;?>)">Edit</a></li>
                                             <?php
                                             if ($class_status == 1) {
                                                ?>
@@ -86,7 +86,9 @@
                                                  <li><a href="javascript:void(0);"  onclick="enableClassroom(<?php echo $class_ID;?>)">Enable</a></li>
                                                 <?php
                                             }
+
                                             ?>
+                                            <li><a href="javascript:void(0);"  onclick="deleteClassroom(<?php echo $class_ID;?>)">Delete</a></li>
                                         </ul>
                                     </li>
                                 </ul>

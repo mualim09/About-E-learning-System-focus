@@ -12,7 +12,47 @@ if (isset($_POST["comment"])) {
 	$sql1 = "INSERT INTO `class_comment` (`comment_ID`, `user_ID`, `class_ID`, `comment_content`, `comment_Date`) VALUES (NULL, '$user_id', '$classPost_ID', '$new_comment', CURRENT_TIMESTAMP);";
 	$query1 = mysqli_query($conn,$sql1);
 }
+if (isset($_POST['submit_deleteclass'])) {
+	$class_ID = $_POST['submit_deleteclass'];
+	$sql = "DELETE FROM `class_room` WHERE `class_room`.`class_ID` = $class_ID";
+	if (mysqli_query($conn, $sql)) {
+		echo "<script>alert('Success');
+				window.location='classroom';
+				</script>";
+	}
+	else{
+		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
+	# code...
+}
+if (isset($_POST['submit_editclass'])) {
+	$class_ID = $_POST['submit_editclass'];
+	
+	
+	$output = array();
+	
+	$sql = "SELECT * FROM `class_room`
+		WHERE class_ID = '".$class_ID ."' 
+		LIMIT 1";
+ 	if ($query = mysqli_query($conn, $sql)) {
 
+		while ($row = mysqli_fetch_assoc($query)) {
+			$output["class_Name"] = $row["class_Name"];
+			$output["class_Description"] = $row["class_Description"];
+			$output["class_color"] = $row["class_Color"];
+		}
+ 		
+	}
+	else{
+		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
+	
+	
+		
+	
+
+	echo json_encode($output);
+}
 if (isset($_POST['submit_createclass'])) {
 
 		$class_Name = $_POST['class_Name'];
@@ -114,15 +154,19 @@ if (isset($_POST['submit_joinclass'])) {
 }
 
 if (isset($_POST['submit_postinClass'])) {
-	print_r($_POST);
+
 	$newpost_content = $_POST["newpost_content"];
-	$sql = "INSERT INTO `class_post` (`classPost_ID`, `user_ID`, `class_ID`, `classTopic_ID`, `classPost_Name`, `classPost_Description`, `classPost_Date`) VALUES (NULL, NULL, NULL, NULL, '', '', CURRENT_TIMESTAMP);";
-	# code...
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+	$sql = "INSERT INTO `class_post` (`classPost_ID`, `user_ID`, `class_ID`, `classTopic_ID`, `classPost_Name`, `classPost_Description`, `classPost_Date`) VALUES (NULL, '$user_id', '$class_ID', NULL, '', '$newpost_content', CURRENT_TIMESTAMP);";
+	mysqli_query($conn, $sql);
+	echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+
 }
 
-if (isset($_POST['submit_createTopic'])) {
-
-	}
 
 if (isset($_POST['action'])) {
 	if ($_POST["action"] == "userclassEnable") {
@@ -130,7 +174,7 @@ if (isset($_POST['action'])) {
 		
 		$sql = "UPDATE `class_student` SET `join_Stat` = '1' WHERE `class_student`.`classStudent_ID` = $classStudent_ID;";
 		if (mysqli_query($conn, $sql)) {
-			# code...
+		 
 		}
 
 	}
@@ -143,4 +187,57 @@ if (isset($_POST['action'])) {
 		}
 	}
 }
+
+if (isset($_POST['submit_createTopic'])) {
+	$new_topic = $_POST["new_topic"];
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+	$sql = "INSERT INTO `class_topic` (`classTopic_ID`, `class_ID`, `classTopic_Name`) VALUES (NULL, '$class_ID', '$new_topic');";
+	if (mysqli_query($conn, $sql)) {
+				# code...
+			}
+	echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+}
+if (isset($_POST['submit_createAssignment'])) {
+	$assignment_title = $_POST["assignment_title"];
+	$assignment_descr = $_POST["assignment_descr"];
+	$assignment_points = $_POST["assignment_points"];
+	$assignment_due = $_POST["assignment_due"];
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+	$SQL = "";
+	// echo "<script>alert('Successfully Post');
+	// 										window.location='classroom?name=$name&code=$code&classID=$class_ID';
+	// 									</script>";
+	}
+if (isset($_POST['submit_createMaterial'])) {
+	
+	$MaterialTitle = $_POST["MaterialTitle"];
+	$MaterialDescr = $_POST["MaterialDescr"];
+	$MaterialFile = $_POST["MaterialFile"];
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+
+	$SQL = "";
+	echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+	}
+if (isset($_POST['submit_createQuestion'])) {
+
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+
+	$SQL = "";
+	echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+
+	}
 ?>

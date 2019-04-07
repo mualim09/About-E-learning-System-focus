@@ -174,7 +174,7 @@ function side_query(){
             <!-- Footer -->
             <div class="legal">
                 <div class="copyright">
-                     &copy; <?php auto_copyright("2019"); ?> <a href="javascript:void(0);">E-learning</a>
+                    <!--  &copy; <?php auto_copyright("2019"); ?> --> <a href="javascript:void(0);">CvSU E-learning for Information Management</a>
                 </div>
                 <!-- <div class="version">
                     <b>Version: </b> 1.0.5

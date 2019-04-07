@@ -69,7 +69,7 @@
             </div>
             <ol class="breadcrumb breadcrumb-bg-green">
                 <li><a href="javascript:void(0);"><i class="material-icons">home</i> Home</a></li>
-                <li><a href="javascript:void(0);"><i class="material-icons">archive</i> Data</a></li>
+                <li><a href="javascript:void(0);"><i class="material-icons">archive</i> Query Simulator</a></li>
             </ol>
 
             

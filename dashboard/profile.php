@@ -61,7 +61,7 @@
                         <div class="profile-header">&nbsp;</div>
                         <div class="profile-body">
                             <div class="image-area">
-                                <img src="<?php echo $user_img?>" alt="" width="145" height="145"/>
+                                <img src="<?php echo $user_img?>" alt="" width="145" height="145" id="m_img"/>
                             </div>
                             <div class="content-area">
                                 <h3><?php echo $username?></h3>
@@ -147,7 +147,47 @@
             </div>
         </div>
     </section>
+    <!-- /profile area -->
+                    <div id="changeprofile" class="modal fade">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header bg-slate-400">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h5 class="modal-title">PROFILE</h5>
+                                </div>
 
+                                <form action="#" method="POST"  class="form-horizontal" id="changeprofile_form" enctype="multipart/form-data">
+                                
+                                    <div class="modal-body">
+                                           <?php 
+                                            if (isset($user_img)) {
+                                                ?>
+                                                <img id="c_img" src="<?php echo $user_img;?>" alt="your image"  runat="server"  height="250" width="250" class="img-circle" style="border:1px solid;"/>
+                                                <?php
+                                            } 
+                                            else{
+                                              ?>
+                                              <img id="blah" src="../assets/images/placeholder.jpg" alt="your image"  runat="server"  height="250" width="250" class="img-circle" style="border:1px solid;"/>
+                                              <?php
+                                            }
+                                            ?>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <label>Profile Image</label>
+                                                    <input type="file" class="form-control" id="profileimg" name="profileimg">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                       <button  type="submit" class="btn btn-primary" id="update_profile">Update</button>
+                                       <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
     <?php 
         include("dash-js.php");
     ?>
@@ -161,6 +201,8 @@
              reader.onload = function(e) {
                $('#c_img').attr('src', e.target.result);
                $('#r_img').attr('src', e.target.result);
+               $('#m_img').attr('src', e.target.result);
+               
          
              }
          
@@ -214,6 +256,7 @@
                         {
                           alert(data);
 
+                           $('#changeprofile').modal('hide');
                         }
                       }); 
               

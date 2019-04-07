@@ -3,7 +3,7 @@
 <br>
 <hr>
 <?PHP 
-
+$req_classID = $_REQUEST['classID'];
 $sql = 'SELECT (IF(ua.level_ID = 1, 
     (
         SELECT CONCAT(rsd.rsd_FName," ",rsd.rsd_MName," ",rsd.rsd_LName," ",(SELECT IF(`rsn`.suffix = "N/A", "", `rsn`.suffix))) 
@@ -20,6 +20,7 @@ $sql = 'SELECT (IF(ua.level_ID = 1,
     )
     ))  as `Name_of_user_who_post`,`cp`.* FROM `class_post` `cp`
     INNER JOIN `user_accounts` `ua` ON `cp`.user_ID = `ua`.user_ID  
+    WHERE `cp`.class_ID = '.$req_classID.'
     ORDER BY `cp`.`classPost_Date` DESC';
     $query = mysqli_query($conn,$sql);
     if (mysqli_num_rows($query) > 0) {

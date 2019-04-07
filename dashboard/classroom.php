@@ -149,6 +149,9 @@ if ($login_level == 1) {
                             <!-- CKEditor -->
                            <textarea id="ckeditor" name="newpost_content">
                           </textarea>
+                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
                         </div>
                         <div class="modal-footer">
                             <input type="submit" class="btn btn-link waves-effect" name="submit_postinClass" value="Post">
@@ -165,7 +168,7 @@ if ($login_level == 1) {
             <div class="modal-header">
                 <h4 class="modal-title" id="defaultModalLabel">Create Class</h4>
             </div>
-            <form class="form-horizontal" action="data-action.php" method="POST"  enctype="multipart/form-data">
+            <form class="form-horizontal" action="data-action.php" method="POST"  enctype="multipart/form-data" id="class_form">
             <div class="modal-body">
                     <div class="row clearfix">
                       <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -217,7 +220,8 @@ if ($login_level == 1) {
                   </div> 
             </div>
             <div class="modal-footer">
-                 <button type="submit" class="btn btn-link waves-effect"  name="submit_createclass" value="submit_createclass">Create</button>
+               <input type="hidden" name="class_ID" id="class_ID">
+                 <button type="submit" class="btn btn-link waves-effect"  name="submit_createclass" value="submit_createclass" id="operation">Create</button>
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
             </div>         
             </form>
@@ -225,6 +229,202 @@ if ($login_level == 1) {
     </div>
 </div>
 
+
+<!-- Create Topic In Classroom -->
+            <div class="modal fade" id="CreateTopicInClass" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-green">
+                            <h4 class="modal-title" id="defaultModalLabel">Create Topic</h4>
+                        </div>
+                        <form action="data-action.php" method="POST" id="topic_form">
+                        <div class="modal-body">
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Title</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                           <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="create_topic">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> 
+                          
+                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
+                         
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-link waves-effect" name="submit_createTopic" value="Post">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>  
+
+<!-- Create Assignment In Classroom -->
+            <div class="modal fade" id="CreateAssignmentInClass" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header bg-green">
+                            <h4 class="modal-title" id="defaultModalLabel">Create Assignment</h4>
+                        </div>
+                        <form action="data-action.php" method="POST" id="topic_form">
+                        <div class="modal-body">
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Title</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                          <input type="text" class="form-control"  name="assignment_title" value="" placeholder="Topic" id="Assignment Title">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> 
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Instruction</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                           <input type="text" class="form-control"  name="assignment_descr" value="" placeholder="Topic" id="Assignment Instruction">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div> 
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Points</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                           <input type="text" class="form-control"  name="assignment_points" value="" placeholder="Assignment Points" id="assignment_points">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Due Date</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                           <input type="date" class="form-control"  name="assignment_due" id="assignment_due">
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>  
+                          
+                          
+                          
+                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
+                         
+                        </div>
+                        <div class="modal-footer">
+                            <input type="submit" class="btn btn-link waves-effect" name="submit_createAssignment" value="Post">
+                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>  
+<!-- Create Assingment In Classroom -->
+<div class="modal fade" id="CreateMaterialInClass" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-green">
+                <h4 class="modal-title" id="defaultModalLabel">Create Material</h4>
+            </div>
+            <form action="data-action.php" method="POST" id="topic_form">
+            <div class="modal-body">
+              <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                  <label for="class_color">Title</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <input type="text" class="form-control"  name="MaterialTitle" value="" placeholder="Topic" id="MaterialTitle">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                  <label for="class_color">Description</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <input type="text" class="form-control"  name="MaterialDescr" value="" placeholder="Topic" id="MaterialDescr">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                  <label for="class_color">Attachment</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <input type="file" class="form-control"  name="MaterialFile" value="" placeholder="Topic" id="MaterialFile">
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              
+              
+              
+              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
+             
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-link waves-effect" name="submit_createMaterial" value="Post">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>  
+
+<!-- Create Assingment In Classroom -->
+<div class="modal fade" id="CreateQuestionInClass" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-green">
+                <h4 class="modal-title" id="defaultModalLabel">Create Question</h4>
+            </div>
+            <form action="data-action.php" method="POST" id="topic_form">
+            <div class="modal-body">
+              
+              <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="createQuestion">
+              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
+             
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-link waves-effect" name="submit_createQuestion" value="Post">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>  
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script type="text/javascript">
 
@@ -346,8 +546,94 @@ if ($login_level == 1) {
         }
 
         }
+       $(document).on('click', '.add', function () {
+            document.getElementById("operation").setAttribute('name', 'submit_createclass');
+            $('#operation').text("Create");
+            $('#operation').val("submit_createclass");
+            $('.modal-title').text("Create Class");
+           document.getElementById('class_form').reset();
+          
+      });
+        function editClassroom($var) {
+        var class_ID = $var;
+             if(confirm("Are you sure you want to edit this classroom?"))
+        {
 
+           $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_editclass:class_ID},
+              dataType:"json",
+              success:function(data)
+              {
+                  $('#CreateClass').modal('show');
+                   $('#class_Name').val(data.class_Name);
+                   $('#class_Description').val(data.class_Description);
+                   $('#class_color').val(data.class_color).change();
+                   document.getElementById("operation").setAttribute('name', 'submit_editclass');
+                   $('#operation').text("Update");
+                   $('#operation').val("submit_editclass");
+                   $('.modal-title').text("Edit Classroom Info");
+                   $('#class_ID').val(class_ID);
+              }
+            });
+         
+        }
+        else
+        {
+          return false; 
+        }
+
+        }
+        function deleteClassroom($var) {
+        var class_ID = $var;
+             if(confirm("Are you sure you want to delete this classroom?"))
+        {
+           $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_deleteclass:class_ID},
+              dataType:"html",
+              success:function(data)
+              {
+              }
+            });
+           location.reload();
+        }
+        else
+        {
+          return false; 
+        }
+
+        }
+        // function classworkTopic($var){
+        //  var class_ID = $var;
+        //  $('#CreateTopicInClass').modal('show');
+        // }
+        // function classworkMaterial($var){
+       
+        //   var class_ID = $var;
+        //   var title  =  $('#material_title').val();
+        //   var Description  =  $('#material_description').val();
+        //   var attachment  =  $('#material_attachment').val();
+        // }
+        //  function classworkQuizAssigment($var){
+          
+        //   var class_ID = $var;
+        //   var Question = $var;
+        //   var Instruction = $var;
+        //   var Points = $var;
+        //   var Duedate = $var;
+        // }
+        // function classworkAssignment($var){
+        //   var class_ID = $var;
+        //   var Question = $('#classassign_question').val();
+        //   var Instruction = $('#classassign_instruction').val();
+        //   var Points = $('#classassign_points').val();
+        //   var Duedate = $('#classassign_duedate').val();
+
+        // }
   
-
+   
  </script>
 </html>
