@@ -209,10 +209,13 @@ if (isset($_POST['submit_createAssignment'])) {
 	$name = $_POST["name"];
 	$code = $_POST["code"];
 	$class_ID = $_POST["class_ID"];
-	$SQL = "";
-	// echo "<script>alert('Successfully Post');
-	// 										window.location='classroom?name=$name&code=$code&classID=$class_ID';
-	// 									</script>";
+	$sql = "INSERT INTO `class_assignment` (`classassignment_ID`, `classTopic_ID`, `class_ID`, `classassignment_Title`, `classassignment_Instruction`, `classassignment_Points`, `classassignment_Duedate`) VALUES (NULL, NULL, '$class_ID', '$assignment_title', '$assignment_descr', $assignment_points, '$assignment_due');";
+	if (mysqli_query($conn, $sql)) {
+				echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+	}
+	
 	}
 if (isset($_POST['submit_createMaterial'])) {
 	

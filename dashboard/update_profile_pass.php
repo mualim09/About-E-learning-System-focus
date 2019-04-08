@@ -10,7 +10,7 @@ $newpassword = $_POST['newpassword'];
 $newpasswordconfirm = $_POST['newpasswordconfirm'];
 
 
-echo $encrypted = encryptIt($oldpassword);
+ $encrypted = encryptIt($oldpassword);
 
 
 $sql = "SELECT user_Pass FROM user_accounts WHERE user_ID = $user_ID";
@@ -20,7 +20,7 @@ if (mysqli_num_rows($result) > 0) {
     // output data of each row
     while($row = mysqli_fetch_assoc($result)) {
         
-        echo $chk_oldpass = $row["user_Pass"];
+         $chk_oldpass = $row["user_Pass"];
     }
 } 
 else {
