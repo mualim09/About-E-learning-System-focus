@@ -267,8 +267,8 @@ if ($login_level == 1) {
             </div>  
 
 <!-- Create Assignment In Classroom -->
-            <div class="modal fade" id="CreateAssignmentInClass" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+            <div class="modal fade " id="CreateAssignmentInClass" tabindex="-1" role="dialog">
+                <div class="modal-dialog " role="document">
                     <div class="modal-content">
                         <div class="modal-header bg-green">
                             <h4 class="modal-title" id="defaultModalLabel">Create Assignment</h4>
@@ -277,16 +277,44 @@ if ($login_level == 1) {
                         <div class="modal-body">
                           <div class="row clearfix">
                           <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                              <label for="class_color">Topic</label>
+                          </div>
+                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                         <select class="form-control" name="classtopic" id="classtopic">
+                                          <option value=""> - SELECT - </option>
+                                           <?php 
+                                           $sql = "SELECT * FROM `class_topic`
+                                              WHERE class_ID = '".$_REQUEST['classID'] ."' 
+                                              ";
+                                            if ($query = mysqli_query($conn, $sql)) {
+
+                                              while ($row = mysqli_fetch_assoc($query)) {
+                                                ?>
+                                                <option value="<?php echo $row["classTopic_ID"]?>"><?php echo $row["classTopic_Name"]?></option>
+                                                <?php
+                                              }
+                                            }
+                                           ?>
+                                         </select>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row clearfix">
+                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                               <label for="class_color">Title</label>
                           </div>
                           <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                          <input type="text" class="form-control"  name="assignment_title" value="" placeholder="Topic" id="Assignment Title">
+                                          <input type="text" class="form-control"  name="assignment_title" value="" placeholder="Topic" id="assignment_title">
                                       </div>
                                   </div>
                               </div>
                           </div> 
+                           
                           <div class="row clearfix">
                           <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                               <label for="class_color">Instruction</label>
@@ -294,7 +322,7 @@ if ($login_level == 1) {
                           <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                           <input type="text" class="form-control"  name="assignment_descr" value="" placeholder="Topic" id="Assignment Instruction">
+                                        <textarea class="form-control" name="assignment_descr" value="" placeholder="Assignment Instruction" id="assignment_descr"></textarea>
                                       </div>
                                   </div>
                               </div>
@@ -306,7 +334,7 @@ if ($login_level == 1) {
                           <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                           <input type="text" class="form-control"  name="assignment_points" value="" placeholder="Assignment Points" id="assignment_points">
+                                           <input type="number" class="form-control"  name="assignment_points" value="" placeholder="Assignment Points" id="assignment_points">
                                       </div>
                                   </div>
                               </div>
@@ -318,7 +346,7 @@ if ($login_level == 1) {
                           <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                                   <div class="form-group">
                                       <div class="form-line">
-                                           <input type="date" class="form-control"  name="assignment_due" id="assignment_due">
+                                           <input type="datetime-local" class="form-control"  name="assignment_due" id="assignment_due">
                                       </div>
                                   </div>
                               </div>
@@ -332,7 +360,7 @@ if ($login_level == 1) {
                          
                         </div>
                         <div class="modal-footer">
-                            <input type="submit" class="btn btn-link waves-effect" name="submit_createAssignment" value="Post">
+                            <input type="submit" class="btn btn-link waves-effect" name="submit_createAssignment" value="Post" id="assign_action">
                             <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
                         </div>
                         </form>
@@ -393,7 +421,7 @@ if ($login_level == 1) {
              
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-link waves-effect" name="submit_createMaterial" value="Post">
+                <input type="submit" class="btn btn-link waves-effect" name="submit_createMaterial" value="Submit">
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
             </div>
             </form>
@@ -409,7 +437,7 @@ if ($login_level == 1) {
                 <h4 class="modal-title" id="defaultModalLabel">Create Question</h4>
             </div>
             <form action="data-action.php" method="POST" id="topic_form">
-            <div class="modal-body">
+            <div class="modal-body ">
               
               <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="createQuestion">
               <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
@@ -425,6 +453,26 @@ if ($login_level == 1) {
         </div>
     </div>
 </div>  
+<!-- View Assingment In Classroom -->
+<div class="modal fade" id="ViewAssignmentInClass" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-green">
+                <h4 class="modal-title" id="defaultModalLabel">View Assignment</h4>
+            </div>
+            <form action="data-action.php" method="POST" id="topic_form">
+            <div class="modal-body assign_body">
+              
+             
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>  
+
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script type="text/javascript">
 
@@ -570,9 +618,9 @@ if ($login_level == 1) {
                    $('#class_Name').val(data.class_Name);
                    $('#class_Description').val(data.class_Description);
                    $('#class_color').val(data.class_color).change();
-                   document.getElementById("operation").setAttribute('name', 'submit_editclass');
                    $('#operation').text("Update");
-                   $('#operation').val("submit_editclass");
+                   document.getElementById("operation").setAttribute('name', 'submit_upclass');
+                   $('#operation').val("submit_upclass");
                    $('.modal-title').text("Edit Classroom Info");
                    $('#class_ID').val(class_ID);
               }
@@ -633,7 +681,87 @@ if ($login_level == 1) {
         //   var Duedate = $('#classassign_duedate').val();
 
         // }
+    
+  $(document).on('click', '.add_assign', function () {
+    $('.modal-title').text('Create Assignment');
+        document.getElementById("assign_action").setAttribute('name', 'submit_createAssignment');
+
+        $('#classtopic').val('');
+        $('#assignment_title').val('');
+        $('#assignment_descr').val('');
+        $('#assignment_points').val('');
+        $('#assignment_due').val('');
+  });
+
   
+  function  assignment_view($var){
+    var assignment_ID = $var;
+     $('#ViewAssignmentInClass').modal('show');
+
+     $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_viewassignment:assignment_ID},
+              dataType:"html",
+              success:function(data)
+              {
+                $('.modal-body.assign_body').html(data);
+              }
+            });
+     
+  }
+      function assignment_edit($var) {
+        var assignment_ID = $var;
+        $('#CreateAssignmentInClass').modal('show');
+        $('.modal-title').text('Edit Assignment');
+        document.getElementById("assign_action").setAttribute('name', 'submit_edit_assignment');
+        //      if(confirm("Are you sure you want to edit this assignment?"))
+        // {
+           $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_updateassignment:assignment_ID},
+              dataType:"json",
+              success:function(data)
+              {
+                $('#classtopic').val(data.classTopic_ID).change();
+                $('#assignment_title').val(data.classassignment_Title);
+                $('#assignment_descr').val(data.classassignment_Instruction);
+                $('#assignment_points').val(data.classassignment_Points);
+                $('#assignment_due').val(data.classassignment_Duedate);
+              }
+            });
+        //    location.reload();
+        // }
+        // else
+        // {
+        //   return false; 
+        // }
+
+        }
+        function assignment_delete($var) {
+        var assignment_ID = $var;
+             if(confirm("Are you sure you want to delete this assignment?"))
+        {
+           $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_deleteassignment:assignment_ID},
+              dataType:"html",
+              success:function(data)
+              {
+                alert(data);
+              }
+            });
+           location.reload();
+          
+        }
+        else
+        {
+          return false; 
+        }
+
+        }
    
  </script>
 </html>

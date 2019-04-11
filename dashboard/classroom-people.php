@@ -22,9 +22,9 @@ if (isset($_REQUEST['classID'])) {
 	$req_classID = $_REQUEST['classID'];
 
 	$query = mysqli_query($conn,"SELECT rid.*,rs.suffix,ua.user_img FROM `class_room` `clr`
-INNER JOIN user_accounts ua ON ua.user_ID = clr.user_ID
-INNER JOIN record_instructor_detail rid ON ua.user_Name = rid.rid_EmpID
-INNER JOIN ref_suffixname rs ON rid.suffix_ID = rs.suffix_ID
+LEFT JOIN user_accounts ua ON ua.user_ID = clr.user_ID
+LEFT JOIN record_instructor_detail rid ON ua.user_Name = rid.rid_EmpID
+LEFT JOIN ref_suffixname rs ON rid.suffix_ID = rs.suffix_ID
 WHERE `class_ID` = $req_classID");
                
                  
@@ -34,7 +34,7 @@ WHERE `class_ID` = $req_classID");
        while($classroom = mysqli_fetch_assoc($query)) {
        		
        		if (!empty($row['user_img'])) {
-			 $rid_img = 'data:image/jpeg;base64,'.base64_encode($row['user_img']);
+			 $rid_img = 'data:image/jpeg;base64,'.base64_encode($classroom['user_img']);
 			}
 			else{
 			  $rid_img = "../assets/images/user.png";
@@ -79,11 +79,11 @@ WHERE `class_ID` = $req_classID");
 
        while($classroom = mysqli_fetch_assoc($queryx)) {
 
-       	    if (!empty($row['user_img'])) {
-			 $rsd_img = 'data:image/jpeg;base64,'.base64_encode($row['user_img']);
+       	    if (!empty($classroom['user_img'])) {
+			 $rsxd_img = 'data:image/jpeg;base64,'.base64_encode($classroom['user_img']);
 			}
 			else{
-			  $rsd_img = "../assets/images/user.png";
+			  $rsxd_img = "../assets/images/user.png";
 			}
             $classStudent_ID = $classroom['classStudent_ID'];
             $rsd_user_ID = $classroom['user_ID'];
@@ -97,7 +97,7 @@ WHERE `class_ID` = $req_classID");
 		<tr>
 			<td>
 				<div>
-					<span><img class="img" aria-hidden="true" src="<?php echo $rsd_img?>" width="32" height="32"></span>
+					<span><img class="img" aria-hidden="true" src="<?php echo $rsxd_img?>" width="32" height="32"></span>
 					
 					
 					<span><?php echo $student_name?></span>

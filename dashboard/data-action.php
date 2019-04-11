@@ -30,7 +30,7 @@ if (isset($_POST['submit_editclass'])) {
 	
 	
 	$output = array();
-	
+	 
 	$sql = "SELECT * FROM `class_room`
 		WHERE class_ID = '".$class_ID ."' 
 		LIMIT 1";
@@ -52,6 +52,34 @@ if (isset($_POST['submit_editclass'])) {
 	
 
 	echo json_encode($output);
+}
+
+if (isset($_POST['submit_upclass'])) {
+
+	$class_ID = $_POST["class_ID"];
+	$class_Name = $_POST["class_Name"];
+	$class_Description = $_POST["class_Description"];
+	$class_color = $_POST["class_color"];
+	
+	$sql = "UPDATE `class_room` 
+	SET 
+	`class_Name` = '$class_Name' ,
+	`class_Description` = '$class_Description' ,
+	`class_Color` = '$class_color'
+	WHERE `class_room`.`class_ID` = $class_ID;";
+	if ($query = mysqli_query($conn, $sql)) {
+	
+		 echo "<script>alert('Success');
+											window.location='classroom';
+										</script>";
+	}
+	else{
+
+		echo "<script>alert('Error: ".$sql.mysqli_error($conn)."');
+											window.location='classroom';
+										</script>";
+	}
+	
 }
 if (isset($_POST['submit_createclass'])) {
 
@@ -202,6 +230,8 @@ if (isset($_POST['submit_createTopic'])) {
 										</script>";
 }
 if (isset($_POST['submit_createAssignment'])) {
+	
+	$classtopic = $_POST["classtopic"];
 	$assignment_title = $_POST["assignment_title"];
 	$assignment_descr = $_POST["assignment_descr"];
 	$assignment_points = $_POST["assignment_points"];
@@ -209,7 +239,7 @@ if (isset($_POST['submit_createAssignment'])) {
 	$name = $_POST["name"];
 	$code = $_POST["code"];
 	$class_ID = $_POST["class_ID"];
-	$sql = "INSERT INTO `class_assignment` (`classassignment_ID`, `classTopic_ID`, `class_ID`, `classassignment_Title`, `classassignment_Instruction`, `classassignment_Points`, `classassignment_Duedate`) VALUES (NULL, NULL, '$class_ID', '$assignment_title', '$assignment_descr', $assignment_points, '$assignment_due');";
+	$sql = "INSERT INTO `class_assignment` (`classassignment_ID`, `classTopic_ID`, `class_ID`, `classassignment_Title`, `classassignment_Instruction`, `classassignment_Points`, `classassignment_Duedate`) VALUES (NULL, '$classtopic', '$class_ID', '$assignment_title', '$assignment_descr', $assignment_points, '$assignment_due');";
 	if (mysqli_query($conn, $sql)) {
 				echo "<script>alert('Successfully Post');
 											window.location='classroom?name=$name&code=$code&classID=$class_ID';
@@ -243,4 +273,89 @@ if (isset($_POST['submit_createQuestion'])) {
 										</script>";
 
 	}
+
+
+	if (isset($_POST["submit_viewassignment"])) {
+		$assignment_ID = $_POST["submit_viewassignment"];
+	
+		$sql = "SELECT * FROM `class_assignment`
+		WHERE classassignment_ID = '".$assignment_ID ."' 
+		LIMIT 1";
+	 	if ($query = mysqli_query($conn, $sql)) {
+
+			while ($row = mysqli_fetch_assoc($query)) {
+				$classTopic_ID = $row["classTopic_ID"];
+				$classassignment_Title = $row["classassignment_Title"];
+				$classassignment_Instruction = $row["classassignment_Instruction"];
+				$classassignment_Points = $row["classassignment_Points"];
+				$input = $row["classassignment_Duedate"]; 
+				$d = new DateTime($input);
+				// Output the microseconds.
+				 $d->format('u'); // 012345
+				// Output the date with microseconds.
+				$classassignment_Duedate =  $d->format('Y-m-d\TH:i:s'); 
+			}
+		}
+		?>
+		<h4><?php echo $classassignment_Title?></h4>
+		<hr>
+		<b>Instruction:</b><br>
+		<p>
+			<?php echo $classassignment_Instruction?>
+		</p><br>
+		<b>Points:</b><?php echo $classassignment_Points?><br>
+		<b>Last Submition Date:</b><?php echo strftime("%b %e,%a %Y  (%I:%M %p)", strtotime($classassignment_Duedate))?>
+		<?php
+	}
+
+	if (isset($_POST["submit_deleteassignment"])) {
+		$assignment_ID = $_POST["submit_deleteassignment"];
+		$sql = "DELETE FROM `class_assignment` WHERE `class_assignment`.`classassignment_ID` = $assignment_ID";
+		if (mysqli_query($conn, $sql)) {
+
+		echo "Data Delete";
+		}
+		else{
+
+		echo "Error";
+		}
+	}
+
+	if (isset($_POST['submit_updateassignment'])) {
+	$assignment_ID = $_POST['submit_updateassignment'];
+	
+	
+	$output = array();
+	 
+	$sql = "SELECT * FROM `class_assignment`
+		WHERE classassignment_ID = '".$assignment_ID ."' 
+		LIMIT 1";
+ 	if ($query = mysqli_query($conn, $sql)) {
+
+		while ($row = mysqli_fetch_assoc($query)) {
+			$output["classTopic_ID"] = $row["classTopic_ID"];
+			$output["classassignment_Title"] = $row["classassignment_Title"];
+			$output["classassignment_Instruction"] = $row["classassignment_Instruction"];
+			$output["classassignment_Points"] = $row["classassignment_Points"];
+			$input = $row["classassignment_Duedate"]; 
+			$d = new DateTime($input);
+			// Output the microseconds.
+			 $d->format('u'); // 012345
+			// Output the date with microseconds.
+			$output["classassignment_Duedate"] =  $d->format('Y-m-d\TH:i:s'); 
+
+		}
+ 		
+	}
+	else{
+		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
+	
+	
+		
+	
+
+	echo json_encode($output);
+}
+
 ?>

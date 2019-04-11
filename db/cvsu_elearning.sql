@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2019 at 02:52 AM
+-- Generation Time: Apr 11, 2019 at 02:01 AM
 -- Server version: 10.1.26-MariaDB
 -- PHP Version: 7.1.8
 
@@ -35,16 +35,18 @@ CREATE TABLE `class_assignment` (
   `classassignment_Title` varchar(85) DEFAULT NULL,
   `classassignment_Instruction` text,
   `classassignment_Points` mediumint(9) DEFAULT NULL,
-  `classassignment_Duedate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `classassignment_Duedate` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `classassignment_Post` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `class_assignment`
 --
 
-INSERT INTO `class_assignment` (`classassignment_ID`, `classTopic_ID`, `class_ID`, `classassignment_Title`, `classassignment_Instruction`, `classassignment_Points`, `classassignment_Duedate`) VALUES
-(1, 4, 23, 'asdasd', 'asd', 100, '2019-04-04 21:35:24'),
-(2, 0, 23, 'Assignment', 'asd', 100, '2019-04-04 22:14:27');
+INSERT INTO `class_assignment` (`classassignment_ID`, `classTopic_ID`, `class_ID`, `classassignment_Title`, `classassignment_Instruction`, `classassignment_Points`, `classassignment_Duedate`, `classassignment_Post`) VALUES
+(1, 4, 23, 'asdasd', 'asd', 100, '2019-04-04 21:35:24', '2019-04-10 23:33:53'),
+(3, 5, 23, 'asda', '21', 30, '2019-04-08 16:00:00', '2019-04-10 23:33:53'),
+(7, 0, 23, 'asdasdasd', 'asdasd', 2121, '2019-04-13 10:00:00', '2019-04-10 23:39:39');
 
 -- --------------------------------------------------------
 
@@ -118,8 +120,7 @@ INSERT INTO `class_room` (`class_ID`, `user_ID`, `class_Code`, `class_Name`, `cl
 (19, 4, '20190350', '13123123', 'asdasdasd', 8, 0),
 (20, 4, '20190351', 'Programming 32', 'asdwqeyutqweqwe', 5, 0),
 (21, 4, '20190352', 'asdasd', '23123', 7, 0),
-(23, 6, '20190354', 'Javascript', 'java', 1, 1),
-(24, 6, '20190355', 'New Class', 'classroom', 7, 1),
+(23, 6, '20190354', 'Javascript', 'java32', 1, 1),
 (25, 6, '20190429', 'Programming 32', 'asdasda', 8, 1);
 
 -- --------------------------------------------------------
@@ -163,7 +164,8 @@ CREATE TABLE `class_topic` (
 --
 
 INSERT INTO `class_topic` (`classTopic_ID`, `class_ID`, `classTopic_Name`) VALUES
-(4, 23, 'java');
+(4, 23, 'java'),
+(5, 23, 'C++');
 
 -- --------------------------------------------------------
 
@@ -209,10 +211,10 @@ CREATE TABLE `record_instructor_detail` (
 --
 
 INSERT INTO `record_instructor_detail` (`rid_ID`, `rid_EmpID`, `rid_FName`, `rid_MName`, `rid_LName`, `suffix_ID`, `rid_Sex`) VALUES
-(1, '30203012', 'Instructor 1', 'Instructor 1', 'Instructor 1', 1, 1),
-(3, '30203013', 'Instructor 2', 'Instructor 2', 'Instructor 2', 1, 2),
-(4, 'asd', 'asd', 'asd', 'asd', 2, 1),
-(5, '302030132', 'xxxx', 'xxxx', 'asdkjhjkh', 1, 1);
+(1, '30203012', 'Constancia', 'L', 'Casil', 1, 1),
+(3, '30203013', 'Junior', 'C', 'Paor', 1, 2),
+(4, '30203014', 'Heimer', 'D', 'Constantine', 2, 1),
+(5, '302030132', 'Tris', 'M', 'Ace', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -236,10 +238,10 @@ CREATE TABLE `record_student_details` (
 --
 
 INSERT INTO `record_student_details` (`rsd_ID`, `user_ID`, `rsd_StudNum`, `rsd_FName`, `rsd_MName`, `rsd_LName`, `suffix_ID`, `rsd_Sex`) VALUES
-(1, 2, '201310656', 'Student', 'Student', 'Student', 1, 1),
-(2, 3, '201310657', 'Student', 'Student', 'Student', 1, 1),
-(5, NULL, '20131065621', 'asjdghkj', 'kjhasd', 'asd', 1, 1),
-(7, NULL, '201310656555', 'neww', 'new', 'new', 2, 1);
+(1, 2, '201310656', 'Darwin', 'N', 'Villanueva', 1, 1),
+(2, 3, '201310657', 'Hero', 'M', 'Paor', 1, 1),
+(5, NULL, '20131065621', 'Hawk', 'W', 'Demiurge', 1, 1),
+(7, NULL, '201310656555', 'Shin', 'C', 'Zhen', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -540,7 +542,7 @@ ALTER TABLE `user_notif_type`
 -- AUTO_INCREMENT for table `class_assignment`
 --
 ALTER TABLE `class_assignment`
-  MODIFY `classassignment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `classassignment_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `class_comment`
 --
@@ -565,7 +567,7 @@ ALTER TABLE `class_student`
 -- AUTO_INCREMENT for table `class_topic`
 --
 ALTER TABLE `class_topic`
-  MODIFY `classTopic_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `classTopic_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
 -- AUTO_INCREMENT for table `record_admin_detail`
 --
@@ -580,7 +582,7 @@ ALTER TABLE `record_instructor_detail`
 -- AUTO_INCREMENT for table `record_student_details`
 --
 ALTER TABLE `record_student_details`
-  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `rsd_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `ref_suffixname`
 --
@@ -590,7 +592,7 @@ ALTER TABLE `ref_suffixname`
 -- AUTO_INCREMENT for table `user_accounts`
 --
 ALTER TABLE `user_accounts`
-  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `user_ID` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `user_level`
 --
