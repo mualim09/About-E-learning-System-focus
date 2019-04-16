@@ -91,7 +91,7 @@ function side_query(){
         
     <?php endif ?>
     >
-         <a href="query-simulator">
+         <a href="query-simulator-offline">
             <i class="material-icons">save</i>
             <span>Query Simulator</span>
         </a>
