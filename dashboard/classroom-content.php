@@ -60,6 +60,17 @@
                         $class_status = $classroom['class_status'];
                         $sql = "SELECT * FROM `class_student` WHERE class_ID = $class_ID ";
                         $count_s = mysqli_query($conn,$sql);
+                        $csql = "SELECT class_Password FROM `class_room` WHERE class_ID = $class_ID ";
+                        $cpaszs = mysqli_query($conn,$csql);
+                        while($cpaszsc = mysqli_fetch_assoc($cpaszs)) {
+                            if(isset($cpaszsc["class_Password"])){
+                                $spassz = "1";
+                            }
+                            else{
+                                 $spassz = "0";
+                            }
+
+                        }
                         ?>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
                         <div class="card">
@@ -86,8 +97,23 @@
                                                  <li><a href="javascript:void(0);"  onclick="enableClassroom(<?php echo $class_ID;?>)">Enable</a></li>
                                                 <?php
                                             }
+                                            
 
                                             ?>
+                                         <!--    <?php 
+                                            if ($spassz == "1"){
+                                                ?>
+                                                 <li><a href="javascript:void(0);"  onclick="removeclass_password(<?php echo $class_ID;?>)">Remove Password</a></li>
+                                                <?php
+                                            }
+                                            else{
+                                                ?>
+                                                 <li><a href="javascript:void(0);"  onclick="createclass_password(<?php echo $class_ID;?>)">Set Password</a></li>
+                                                <?php
+                                            }
+
+                                            ?> -->
+                                           
                                             <li><a href="javascript:void(0);"  onclick="deleteClassroom(<?php echo $class_ID;?>)">Delete</a></li>
                                         </ul>
                                     </li>

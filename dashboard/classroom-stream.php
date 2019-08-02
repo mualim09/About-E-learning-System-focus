@@ -38,13 +38,13 @@ $sql = 'SELECT (IF(ua.level_ID = 1,
               $classStream_Title = $classStream_postName;
           }
           else{
-              $classStream_Title = $classStream_postName." Posted By ";
+              $classStream_Title = "<strong>".$classStream_postName."</strong>  Posted By ";
           }
        ?>
 <div class="panel panel-info">
   <div class="panel-heading">
     <?php 
-    echo $classStream_Title.$classStream_Name."<br>";
+    echo $classStream_Title." ".$classStream_Name."<br>";
     echo strftime("%b %e,%a %Y  at (%I:%M %p)", strtotime($classStream_Date));
     
     ?>

@@ -112,12 +112,24 @@ if ($login_level == 1) {
             <div class="modal-body">
                    <div class="row clearfix">
                       <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="pass">Classcode</label>
+                          <label for="ccode">Classcode</label>
                       </div>
                       <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
                           <div class="form-group">
                               <div class="form-line">
                                   <input type="text" class="form-control" id="joinclasscode" name="joinclasscode" placeholder="Classroom Code">
+                              </div>
+                          </div>
+                      </div>
+                   </div>
+                  <br> <div class="row clearfix">
+                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                          <label for="cpass">Password</label>
+                      </div>
+                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                          <div class="form-group">
+                              <div class="form-line">
+                                  <input type="password" class="form-control" id="joinclass_pass" name="joinclass_pass" placeholder="Classroom Password">
                               </div>
                           </div>
                       </div>
@@ -147,7 +159,20 @@ if ($login_level == 1) {
                         <form action="data-action.php" method="POST">
                         <div class="modal-body">
                             <!-- CKEditor -->
-                           <textarea id="ckeditor" name="newpost_content">
+                          <div class="row clearfix">
+                              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                                  <label for="class_Name">Post Title</label>
+                              </div>
+                              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                                  <div class="form-group">
+                                      <div class="form-line">
+                                          <input type="text" class="form-control" id="class_pTitle" name="class_pTitle" placeholder="Title" required>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                          <br>
+                          <textarea id="ckeditor" name="newpost_content">
                           </textarea>
                           <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
                           <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
@@ -183,6 +208,7 @@ if ($login_level == 1) {
                       </div>
                   </div>
                   <br>
+
                    <div class="row clearfix">
                       <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
                           <label for="class_Description">Description</label>
@@ -217,11 +243,71 @@ if ($login_level == 1) {
                               </div>
                           </div>
                       </div>
-                  </div> 
+                  </div>
+                  <br> 
+                  <div class="row clearfix">
+                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                          <label for="class_Passz">Password</label>
+
+                      </div>
+                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                          <div class="form-group">
+                              <div class="form-line">
+                                  <input type="password" class="form-control" id="class_Passz" name="class_Passz" placeholder="Classroom Password">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
             </div>
             <div class="modal-footer">
                <input type="hidden" name="class_ID" id="class_ID">
                  <button type="submit" class="btn btn-link waves-effect"  name="submit_createclass" value="submit_createclass" id="operation">Create</button>
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>         
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Create Classroom -->
+<div class="modal fade" id="CreateClass_Pass" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="defaultModalLabel">Create Class Password</h4>
+            </div>
+            <form class="form-horizontal" action="#" method="POST"  enctype="multipart/form-data" id="subpassword">
+            <div class="modal-body">
+                   <div class="row clearfix">
+                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                          <label for="class_Password">Password</label>
+                      </div>
+                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                          <div class="form-group">
+                              <div class="form-line">
+                                  <input type="password" class="form-control" id="class_Password" name="class_Password">
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+                   <div class="row clearfix">
+                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                          <label for="class_CPassword">Confirm Password</label>
+                      </div>
+                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                          <div class="form-group">
+                              <div class="form-line">
+                                  <input type="password" class="form-control" id="class_CPassword" name="class_CPassword" >
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <br>
+            </div>
+            <div class="modal-footer">
+                 <input type="hidden"  id="passc_ID" name="passc_ID" value="">
+                 <button type="submit" class="btn btn-link waves-effect"  name="submit_classPass" value="submit_classPass" id="submit_classPass">Create</button>
                 <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
             </div>         
             </form>
@@ -372,9 +458,9 @@ if ($login_level == 1) {
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-green">
-                <h4 class="modal-title" id="defaultModalLabel">Create Material</h4>
+                <h4 class="modal-title cm" id="defaultModalLabel">Create Material</h4>
             </div>
-            <form action="data-action.php" method="POST" id="topic_form">
+            <form action="data-action.php" method="POST" id="topic_form"  enctype="multipart/form-data">
             <div class="modal-body">
               <div class="row clearfix">
               <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
@@ -472,6 +558,63 @@ if ($login_level == 1) {
         </div>
     </div>
 </div>  
+<!-- View Assingment In Classroom -->
+
+
+<div class="modal fade" id="classMaterials" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-green">
+                <h4 class="modal-title" id="defaultModalLabel">Create Topic</h4>
+            </div>
+            <form action="data-action.php" method="POST" id="topic_form">
+            <div class="modal-body">
+              <div class="row clearfix">
+              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
+                  <label for="class_color">Title</label>
+              </div>
+              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
+                      <div class="form-group">
+                          <div class="form-line">
+                               <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="create_topic">
+                          </div>
+                      </div>
+                  </div>
+              </div> 
+              
+              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
+              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
+              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
+             
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-link waves-effect" name="submit_createTopic" value="Post">
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div> 
+
+
+<div class="modal fade" id="class_Materials" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-green">
+                <h4 class="modal-title" id="defaultModalLabel">Class Materials</h4>
+            </div>
+          
+            <div class="modal-body cmaterials">
+             
+            </div>
+            <div class="modal-footer">
+               
+                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div> 
+
 
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
 <script type="text/javascript">
@@ -598,7 +741,7 @@ if ($login_level == 1) {
             document.getElementById("operation").setAttribute('name', 'submit_createclass');
             $('#operation').text("Create");
             $('#operation').val("submit_createclass");
-            $('.modal-title').text("Create Class");
+            // $('.modal-title').text("Create Class");
            document.getElementById('class_form').reset();
           
       });
@@ -618,10 +761,11 @@ if ($login_level == 1) {
                    $('#class_Name').val(data.class_Name);
                    $('#class_Description').val(data.class_Description);
                    $('#class_color').val(data.class_color).change();
+                   $('#class_Passz').val(data.class_Password);
                    $('#operation').text("Update");
                    document.getElementById("operation").setAttribute('name', 'submit_upclass');
                    $('#operation').val("submit_upclass");
-                   $('.modal-title').text("Edit Classroom Info");
+                   // $('.modal-title').text("Edit Classroom Info");
                    $('#class_ID').val(class_ID);
               }
             });
@@ -683,7 +827,7 @@ if ($login_level == 1) {
         // }
     
   $(document).on('click', '.add_assign', function () {
-    $('.modal-title').text('Create Assignment');
+    // $('.modal-title').text('Create Assignment');
         document.getElementById("assign_action").setAttribute('name', 'submit_createAssignment');
 
         $('#classtopic').val('');
@@ -713,7 +857,7 @@ if ($login_level == 1) {
       function assignment_edit($var) {
         var assignment_ID = $var;
         $('#CreateAssignmentInClass').modal('show');
-        $('.modal-title').text('Edit Assignment');
+        // $('.modal-title').text('Edit Assignment');
         document.getElementById("assign_action").setAttribute('name', 'submit_edit_assignment');
         //      if(confirm("Are you sure you want to edit this assignment?"))
         // {
@@ -762,6 +906,78 @@ if ($login_level == 1) {
         }
 
         }
-   
+        function createclass_password($var) {
+        var classroom_ID = $var;
+        $('#CreateClass_Pass').modal('show');
+        $('#passc_ID').val(classroom_ID);
+        
+        }
+        $(document).on('submit', '#subpassword', function(event){
+         event.preventDefault();
+         
+          var classroom_ID = $('#passc_ID').val();
+          var class_Password = $('#class_Password').val();
+          var class_CPassword = $('#class_CPassword').val();
+          if (class_Password != class_CPassword){
+            alert("Password Not Match");
+          }
+          else{
+            $.ajax({
+             url:"data-action.php",
+             type:"POST",
+             data:{submit_classPass:classroom_ID,class_Password:class_Password,class_CPassword:class_CPassword},
+             dataType:"json",
+             success:function(data)
+             {
+              alert(data.msg);
+              location.reload();
+             }
+           });
+
+          }
+
+         
+         
+        });
+         function removeclass_password($var) {
+        var class_ID = $var;
+        if(confirm("Are you sure you want to remove this classroom password?"))
+        {
+           $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{submit_deleteclasspass:class_ID},
+              dataType:"json",
+              success:function(data)
+              {
+                alert(data.msg);
+                location.reload();
+              }
+            });
+        }
+        else
+        {
+          return false; 
+        }
+
+        }
+        function materials_m() {
+        $('#class_Materials').modal('show');
+        
+        $.ajax({
+              url:"data-action.php",
+              type:"POST",
+              data:{view_materials:<?php echo $_REQUEST["code"]?>},
+              dataType:"html",
+              success:function(data)
+              {
+                $('.cmaterials').html(data);
+              }
+            });
+
+        }
+        
+        // topic_edit
+        // topic_delete
  </script>
 </html>

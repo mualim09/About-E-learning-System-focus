@@ -8,7 +8,8 @@
 
   if ($login_level == 2) {
 ?>
-  <div class="dropdown">
+<div style="width:150px;">
+    <div class="dropdown" >
     <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Create
   <span class="caret"></span></button>
   <ul class="dropdown-menu" style=" margin-top: 1px !important; ">
@@ -19,11 +20,17 @@
    <!--  <li><a href="#"  href="javascript:void(0);" class=" waves-effect waves-block">Reuse post</a></li> -->
     <li class="divider"></li>
     <li><a href="#"  href="javascript:void(0);" class=" waves-effect waves-block add_topic" data-toggle="modal" data-target="#CreateTopicInClass">Topic</a></li>
+    
   </ul>
+</div>
 </div>
 <?php
   }
   ?>
+
+<?php if ($login_level == 2) {echo "<br>";} else{echo "<br><br>";}?>
+
+<a  href="javascript:void(0);" class="btn btn-info pull-right " onclick="materials_m()" style="margin-top: -50px; z-index: 1000;">Class Material</a>
 <?php 
 $req_classID = $_REQUEST['classID'];
 

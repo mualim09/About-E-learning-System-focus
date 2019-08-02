@@ -39,6 +39,7 @@ if (isset($_POST['submit_editclass'])) {
 		while ($row = mysqli_fetch_assoc($query)) {
 			$output["class_Name"] = $row["class_Name"];
 			$output["class_Description"] = $row["class_Description"];
+			$output["class_Password"] = $row["class_Password"];
 			$output["class_color"] = $row["class_Color"];
 		}
  		
@@ -60,11 +61,13 @@ if (isset($_POST['submit_upclass'])) {
 	$class_Name = $_POST["class_Name"];
 	$class_Description = $_POST["class_Description"];
 	$class_color = $_POST["class_color"];
+	$class_Pass  = $_POST['class_Passz'];
 	
 	$sql = "UPDATE `class_room` 
 	SET 
 	`class_Name` = '$class_Name' ,
 	`class_Description` = '$class_Description' ,
+	`class_Password` = '$class_Pass' ,
 	`class_Color` = '$class_color'
 	WHERE `class_room`.`class_ID` = $class_ID;";
 	if ($query = mysqli_query($conn, $sql)) {
@@ -86,17 +89,18 @@ if (isset($_POST['submit_createclass'])) {
 		$class_Name = $_POST['class_Name'];
 		$class_Description  = $_POST['class_Description'];
 		$class_color  = $_POST['class_color'];
+		$class_Pass  = $_POST['class_Passz'];
 		
 
 		
-		$sql = "INSERT INTO `class_room` (`class_ID`, `user_ID`, `class_Code`, `class_Name`, `class_Description`, `class_Color`) VALUES (NULL, '$user_id', NULL, '$class_Name', '$class_Description', '$class_color');";
+		$sql = "INSERT INTO `class_room` (`class_ID`, `user_ID`, `class_Code`, `class_Name`, `class_Description`, `class_Color`,`class_Password`) VALUES (NULL, '$user_id', NULL, '$class_Name', '$class_Description', '$class_color','$class_Pass');";
 
 		if (mysqli_query($conn, $sql)) {
 			$y = date("Y");
 			$m = date("m");
 			$d = date("d");
 		    $last_id = mysqli_insert_id($conn);
-		echo    $classcode = $y.$m.$d+$last_id;
+		    $classcode = $y.$m.$d+$last_id;
 		    $sql = "UPDATE `class_room` SET `class_Code` = '$classcode' WHERE `class_room`.`class_ID` = $last_id;";
 		    mysqli_query($conn, $sql);
 		    echo "<script>alert('Success');
@@ -141,38 +145,55 @@ if (isset($_POST['submit_enableclass'])) {
 if (isset($_POST['submit_joinclass'])) {
 
 		$joinclasscode =  $_POST['joinclasscode'];
-		$sql = "SELECT class_ID FROM `class_room` WHERE class_Code = '$joinclasscode'";
+		$joinclass_pass =  $_POST['joinclass_pass'];
+
+		$sql = "SELECT class_ID,class_Password FROM `class_room` WHERE class_Code = '$joinclasscode' ";
 		if ($query = mysqli_query($conn, $sql)) {
-			 while($classroom = mysqli_fetch_assoc($query)) {
-			echo 	$class_ID = $classroom['class_ID'];
+			while($classroom = mysqli_fetch_assoc($query)) {
+				 	$class_ID = $classroom['class_ID'];
+				 	$class_Password = $classroom['class_Password'];
 			}
-			$sql = "SELECT * FROM `class_student` WHERE class_ID = '$class_ID' AND user_ID = '$user_id'";
-			$query = mysqli_query($conn, $sql);
-			// IF STUDENT ALREADY IN CLASS CANNOT BE ADD
-			if (mysqli_num_rows($query) > 0) {
-				echo "<script>alert('Already Join In Classroom ');
+			if($class_Password != $joinclass_pass)
+			{
+				echo "<script>alert('Password Incorrect');
 												window.location='classroom';
 											</script>";
 			}
-			else{
-				$sql = "INSERT INTO `class_student` (`classStudent_ID`, `user_ID`, `class_ID`) VALUES (NULL, '$user_id', '$class_ID');";
-				if (mysqli_query($conn, $sql)) {
-					echo "<script>alert('Success Fully Join W8 For Approval');
-												window.location='classroom';
-											</script>";
+			else
+				{
+				$sql = "SELECT * FROM `class_student` WHERE class_ID = '$class_ID' AND user_ID = '$user_id'";
+				$query = mysqli_query($conn, $sql);
+				// IF STUDENT ALREADY IN CLASS CANNOT BE ADD
+				if (mysqli_num_rows($query) > 0) {
+					echo "<script>alert('Already Join In Classroom ');
+													window.location='classroom';
+												</script>";
 				}
 				else{
-					echo "<script>alert('Classroom Join Error');
-												window.location='classroom';
-											</script>";
-				}
+					$sql = "INSERT INTO `class_student` (`classStudent_ID`, `user_ID`, `class_ID`) VALUES (NULL, '$user_id', '$class_ID');";
+					if (mysqli_query($conn, $sql)) {
+						echo "<script>alert('Success Fully Join W8 For Approval');
+													window.location='classroom';
+												</script>";
+					}
+					else{
+						echo "<script>alert('Classroom Join Error');
+													window.location='classroom';
+												</script>";
+					}
 
+				}
 			}
+
+			
+			
+
+			
 
 				
 		}
 		else{
-			echo "<script>alert('Classroom Code Error');
+			echo "<script>alert('Classroom Code or Password Error');
 											window.location='classroom';
 										</script>";
 		}
@@ -186,8 +207,10 @@ if (isset($_POST['submit_postinClass'])) {
 	$newpost_content = $_POST["newpost_content"];
 	$name = $_POST["name"];
 	$code = $_POST["code"];
+	$class_pTitle = $_POST["class_pTitle"];
+	
 	$class_ID = $_POST["class_ID"];
-	$sql = "INSERT INTO `class_post` (`classPost_ID`, `user_ID`, `class_ID`, `classTopic_ID`, `classPost_Name`, `classPost_Description`, `classPost_Date`) VALUES (NULL, '$user_id', '$class_ID', NULL, '', '$newpost_content', CURRENT_TIMESTAMP);";
+	$sql = "INSERT INTO `class_post` (`classPost_ID`, `user_ID`, `class_ID`, `classTopic_ID`, `classPost_Name`, `classPost_Description`, `classPost_Date`) VALUES (NULL, '$user_id', '$class_ID', NULL, '$class_pTitle', '$newpost_content', CURRENT_TIMESTAMP);";
 	mysqli_query($conn, $sql);
 	echo "<script>alert('Successfully Post');
 											window.location='classroom?name=$name&code=$code&classID=$class_ID';
@@ -229,6 +252,115 @@ if (isset($_POST['submit_createTopic'])) {
 											window.location='classroom?name=$name&code=$code&classID=$class_ID';
 										</script>";
 }
+
+if (isset($_POST['submit_createMaterial'])) {
+	function file_newname($path, $filename){
+		    if ($pos = strrpos($filename, '.')) {
+		           $name = substr($filename, 0, $pos);
+		           $ext = substr($filename, $pos);
+		    } else {
+		           $name = $filename;
+		    }
+
+		    $newpath = $path.'/'.$filename;
+		    $newname = $filename;
+		    $counter = 0;
+		    while (file_exists($newpath)) {
+		           $newname = $name .'_'. $counter . $ext;
+		           $newpath = $path.'/'.$newname;
+		           $counter++;
+		     }
+
+		    return $newname;
+		}
+	$MaterialTitle = $_POST["MaterialTitle"];
+	$MaterialDescr = $_POST["MaterialDescr"];
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+
+	if ($_FILES['MaterialFile']['error'] > 0) {
+		
+		echo "<script>alert('File Required');
+										window.location='classroom?name=$name&code=$code&classID=$class_ID';
+									</script>";
+	} 
+	else {
+		
+		$target_dir = "uploads";
+		$uploadOk = 1;
+		$target_file = basename($_FILES["MaterialFile"]["name"]);
+		
+		$imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+		
+	
+		$filename = file_newname($target_dir,$target_file);
+		// Check file size
+		if ($_FILES["MaterialFile"]["size"] > 50000000) {
+		    echo "Sorry, your file is too large.";
+		    $uploadOk = 0;
+		}
+		// Allow certain file formats
+		if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
+		&& $imageFileType != "gif" && $imageFileType != "zip" && $imageFileType != "rar" && $imageFileType != "docx" && $imageFileType != "doc" && $imageFileType != "pdf" ) {
+		    echo "Sorry, this type of files are allowed.";
+		    $uploadOk = 0;
+		}
+		// Check if $uploadOk is set to 0 by an error
+		if ($uploadOk == 0) {
+		    echo "Sorry, your file was not uploaded.";
+		// if everything is ok, try to upload file
+		} else {
+		    if (move_uploaded_file($_FILES["MaterialFile"]["tmp_name"],$target_dir.'/'.$filename)) {
+		        echo "The file ".basename($_FILES["MaterialFile"]["name"]). " has been uploaded.";
+		    } else {
+		        echo "Sorry, there was an error uploading your file.";
+		       
+		    }
+		}
+		$material_AttchMIME = $_FILES["MaterialFile"]["type"];
+		
+		$material_AttchData = file_get_contents($target_dir.'/'.$filename);
+		$material_AttchData = mysqli_real_escape_string($conn,$material_AttchData);
+		$SQL = "INSERT INTO `class_material` (
+		`material_ID`,
+		 `class_ID`,
+		  `material_Name`,
+		  `material_Descr`,
+		   `material_Filename`,
+		    `material_MIME`,
+		     `material_Data`) 
+		     VALUES (
+		     NULL,
+		      '$class_ID', 
+		      '$MaterialTitle',
+		       '$MaterialDescr',
+		        '$filename',
+		         '$material_AttchMIME',
+		          '$material_AttchData');";
+
+		if (mysqli_query($conn, $SQL)) {
+			echo "<script>alert('Successfully Post ');
+										window.location='classroom?name=$name&code=$code&classID=$class_ID';
+									</script>";
+		}
+	}
+	
+
+	}
+if (isset($_POST['submit_createQuestion'])) {
+
+	$name = $_POST["name"];
+	$code = $_POST["code"];
+	$class_ID = $_POST["class_ID"];
+
+	$SQL = "";
+	echo "<script>alert('Successfully Post');
+											window.location='classroom?name=$name&code=$code&classID=$class_ID';
+										</script>";
+
+	}
+
 if (isset($_POST['submit_createAssignment'])) {
 	
 	$classtopic = $_POST["classtopic"];
@@ -247,34 +379,6 @@ if (isset($_POST['submit_createAssignment'])) {
 	}
 	
 	}
-if (isset($_POST['submit_createMaterial'])) {
-	
-	$MaterialTitle = $_POST["MaterialTitle"];
-	$MaterialDescr = $_POST["MaterialDescr"];
-	$MaterialFile = $_POST["MaterialFile"];
-	$name = $_POST["name"];
-	$code = $_POST["code"];
-	$class_ID = $_POST["class_ID"];
-
-	$SQL = "";
-	echo "<script>alert('Successfully Post');
-											window.location='classroom?name=$name&code=$code&classID=$class_ID';
-										</script>";
-	}
-if (isset($_POST['submit_createQuestion'])) {
-
-	$name = $_POST["name"];
-	$code = $_POST["code"];
-	$class_ID = $_POST["class_ID"];
-
-	$SQL = "";
-	echo "<script>alert('Successfully Post');
-											window.location='classroom?name=$name&code=$code&classID=$class_ID';
-										</script>";
-
-	}
-
-
 	if (isset($_POST["submit_viewassignment"])) {
 		$assignment_ID = $_POST["submit_viewassignment"];
 	
@@ -356,6 +460,85 @@ if (isset($_POST['submit_createQuestion'])) {
 	
 
 	echo json_encode($output);
-}
+	}
+	if(isset($_POST["submit_classPass"])){
+		$output = array();
+		
+		$classroom_ID = $_POST["submit_classPass"];
+		$class_Password = $_POST["class_Password"];
+		$class_CPassword = $_POST["class_CPassword"];
+
+		$sql ="UPDATE `class_room` SET `class_Password` = '$class_Password' WHERE `class_room`.`class_ID` = $classroom_ID;";
+
+		if ($query = mysqli_query($conn, $sql)) {
+	 		$output["msg"] = "Successfully Set";
+		}
+		else{
+			$output["msg"] = $sql . "<br>" . mysqli_error($conn);
+		}
+
+		echo json_encode($output);
+	}
+	if(isset($_POST["submit_deleteclasspass"])){
+		$output = array();
+		
+		$classroom_ID = $_POST["submit_deleteclasspass"];
+
+		$sql ="UPDATE `class_room` SET `class_Password` = null WHERE `class_room`.`class_ID` = $classroom_ID;";
+
+		if ($query = mysqli_query($conn, $sql)) {
+	 		$output["msg"] = "Successfully Remove";
+		}
+		else{
+			$output["msg"] = $sql . "<br>" . mysqli_error($conn);
+		}
+
+		echo json_encode($output);
+	}
+	if(isset($_POST["view_materials"])){
+		$class_code = $_POST["view_materials"];
+		$sql = "SELECT * FROM `class_material` cm
+			INNER JOIN class_room cr ON cr.class_ID = cm.class_ID where cr.class_Code = '$class_code'";
+	 	if ($query = mysqli_query($conn, $sql)) {
+	 		echo '<table class="table table-bordered">';
+			while ($row = mysqli_fetch_assoc($query)) {
+				$output["material_Name"] = $row["material_Name"];
+				$output["material_ID"] = $row["material_ID"];
+
+				?>
+				<tr>
+					<th><?php echo $output["material_Name"]?></th>
+					<th>
+						<?php 
+						if (isset($row["material_Data"])){
+							?>
+							<a class="btn btn-primary" href="file-download.php?ccode=<?php echo $class_code?>&id=<?php echo $output["material_ID"]?>" target='_blank' >DOWNLOAD</a>
+							<?php
+				
+						}
+						else{
+							?>
+							<a class="btn btn-primary" href="#" disabled >DOWNLOAD</a>
+							<?php
+						}
+						?>
+					</th>
+				</tr>
+				<?php
+				
+
+			}
+			echo '</table>';
+	 		
+		}
+		else{
+			echo "No File Available";
+		}
+		
+	}
+
+	
+
+	
 
 ?>
