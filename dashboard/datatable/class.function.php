@@ -58,6 +58,24 @@ class DTFunction
             echo $e->getMessage();
         } 
     }
+
+    public function insert_classroom($user_ID,$classroom_course,$classroom_descr,$classroom_password){
+        try
+        { 
+            $sql = "INSERT INTO `class_room` (`class_ID`, `user_ID`, `class_Code`, `class_Name`, `class_Description`, `status_ID`, `class_Password`) VALUES (NULL, '$user_ID', NULL, '$classroom_course', '$classroom_descr', 1, '$classroom_password');";
+            $statement = $this->runQuery($sql);
+            $result = $statement->execute();
+            
+            return $last_id = $this->conn->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+    }
+
+
+    
 }
 
 

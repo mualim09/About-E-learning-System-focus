@@ -40,9 +40,11 @@ foreach($result as $row)
 	
 	if($row["status_ID"] == 1){
 		$span = "<div class='btn btn-sm btn-success' style='min-width:65px;'>".$row["status_Name"]."</div>";
+		$abtn = '<a class="dropdown-item disabled"  id="'.$row["user_ID"].'">Disable</a>';
 	}
 	else{
 		$span = "<div class='btn btn-sm btn-danger' style='min-width:65px;'>".$row["status_Name"]."</div>";
+		$abtn = '<a class="dropdown-item enable"  id="'.$row["user_ID"].'">Enable</a>';
 	}
 
 	$sub_array = array();
@@ -57,10 +59,10 @@ foreach($result as $row)
     Action
   </button>
   <div class="dropdown-menu">
-    <a class="dropdown-item view"  id="'.$row["user_ID"].'">View</a>
-    <a class="dropdown-item edit"  id="'.$row["user_ID"].'">Edit</a>
+    <a class="dropdown-item edit"  id="'.$row["class_ID"].'">Edit</a>
+      '.$abtn.'
      <div class="dropdown-divider"></div>
-    <a class="dropdown-item delete" id="'.$row["user_ID"].'">Delete</a>
+    <a class="dropdown-item delete" id="'.$row["class_ID"].'">Delete</a>
   </div>
 </div>';
 	$data[] = $sub_array;
