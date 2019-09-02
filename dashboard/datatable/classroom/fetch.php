@@ -3,16 +3,18 @@ require_once('../class.function.php');
 $account = new DTFunction();  		 // Create new connection by passing in your configuration array
 
 
+
 $query = '';
 $output = array();
 $query .= "SELECT *";
-$query .= "FROM `user_account` ua
-LEFT JOIN `user_level` `ul` ON `ua`.`lvl_ID` = `ul`.`lvl_ID`";
+$query .= "FROM `class_room` `cr`
+LEFT JOIN `ref_status` `rs` ON `rs`.`status_ID` = `cr`.`status_ID`";
 if(isset($_POST["search"]["value"]))
 {
- $query .= 'WHERE user_ID LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR user_Name LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR lvl_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'WHERE class_ID LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR class_Code LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR class_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR status_Name LIKE "%'.$_POST["search"]["value"].'%" ';
 }
 
 
@@ -22,7 +24,7 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= 'ORDER BY user_ID DESC ';
+	$query .= 'ORDER BY class_ID DESC ';
 }
 if($_POST["length"] != -1)
 {
@@ -36,12 +38,18 @@ $filtered_rows = $statement->rowCount();
 foreach($result as $row)
 {
 	
+	if($row["status_ID"] == 1){
+		$span = "<div class='btn btn-sm btn-success' style='min-width:65px;'>".$row["status_Name"]."</div>";
+	}
+	else{
+		$span = "<div class='btn btn-sm btn-danger' style='min-width:65px;'>".$row["status_Name"]."</div>";
+	}
 
 	$sub_array = array();
-	$sub_array[] = $row["user_ID"];
-	$sub_array[] = $account->check_user_level($row["lvl_ID"]);
-	$sub_array[] = $row["user_Name"];
-	$sub_array[] = $row["user_Registered"];
+	$sub_array[] = $row["class_ID"];
+	$sub_array[] = $row["class_Code"];
+	$sub_array[] = $row["class_Name"];
+	$sub_array[] = $span;
 
 		$sub_array[] = '
 <div class="btn-group">
