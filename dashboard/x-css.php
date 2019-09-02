@@ -5,4 +5,25 @@
     <link rel="stylesheet" href="../assets/alertifyjs/css/alertify.min.css" />
     <!-- include a theme -->
     <link rel="stylesheet" href="../assets/alertifyjs/css/themes/default.min.css" />
+    <style>
+    	.sidebar .nav-link.active {
+		    color: #4caf50 !important;
+		}
+        .breadcrumb-item+.breadcrumb-item::before {
+            display: inline-block;
+            padding-right: .5rem;
+            color: #ffffff;
+            content: "/";
+        }
+        .bcrum{
+            background-color:#4caf50;
+        }
+        .bcrum_i_a{
+            color:white !important;
+        }
+        .bcrum_i_ac{
+            color:#e4e3e4 !important;
+        }
+        class=""
+    </style>
     

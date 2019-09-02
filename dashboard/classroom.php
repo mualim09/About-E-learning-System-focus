@@ -60,6 +60,20 @@ include('x-nav.php');
         <h1 class="h2">Manage Classroom</h1>
         
       </div>
+      <nav aria-label="breadcrumb" >
+        <ol class="breadcrumb bcrum" >
+          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" ><?php 
+          if($auth_user->admin_level())
+          {
+            echo "Classroom Management";
+          }
+          else{
+            echo "Classroom";
+          }
+            ?></li>
+        </ol>
+      </nav>
       <div class="table-responsive">
          <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
          <br><br>
@@ -93,59 +107,33 @@ include('x-nav.php');
     
       <form method="post" id="classroom_form" enctype="multipart/form-data">
             <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="acc_username">Username</label>
-                  <input type="text" class="form-control" id="acc_username" name="acc_username" placeholder="" value=""  required="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_email">Email:</label>
-                  <input type="email" class="form-control" id="acc_email" name="acc_email" placeholder="" value="" required="">
-                </div>
-              </div>  
-               <div class="form-row">
                 <div class="form-group col-md-12">
-                  <label for="acc_name">Full Name</label>
-                  <input type="text" class="form-control" id="acc_name" name="acc_name" placeholder="" value="" required="">
+                  <label for="add_classroom_course">Couse Name</label>
+                  <input type="text" class="form-control" id="add_classroom_course" name="add_classroom_course" placeholder="" value=""  required="">
                 </div>
-              </div> 
-                <div class="form-group">
-                <label for="prod_category">Level</label>
-                <select class="form-control" id="acc_lvl" name="acc_lvl">
-                  <?php 
-                   $auth_user->user_level_option();
-                  ?>
-                </select>
-              </div>
-              <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="acc_pass" id="l_acc_pass">Password</label>
-                  <input type="password" class="form-control" id="acc_pass" name="acc_pass" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_cpass" id="l_acc_cpass">Confirm:</label>
-                  <input type="password" class="form-control" id="acc_cpass" name="acc_cpass" placeholder="" value="" required="">
-                </div>
-              </div> 
-
-              <div class="form-row">
                 <div class="form-group col-md-12">
-                  <label for="acc_add">Address</label>
-                  <input type="text" class="form-control" id="acc_add" name="acc_add" placeholder="" value="" required="">
+                  <label for="add_classroom_descr">Description:</label>
+                  <textarea class="form-control" id="add_classroom_descr" name="add_classroom_descr" placeholder="" value="" required=""></textarea>
                 </div>
-              </div> 
+                <div class="form-group col-md-12">
+                  <label for="add_classroom_course">Password</label>
+                  <input type="text" class="form-control" id="add_classroom_course" name="add_classroom_password" placeholder="" value=""  required="">
+                </div>
+              </div>   
       </div>
       <div class="modal-footer">
-        <input type="hidden" name="Classroom_ID" id="Classroom_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_Classroom">Submit</button>
+        
+        <div class="btn-group">
+        <button type="submit" class="btn btn-primary submit" id="submit_classroom" value="submit_classroom">Submit</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
       </div>
        </form>
     </div>
   </div>
 </div>
 
-<div class="modal fade" id="delclassroom_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+<div class="modal fade" id="classroom_modal_delete" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -159,6 +147,7 @@ include('x-nav.php');
         <div class="btn-group">
         <button type="submit" class="btn btn-danger" id="classroom_delform">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+        <input type="hidden" id="classroom_delete_id" name="classroom_delete_id" value="" >
         </div>
         </div>
       </div>
@@ -204,11 +193,12 @@ include('x-script.php');
 
           $(document).on('submit', '#classroom_form', function(event){
             event.preventDefault();
-
+             var formData = new FormData(this);
+              formData.append('action', "classroom_add");
               $.ajax({
                 url:"datatable/classroom/insert.php",
                 method:'POST',
-                data:new FormData(this),
+                data:formData,
                 contentType:false,
                 processData:false,
                 success:function(data)
@@ -322,25 +312,26 @@ include('x-script.php');
 
             });
             $(document).on('click', '.delete', function(){
-            var Classroom_ID = $(this).attr("id");
-             $('#delclassroom_modal').modal('show');
-             $('.submit').hide();
+            var classroom_ID = $(this).attr("id");
+           
+             $('#classroom_modal_delete').modal('show');
+          
              
-             $('#Classroom_ID').val(Classroom_ID);
+             $('#classroom_delete_id').val(classroom_ID);
             });
 
            
 
 
           $(document).on('click', '#classroom_delform', function(event){
-             var Classroom_ID =  $('#Classroom_ID').val();
+             var classroom_ID =  $('#classroom_delete_id').val();
             $.ajax({
              type        :   'POST',
              url:"datatable/classroom/insert.php",
-             data        :   {operation:"delete_Classroom",Classroom_ID:Classroom_ID},
+             data        :   {action:"classroom_delete",classroom_ID:classroom_ID},
              dataType    :   'json',
              complete     :   function(data) {
-               $('#delclassroom_modal').modal('hide');
+               $('#classroom_modal_delete').modal('hide');
                alertify.alert(data.responseText).setHeader('Delete this Classroom');
                dataTable.ajax.reload();
                dataTable_product_data.ajax.reload();

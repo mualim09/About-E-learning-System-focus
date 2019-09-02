@@ -60,6 +60,12 @@ include('x-nav.php');
         <h1 class="h2">Manage Student Record</h1>
         
       </div>
+      <nav aria-label="breadcrumb" >
+        <ol class="breadcrumb bcrum" >
+          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Student Management</li>
+        </ol>
+      </nav>
       <div class="table-responsive">
          <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#student_modal">Add</button>
          <br><br>

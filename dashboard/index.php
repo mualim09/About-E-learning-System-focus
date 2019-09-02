@@ -23,6 +23,9 @@ $pageTitle = "Dashboard";
 
 
     <style>
+      .sidebar .nav-link.active {
+          color: #4caf50 !important;
+      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;

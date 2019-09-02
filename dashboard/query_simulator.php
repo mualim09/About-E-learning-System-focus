@@ -60,6 +60,12 @@ include('x-nav.php');
         <h1 class="h2">Query Simulator</h1>
         
       </div>
+      <nav aria-label="breadcrumb" >
+        <ol class="breadcrumb bcrum" >
+          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Query Simulator</li>
+        </ol>
+      </nav>
                      <div class="col-sm-12 sql_simulator">
      <link rel="stylesheet" href="../assets/sql_simulator/css/codemirror.css">
   <link rel="stylesheet" href="../assets/sql_simulator/css/demo.css">

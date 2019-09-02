@@ -60,19 +60,10 @@ include('x-nav.php');
         <h1 class="h2">Manage Test</h1>
         
       </div>
-      <style>
-        .breadcrumb-item+.breadcrumb-item::before {
-            display: inline-block;
-            padding-right: .5rem;
-            color: #ffffff;
-            content: "/";
-        }
-      </style>
       <nav aria-label="breadcrumb" >
-        <ol class="breadcrumb" style="background-color:#4caf50; ">
-          <li class="breadcrumb-item " ><a href="index" style="color:white !important;">Dashboard</a></li>
-          <li class="breadcrumb-item " ><a href="test" style="color:white !important;">Test</a></li>
-          <li class="breadcrumb-item active" aria-current="page" style="color:#e4e3e4 !important; ">Data</li>
+        <ol class="breadcrumb bcrum" >
+          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Test Management</li>
         </ol>
       </nav>
       <div class="table-responsive">

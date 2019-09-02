@@ -35,7 +35,10 @@ function navlist($pagefile_name,$name,$link,$icon){
         </div>
 
         <ul class="nav flex-column">
-          
+          <div style="background: #eee;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;">MAIN NAVIGATION</div>
           <?php 
           navlist($pagefile_name,"Dashboard","index","home");
           navlist($pagefile_name,"Account Management","account","users");
@@ -46,6 +49,11 @@ function navlist($pagefile_name,$name,$link,$icon){
           navlist($pagefile_name,"Classroom","classroom","clipboard");
            
           ?>
+          <div class="text-center " style=" position: absolute;bottom: 0; color:#4caf50; padding:5px;">
+            <hr>
+            <strong>CvSU E-learning for Information Management</strong>
+          </div>
+
         </ul>
         <!-- <div class="text-center">CvSU E-learning for Information Management</div> -->
         
