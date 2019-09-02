@@ -1,983 +1,359 @@
-﻿ <?php 
-    include('../session.php');
-    include('dash-global-function.php');
+<?php 
+include('../session.php');
 
-   
-    $pagename = "Classroom";
-    $username = $_SESSION['user_Name'];
-    $user_id = $_SESSION['login_id'];
-    $user_img = $_SESSION['user_img'];
-     $user_email = $_SESSION['user_Email'];
-    $script_for_specific_page = "jquery";
-    if(isset($_SESSION['login_level']) )
-    {      
-        $login_level = $_SESSION['login_level'];
-        if ($login_level == 3) {
-         
-          header('location: error404.php');
-        }
-         
-    }
+
+require_once("../class.user.php");
 
   
+$auth_user = new USER();
+// $page_level = 3;
+// $auth_user->check_accesslevel($page_level);
+$pageTitle = "Manage Classroom";
+?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <?php 
+      include('x-meta.php');
+    ?>
+
+
+  <?php 
+  include('x-css.php');
+  ?>
+ 
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+<?php 
+include('x-nav.php');
 ?>
 
-<!DOCTYPE html>
-<html>
- <?php
-    include("dash-head.php");
+<div class="container-fluid">
+  <div class="row">
+      <?php 
+    include('x-sidenav.php');
     ?>
-<body class="theme-green">
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Manage Classroom</h1>
+        
+      </div>
+      <div class="table-responsive">
+         <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
+         <br><br>
+        <table class="table table-striped table-sm" id="classroom_data">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Course Code</th>
+              <th>Course Name</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+     
+          </tbody>
+        </table>
+
+
+<div class="modal fade" id="classroom_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classroom_modal_title">Add New Classroom</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="product_modal_content">
+    
+      <form method="post" id="classroom_form" enctype="multipart/form-data">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="acc_username">Username</label>
+                  <input type="text" class="form-control" id="acc_username" name="acc_username" placeholder="" value=""  required="">
                 </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
-    <!-- #END# Page Loader -->
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    <?php 
-        include('dash-topnav.php');
-    ?>
-    <section>
-        <?php 
-        include("dash-sidenav-left.php");
-        ?>
-
-    </section>
-
-    <section class="content">
-        <div class="container-fluid">
-            <?php 
-            if (isset($_REQUEST['code'])) {
-                include('classroom-code.php');
-            }
-            else{
-                include('classroom-content.php');
-            }
-
-            ?>
-        </div>
-    </section>
-
-    <?php 
-        include("dash-js.php");
-    ?>
-</body>
-<!-- Add Student In Classroom -->
-            <div class="modal fade" id="AddStudentInClass" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title" id="defaultModalLabel">Add Student In Classroom</h4>
-                        </div>
-                        <div class="modal-body">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin sodales orci ante, sed ornare eros vestibulum ut. Ut accumsan
-                            vitae eros sit amet tristique. Nullam scelerisque nunc enim, non dignissim nibh faucibus ullamcorper.
-                            Fusce pulvinar libero vel ligula iaculis ullamcorper. Integer dapibus, mi ac tempor varius, purus
-                            nibh mattis erat, vitae porta nunc nisi non tellus. Vivamus mollis ante non massa egestas fringilla.
-                            Vestibulum egestas consectetur nunc at ultricies. Morbi quis consectetur nunc.
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-link waves-effect">SAVE CHANGES</button>
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                    </div>
+                <div class="form-group col-md-6">
+                  <label for="acc_email">Email:</label>
+                  <input type="email" class="form-control" id="acc_email" name="acc_email" placeholder="" value="" required="">
                 </div>
-            </div>
-<?php
-
-if ($login_level == 1) {
-  ?>
-<!-- Join Classroom -->
-<div class="modal fade" id="JoinClass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Join Class</h4>
-            </div>
-            <form class="form-horizontal" action="data-action.php" method="POST" enctype="multipart/form-data">
-            <div class="modal-body">
-                   <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="ccode">Classcode</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="text" class="form-control" id="joinclasscode" name="joinclasscode" placeholder="Classroom Code">
-                              </div>
-                          </div>
-                      </div>
-                   </div>
-                  <br> <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="cpass">Password</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="password" class="form-control" id="joinclass_pass" name="joinclass_pass" placeholder="Classroom Password">
-                              </div>
-                          </div>
-                      </div>
-                   </div>
-                  <br> 
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-link waves-effect"  name="submit_joinclass" value="submit_joinclass">Join</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-  <?php
-}
- ?>
-
-<!-- Create Post In Classroom -->
-            <div class="modal fade" id="CreatePostInClass" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-green">
-                            <h4 class="modal-title" id="defaultModalLabel">Create Post</h4>
-                        </div>
-                        <form action="data-action.php" method="POST">
-                        <div class="modal-body">
-                            <!-- CKEditor -->
-                          <div class="row clearfix">
-                              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                  <label for="class_Name">Post Title</label>
-                              </div>
-                              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                          <input type="text" class="form-control" id="class_pTitle" name="class_pTitle" placeholder="Title" required>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <br>
-                          <textarea id="ckeditor" name="newpost_content">
-                          </textarea>
-                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-link waves-effect" name="submit_postinClass" value="Post">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
+              </div>  
+               <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_name">Full Name</label>
+                  <input type="text" class="form-control" id="acc_name" name="acc_name" placeholder="" value="" required="">
                 </div>
-            </div>            
-<!-- Create Classroom -->
-<div class="modal fade" id="CreateClass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Create Class</h4>
-            </div>
-            <form class="form-horizontal" action="data-action.php" method="POST"  enctype="multipart/form-data" id="class_form">
-            <div class="modal-body">
-                    <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_Name">Class Name</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="text" class="form-control" id="class_Name" name="class_Name" placeholder="Classroom Name">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br>
-
-                   <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_Description">Description</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <textarea class="form-control" id="class_Description" name="class_Description" placeholder="Classroom Description"></textarea>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br>
-                  <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_color">Color</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                   <select class="form-control" name="class_color" id="class_color" >
-                                    <option value="">~~SELECT~~</option>
-                                    <option value="1">Red</option>
-                                    <option value="2">Cyan</option>
-                                    <option value="3">Green</option>
-                                    <option value="4">Blue grey</option>
-                                    <option value="5">Pink</option>
-                                    <option value="6">Light blue</option>
-                                    <option value="7">Light green</option>
-                                    <option value="8">Amber</option>
-                                  </select>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br> 
-                  <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_Passz">Password</label>
-
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="password" class="form-control" id="class_Passz" name="class_Passz" placeholder="Classroom Password">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br>
-            </div>
-            <div class="modal-footer">
-               <input type="hidden" name="class_ID" id="class_ID">
-                 <button type="submit" class="btn btn-link waves-effect"  name="submit_createclass" value="submit_createclass" id="operation">Create</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>         
-            </form>
-        </div>
-    </div>
-</div>
-<!-- Create Classroom -->
-<div class="modal fade" id="CreateClass_Pass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="defaultModalLabel">Create Class Password</h4>
-            </div>
-            <form class="form-horizontal" action="#" method="POST"  enctype="multipart/form-data" id="subpassword">
-            <div class="modal-body">
-                   <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_Password">Password</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="password" class="form-control" id="class_Password" name="class_Password">
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br>
-                   <div class="row clearfix">
-                      <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                          <label for="class_CPassword">Confirm Password</label>
-                      </div>
-                      <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                          <div class="form-group">
-                              <div class="form-line">
-                                  <input type="password" class="form-control" id="class_CPassword" name="class_CPassword" >
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-                  <br>
-            </div>
-            <div class="modal-footer">
-                 <input type="hidden"  id="passc_ID" name="passc_ID" value="">
-                 <button type="submit" class="btn btn-link waves-effect"  name="submit_classPass" value="submit_classPass" id="submit_classPass">Create</button>
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>         
-            </form>
-        </div>
-    </div>
-</div>
-
-
-<!-- Create Topic In Classroom -->
-            <div class="modal fade" id="CreateTopicInClass" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-green">
-                            <h4 class="modal-title" id="defaultModalLabel">Create Topic</h4>
-                        </div>
-                        <form action="data-action.php" method="POST" id="topic_form">
-                        <div class="modal-body">
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Title</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                           <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="create_topic">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> 
-                          
-                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-                         
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-link waves-effect" name="submit_createTopic" value="Post">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>  
-
-<!-- Create Assignment In Classroom -->
-            <div class="modal fade " id="CreateAssignmentInClass" tabindex="-1" role="dialog">
-                <div class="modal-dialog " role="document">
-                    <div class="modal-content">
-                        <div class="modal-header bg-green">
-                            <h4 class="modal-title" id="defaultModalLabel">Create Assignment</h4>
-                        </div>
-                        <form action="data-action.php" method="POST" id="topic_form">
-                        <div class="modal-body">
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Topic</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                         <select class="form-control" name="classtopic" id="classtopic">
-                                          <option value=""> - SELECT - </option>
-                                           <?php 
-                                           $sql = "SELECT * FROM `class_topic`
-                                              WHERE class_ID = '".$_REQUEST['classID'] ."' 
-                                              ";
-                                            if ($query = mysqli_query($conn, $sql)) {
-
-                                              while ($row = mysqli_fetch_assoc($query)) {
-                                                ?>
-                                                <option value="<?php echo $row["classTopic_ID"]?>"><?php echo $row["classTopic_Name"]?></option>
-                                                <?php
-                                              }
-                                            }
-                                           ?>
-                                         </select>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Title</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                          <input type="text" class="form-control"  name="assignment_title" value="" placeholder="Topic" id="assignment_title">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> 
-                           
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Instruction</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                        <textarea class="form-control" name="assignment_descr" value="" placeholder="Assignment Instruction" id="assignment_descr"></textarea>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div> 
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Points</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                           <input type="number" class="form-control"  name="assignment_points" value="" placeholder="Assignment Points" id="assignment_points">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="row clearfix">
-                          <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                              <label for="class_color">Due Date</label>
-                          </div>
-                          <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                                  <div class="form-group">
-                                      <div class="form-line">
-                                           <input type="datetime-local" class="form-control"  name="assignment_due" id="assignment_due">
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>  
-                          
-                          
-                          
-                          <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-                          <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-                          <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-                         
-                        </div>
-                        <div class="modal-footer">
-                            <input type="submit" class="btn btn-link waves-effect" name="submit_createAssignment" value="Post" id="assign_action">
-                            <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-                        </div>
-                        </form>
-                    </div>
-                </div>
-            </div>  
-<!-- Create Assingment In Classroom -->
-<div class="modal fade" id="CreateMaterialInClass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-green">
-                <h4 class="modal-title cm" id="defaultModalLabel">Create Material</h4>
-            </div>
-            <form action="data-action.php" method="POST" id="topic_form"  enctype="multipart/form-data">
-            <div class="modal-body">
-              <div class="row clearfix">
-              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                  <label for="class_color">Title</label>
-              </div>
-              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                               <input type="text" class="form-control"  name="MaterialTitle" value="" placeholder="Topic" id="MaterialTitle">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="row clearfix">
-              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                  <label for="class_color">Description</label>
-              </div>
-              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                               <input type="text" class="form-control"  name="MaterialDescr" value="" placeholder="Topic" id="MaterialDescr">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="row clearfix">
-              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                  <label for="class_color">Attachment</label>
-              </div>
-              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                               <input type="file" class="form-control"  name="MaterialFile" value="" placeholder="Topic" id="MaterialFile">
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              
-              
-              
-              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-             
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="btn btn-link waves-effect" name="submit_createMaterial" value="Submit">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>  
-
-<!-- Create Assingment In Classroom -->
-<div class="modal fade" id="CreateQuestionInClass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-green">
-                <h4 class="modal-title" id="defaultModalLabel">Create Question</h4>
-            </div>
-            <form action="data-action.php" method="POST" id="topic_form">
-            <div class="modal-body ">
-              
-              <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="createQuestion">
-              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-             
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="btn btn-link waves-effect" name="submit_createQuestion" value="Post">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>  
-<!-- View Assingment In Classroom -->
-<div class="modal fade" id="ViewAssignmentInClass" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-green">
-                <h4 class="modal-title" id="defaultModalLabel">View Assignment</h4>
-            </div>
-            <form action="data-action.php" method="POST" id="topic_form">
-            <div class="modal-body assign_body">
-              
-             
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
-            </form>
-        </div>
-    </div>
-</div>  
-<!-- View Assingment In Classroom -->
-
-
-<div class="modal fade" id="classMaterials" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-green">
-                <h4 class="modal-title" id="defaultModalLabel">Create Topic</h4>
-            </div>
-            <form action="data-action.php" method="POST" id="topic_form">
-            <div class="modal-body">
-              <div class="row clearfix">
-              <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                  <label for="class_color">Title</label>
-              </div>
-              <div class="col-lg-10 col-md-10 col-sm-8 col-xs-7">
-                      <div class="form-group">
-                          <div class="form-line">
-                               <input type="text" class="form-control"  name="new_topic" value="" placeholder="Topic" id="create_topic">
-                          </div>
-                      </div>
-                  </div>
               </div> 
-              
-              <input type="hidden" name="name" value="<?php echo $_REQUEST['name']?>">
-              <input type="hidden" name="code" value="<?php echo $_REQUEST['code']?>">
-              <input type="hidden" name="class_ID" value="<?php echo $_REQUEST['classID']?>">
-             
-            </div>
-            <div class="modal-footer">
-                <input type="submit" class="btn btn-link waves-effect" name="submit_createTopic" value="Post">
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
-            </form>
-        </div>
+                <div class="form-group">
+                <label for="prod_category">Level</label>
+                <select class="form-control" id="acc_lvl" name="acc_lvl">
+                  <?php 
+                   $auth_user->user_level_option();
+                  ?>
+                </select>
+              </div>
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="acc_pass" id="l_acc_pass">Password</label>
+                  <input type="password" class="form-control" id="acc_pass" name="acc_pass" placeholder="" value="" required="">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="acc_cpass" id="l_acc_cpass">Confirm:</label>
+                  <input type="password" class="form-control" id="acc_cpass" name="acc_cpass" placeholder="" value="" required="">
+                </div>
+              </div> 
+
+              <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="acc_add">Address</label>
+                  <input type="text" class="form-control" id="acc_add" name="acc_add" placeholder="" value="" required="">
+                </div>
+              </div> 
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="Classroom_ID" id="Classroom_ID" />
+        <input type="hidden" name="operation" id="operation" />
+        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_Classroom">Submit</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+       </form>
     </div>
-</div> 
+  </div>
+</div>
 
-
-<div class="modal fade" id="class_Materials" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header bg-green">
-                <h4 class="modal-title" id="defaultModalLabel">Class Materials</h4>
-            </div>
-          
-            <div class="modal-body cmaterials">
-             
-            </div>
-            <div class="modal-footer">
-               
-                <button type="button" class="btn btn-link waves-effect" data-dismiss="modal">CLOSE</button>
-            </div>
+<div class="modal fade" id="delclassroom_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="classroom_modal_title">Delete this Classroom</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+        <div class="btn-group">
+        <button type="submit" class="btn btn-danger" id="classroom_delform">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
-</div> 
+  </div>
+</div>
+      </div>
+    </main>
+  </div>
+</div>
 
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> -->
-<script type="text/javascript">
-
- 
-  function reload($id){
-    var classPost_ID = $id; 
-    $("#post_comment_"+classPost_ID).load("comment.php", { 'classPost_ID': classPost_ID  });
-
-  }
-
-  function showComment($id){
-    var classPost_ID = $id;
-    
-    $("#post_comment_"+classPost_ID).load("comment.php", { 'classPost_ID': classPost_ID  });
-
-  }
-  function userclassDisable($id){
-    var classStudent_ID = $id;
-     if(confirm("Are you sure you want disable this student for accessing this classroom?"))
-        {
-            $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{'action': 'classuserDisable' ,'classStudent_ID': classStudent_ID  },
-              dataType:"html",
-              success:function(data)
-              {
-               document.getElementById('uc_'+classStudent_ID).setAttribute('onclick','userclassEnable('+classStudent_ID+')');
-               $('#uc_'+classStudent_ID).text('Enable');
-              }
-            }); 
-        }
-        else
-        {
-          return false; 
-        }
-
-  }
-  function userclassEnable($id){
-      var classStudent_ID = $id;
-     if(confirm("Are you sure you want enable this student for accessing this classroom?"))
-        {
-            $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{'action': 'userclassEnable' ,'classStudent_ID': classStudent_ID  },
-              dataType:"html",
-              success:function(data)
-              {
-                document.getElementById('uc_'+classStudent_ID).setAttribute('onclick','userclassDisable('+classStudent_ID+')');
-                $('#uc_'+classStudent_ID).text('Disable');
-              }
-            }); 
-           
-        }
-        else
-        {
-          return false; 
-        }
-
-  }
-  function addComment($id){
-    var classPost_ID = $id;
-    var comment = $("#comment_content"+classPost_ID).val();
+<?php 
+include('x-script.php');
+?>
+        <script type="text/javascript">
    
-     
-    $.ajax({
-      url:"data-action.php",
-      type:"POST",
-      data:{ 'classPost_ID': classPost_ID ,'comment': comment  },
-      dataType:"html",
-      success:function(data)
-      {
-        $("#post_comment_"+classPost_ID).load("comment.php", { 'classPost_ID': classPost_ID});
-      }
-    }); 
 
-  }
-       function disableClassroom($var) {
-        var class_ID = $var;
-        if(confirm("Are you sure you want to disable this classroom?"))
-        {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_disableclass:class_ID},
-              dataType:"html",
-              success:function(data)
+
+          $(document).ready(function() {
+             
+            var dataTable = $('#classroom_data').DataTable({
+            "processing":true,
+            "serverSide":true,
+            "order":[],
+            "ajax":{
+              url:"datatable/classroom/fetch.php",
+              type:"POST"
+            },
+            "columnDefs":[
               {
-              }
-            });
-           location.reload();
-        }
-        else
-        {
-          return false; 
-        }
+                "targets":[0],
+                "orderable":false,
+              },
+            ],
+            
 
-        }
+          });
 
-       function enableClassroom($var) {
-        var class_ID = $var;
-         if(confirm("Are you sure you want to enable this classroom?"))
-        {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_enableclass:class_ID},
-              dataType:"html",
-              success:function(data)
-              {
-              }
-            });
-           location.reload();
-        }
-        else
-        {
-          return false; 
-        }
-
-        }
-       $(document).on('click', '.add', function () {
-            document.getElementById("operation").setAttribute('name', 'submit_createclass');
-            $('#operation').text("Create");
-            $('#operation').val("submit_createclass");
-            // $('.modal-title').text("Create Class");
-           document.getElementById('class_form').reset();
           
-      });
-        function editClassroom($var) {
-        var class_ID = $var;
-             if(confirm("Are you sure you want to edit this classroom?"))
-        {
 
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_editclass:class_ID},
-              dataType:"json",
-              success:function(data)
-              {
-                  $('#CreateClass').modal('show');
-                   $('#class_Name').val(data.class_Name);
-                   $('#class_Description').val(data.class_Description);
-                   $('#class_color').val(data.class_color).change();
-                   $('#class_Passz').val(data.class_Password);
-                   $('#operation').text("Update");
-                   document.getElementById("operation").setAttribute('name', 'submit_upclass');
-                   $('#operation').val("submit_upclass");
-                   // $('.modal-title').text("Edit Classroom Info");
-                   $('#class_ID').val(class_ID);
-              }
+          $(document).on('submit', '#classroom_form', function(event){
+            event.preventDefault();
+
+              $.ajax({
+                url:"datatable/classroom/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alertify.alert(data).setHeader('Classroom');
+                  $('#classroom_form')[0].reset();
+                  $('#classroom_modal').modal('hide');
+                  dataTable.ajax.reload();
+                }
+              });
+           
+          });
+
+          $(document).on('click', '.add', function(){
+            $('#classroom_modal_title').text('Add New Classroom');
+            $("#acc_username").prop("disabled", false);
+            $('#classroom_form')[0].reset();
+            $('#submit_input').show();
+            $('#submit_input').text('Submit');
+            $('#submit_input').val('submit_Classroom');
+            $('#operation').val("submit_Classroom");
+          });
+
+          $(document).on('click', '.view', function(){
+            var Classroom_ID = $(this).attr("id");
+            $('#classroom_modal_title').text('View Classroom');
+            $('#classroom_modal').modal('show');
+            $("#acc_pass").hide();
+            $("#acc_cpass").hide();
+            $("#l_acc_pass").hide();
+            $("#l_acc_cpass").hide();
+            
+             $.ajax({
+                url:"datatable/classroom/fetch_single.php",
+                method:'POST',
+                data:{action:"classroom_view",Classroom_ID:Classroom_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+
+                $("#acc_username").prop("disabled", true);
+                $("#acc_email").prop("disabled", true);
+                $("#acc_name").prop("disabled", true);
+                $("#acc_lvl").prop("disabled", true);
+                $("#acc_add").prop("disabled", true);
+
+                  $('#acc_username').val(data.user_Name);
+                  $('#acc_email').val(data.user_Email);
+                  $('#acc_name').val(data.user_Fullname);
+                  $('#acc_pass').val(data.user_Pass);
+                  $('#acc_lvl').val(data.lvl_ID).change();
+                  
+                  $('#acc_cpass').val(data.user_Pass);
+                  $('#acc_add').val(data.user_Address);
+
+                  $('#submit_input').hide();
+                  $('#Classroom_ID').val(Classroom_ID);
+                  $('#submit_input').text('Update');
+                  $('#submit_input').val('Classroom_edit');
+                  $('#operation').val("Classroom_edit");
+                  
+                }
+              });
+
+
             });
-         
-        }
-        else
-        {
-          return false; 
-        }
-
-        }
-        function deleteClassroom($var) {
-        var class_ID = $var;
-             if(confirm("Are you sure you want to delete this classroom?"))
-        {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_deleteclass:class_ID},
-              dataType:"html",
-              success:function(data)
-              {
-              }
-            });
-           location.reload();
-        }
-        else
-        {
-          return false; 
-        }
-
-        }
-        // function classworkTopic($var){
-        //  var class_ID = $var;
-        //  $('#CreateTopicInClass').modal('show');
-        // }
-        // function classworkMaterial($var){
-       
-        //   var class_ID = $var;
-        //   var title  =  $('#material_title').val();
-        //   var Description  =  $('#material_description').val();
-        //   var attachment  =  $('#material_attachment').val();
-        // }
-        //  function classworkQuizAssigment($var){
+          $(document).on('click', '.edit', function(){
+            var Classroom_ID = $(this).attr("id");
+            $('#classroom_modal_title').text('Edit Classroom');
+            $('#classroom_modal').modal('show');
           
-        //   var class_ID = $var;
-        //   var Question = $var;
-        //   var Instruction = $var;
-        //   var Points = $var;
-        //   var Duedate = $var;
-        // }
-        // function classworkAssignment($var){
-        //   var class_ID = $var;
-        //   var Question = $('#classassign_question').val();
-        //   var Instruction = $('#classassign_instruction').val();
-        //   var Points = $('#classassign_points').val();
-        //   var Duedate = $('#classassign_duedate').val();
+            $("#acc_pass").show();
+            $("#acc_cpass").show();
+            $("#l_acc_pass").show();
+            $("#l_acc_cpass").show();
 
-        // }
-    
-  $(document).on('click', '.add_assign', function () {
-    // $('.modal-title').text('Create Assignment');
-        document.getElementById("assign_action").setAttribute('name', 'submit_createAssignment');
+            
+             $.ajax({
+                url:"datatable/classroom/fetch_single.php",
+                method:'POST',
+                data:{action:"classroom_view",Classroom_ID:Classroom_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $("#acc_username").prop("disabled", true);
+                  $("#acc_email").prop("disabled", false);
+                  $("#acc_name").prop("disabled", false);
+                  $("#acc_lvl").prop("disabled", false);
+                  $("#acc_add").prop("disabled", false);
+                  $("#acc_pass").prop("disabled", false);
+                  $("#acc_cpass").prop("disabled", false);
 
-        $('#classtopic').val('');
-        $('#assignment_title').val('');
-        $('#assignment_descr').val('');
-        $('#assignment_points').val('');
-        $('#assignment_due').val('');
-  });
+                  $('#acc_username').val(data.user_Name);
+                  $('#acc_email').val(data.user_Email);
+                  $('#acc_name').val(data.user_Fullname);
+                  $('#acc_pass').val(data.user_Pass);
+                  $('#acc_lvl').val(data.lvl_ID).change();
+                  
+                  $('#acc_cpass').val(data.user_Pass);
+                  $('#acc_add').val(data.user_Address);
 
-  
-  function  assignment_view($var){
-    var assignment_ID = $var;
-     $('#ViewAssignmentInClass').modal('show');
+                  $('#submit_input').show();
+                  $('#Classroom_ID').val(Classroom_ID);
+                  $('#submit_input').text('Update');
+                  $('#submit_input').val('Classroom_update');
+                  $('#operation').val("Classroom_edit");
+                  
+                }
+              });
 
-     $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_viewassignment:assignment_ID},
-              dataType:"html",
-              success:function(data)
-              {
-                $('.modal-body.assign_body').html(data);
-              }
+
             });
-     
-  }
-      function assignment_edit($var) {
-        var assignment_ID = $var;
-        $('#CreateAssignmentInClass').modal('show');
-        // $('.modal-title').text('Edit Assignment');
-        document.getElementById("assign_action").setAttribute('name', 'submit_edit_assignment');
-        //      if(confirm("Are you sure you want to edit this assignment?"))
-        // {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_updateassignment:assignment_ID},
-              dataType:"json",
-              success:function(data)
-              {
-                $('#classtopic').val(data.classTopic_ID).change();
-                $('#assignment_title').val(data.classassignment_Title);
-                $('#assignment_descr').val(data.classassignment_Instruction);
-                $('#assignment_points').val(data.classassignment_Points);
-                $('#assignment_due').val(data.classassignment_Duedate);
-              }
+            $(document).on('click', '.delete', function(){
+            var Classroom_ID = $(this).attr("id");
+             $('#delclassroom_modal').modal('show');
+             $('.submit').hide();
+             
+             $('#Classroom_ID').val(Classroom_ID);
             });
-        //    location.reload();
-        // }
-        // else
-        // {
-        //   return false; 
-        // }
 
-        }
-        function assignment_delete($var) {
-        var assignment_ID = $var;
-             if(confirm("Are you sure you want to delete this assignment?"))
-        {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_deleteassignment:assignment_ID},
-              dataType:"html",
-              success:function(data)
-              {
-                alert(data);
-              }
-            });
-           location.reload();
-          
-        }
-        else
-        {
-          return false; 
-        }
+           
 
-        }
-        function createclass_password($var) {
-        var classroom_ID = $var;
-        $('#CreateClass_Pass').modal('show');
-        $('#passc_ID').val(classroom_ID);
-        
-        }
-        $(document).on('submit', '#subpassword', function(event){
-         event.preventDefault();
-         
-          var classroom_ID = $('#passc_ID').val();
-          var class_Password = $('#class_Password').val();
-          var class_CPassword = $('#class_CPassword').val();
-          if (class_Password != class_CPassword){
-            alert("Password Not Match");
-          }
-          else{
+
+          $(document).on('click', '#classroom_delform', function(event){
+             var Classroom_ID =  $('#Classroom_ID').val();
             $.ajax({
-             url:"data-action.php",
-             type:"POST",
-             data:{submit_classPass:classroom_ID,class_Password:class_Password,class_CPassword:class_CPassword},
-             dataType:"json",
-             success:function(data)
-             {
-              alert(data.msg);
-              location.reload();
+             type        :   'POST',
+             url:"datatable/classroom/insert.php",
+             data        :   {operation:"delete_Classroom",Classroom_ID:Classroom_ID},
+             dataType    :   'json',
+             complete     :   function(data) {
+               $('#delclassroom_modal').modal('hide');
+               alertify.alert(data.responseText).setHeader('Delete this Classroom');
+               dataTable.ajax.reload();
+               dataTable_product_data.ajax.reload();
+                
              }
-           });
+            })
+           
+          });
+          
+          } );
 
-          }
 
-         
-         
-        });
-         function removeclass_password($var) {
-        var class_ID = $var;
-        if(confirm("Are you sure you want to remove this classroom password?"))
-        {
-           $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{submit_deleteclasspass:class_ID},
-              dataType:"json",
-              success:function(data)
-              {
-                alert(data.msg);
-                location.reload();
-              }
-            });
-        }
-        else
-        {
-          return false; 
-        }
+        </script>
+        </body>
 
-        }
-        function materials_m() {
-        $('#class_Materials').modal('show');
-        
-        $.ajax({
-              url:"data-action.php",
-              type:"POST",
-              data:{view_materials:<?php echo $_REQUEST["code"]?>},
-              dataType:"html",
-              success:function(data)
-              {
-                $('.cmaterials').html(data);
-              }
-            });
-
-        }
-        
-        // topic_edit
-        // topic_delete
- </script>
 </html>
