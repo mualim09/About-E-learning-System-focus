@@ -1,85 +1,75 @@
- <?php 
-    include('../session.php');
-    include('dash-global-function.php');
+<?php 
+include('../session.php');
 
-   
-    $pagename = "Query Simulator";
-    $username = $_SESSION['user_Name'];
-    $script_for_specific_page = "index";
-    $user_img = "../assets/images/user.png";
-    $user_email = "mail@gmail.com";
-    if(isset($_SESSION['login_level']) )
-    {      
-        $login_level = $_SESSION['login_level'];
-        if ($login_level == 3) {
-         
-          header('location: error404.php');
-        }
-         
-    }
 
-    if (empty($_REQUEST['page'])) {
-        $page = "";
-    }
-    else{
-        $page = $_REQUEST['page'];
-    }
+require_once("../class.user.php");
 
+  
+$auth_user = new USER();
+// $page_level = 3;
+// $auth_user->check_accesslevel($page_level);
+$pageTitle = "Manage Account";
 ?>
-<!DOCTYPE html>
-<html>
- <?php
-    include("dash-head.php");
-    ?>
-<body class="theme-green">
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
-                    </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
-                </div>
-            </div>
-            <p>Please wait...</p>
-        </div>
-    </div>
-    <!-- #END# Page Loader -->
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    
+<!doctype html>
+<html lang="en">
+  <head>
     <?php 
-        include('dash-topnav.php');
+      include('x-meta.php');
     ?>
-    <section>
-        <?php 
-        include("dash-sidenav-left.php");
-        ?>
 
-    </section>
 
-    <section class="content">
-        <div class="container-fluid">
-            <div class="block-header">
-                <h2>DASHBOARD</h2>
-            </div>
-            <ol class="breadcrumb breadcrumb-bg-green">
-                <li><a href="javascript:void(0);"><i class="material-icons">home</i> Home</a></li>
-                <li><a href="javascript:void(0);"><i class="material-icons">archive</i> Query Simulator</a></li>
-            </ol>
+  <?php 
+  include('x-css.php');
+  ?>
+ 
 
-            
-               <div class="col-sm-12 sql_simulator">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+<?php 
+include('x-nav.php');
+?>
+
+<div class="container-fluid">
+  <div class="row">
+      <?php 
+    include('x-sidenav.php');
+    ?>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Query Simulator</h1>
+        
+      </div>
+                     <div class="col-sm-12 sql_simulator">
      <link rel="stylesheet" href="../assets/sql_simulator/css/codemirror.css">
   <link rel="stylesheet" href="../assets/sql_simulator/css/demo.css">
   <script src="../assets/sql_simulator/css/codemirror.js"></script>            
                <main>
-   <label for='commands'>Enter some SQL</label><a class="btn btn-info pull-right" href="query-simulator-offline?req_sample=1">Load sample</a>
+   <label for='commands'>Enter some SQL</label> 
+   <div class="btn-group float-right">
+    <a class="btn btn-danger " href="query_simulator">Clear</a>
+    <a class="btn btn-success " href="query_simulator?req_sample=1">Load sample</a>
+  </div>
    <br>   <br>
 <style type="text/css">
     table {
@@ -146,16 +136,26 @@ SELECT name,hired_on FROM employees ORDER BY hired_on;
 </main>
                </div>
 
-            </div>
-        </div>
-    </section>
+    </main>
+  </div>
+</div>
 
-    <?php 
-        include("dash-js.php");
-    ?>
-    <script src="../assets/sql_simulator/js/sql.js"></script>
-    <script type="text/javascript" src="../assets/sql_simulator/css/gui.js"></script>
+<?php 
+include('x-script.php');
+?>
 
-</body>
+  <script src="../assets/sql_simulator/js/sql.js"></script>
+  <script type="text/javascript" src="../assets/sql_simulator/css/gui.js"></script>
+  <script type="text/javascript">
+  // $(document).on('click', '#load_sample_command', function(){
+  
+  // var x = document.querySelectorAll(".CodeMirror-code div pre span");
+  
+  //   console.log ( x[0].innerHTML);
+  //   $(".CodeMirror-code div pre span").html("heey");
+  //   });
+
+  </script>
+  </body>
 
 </html>

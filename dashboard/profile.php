@@ -1,286 +1,382 @@
-﻿ <?php 
-    include('../session.php');
-    include('dash-global-function.php');
+<?php 
+include('../session.php');
 
-   
-    $pagename = "Profile";
-    $username = $_SESSION['login_user'];
-    $user_id = $_SESSION['login_id'];
-    $user_img = $_SESSION['user_img'];
-    $user_email = $_SESSION['user_Email'];
-    $script_for_specific_page = "index";
-    if(isset($_SESSION['login_level']) )
-    {      
-    echo $login_level = $_SESSION['login_level'];
-       
-         
-    }
 
+require_once("../class.user.php");
+
+  
+$auth_user = new USER();
+// $page_level = 3;
+// $auth_user->check_accesslevel($page_level);
+$pageTitle = "Dashboard";
+?>
+<!doctype html>
+<html lang="en">
+  <head>
+    <?php 
+      include('x-meta.php');
+    ?>
+
+
+    <!-- Bootstrap core CSS -->
+    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+    <!-- Custom styles for this template -->
+    <link href="../assets/css/dashboard.css" rel="stylesheet">
+  </head>
+  <body>
+<?php 
+include('x-nav.php');
 ?>
 
-<!DOCTYPE html>
-<html>
- <?php
-    include("dash-head.php");
+<div class="container-fluid">
+  <div class="row">
+    <?php 
+    include('x-sidenav.php');
     ?>
-<body class="theme-green">
-    <!-- Page Loader -->
-    <div class="page-loader-wrapper">
-        <div class="loader">
-            <div class="preloader">
-                <div class="spinner-layer pl-red">
-                    <div class="circle-clipper left">
-                        <div class="circle"></div>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+     
+      </div>
+            <div class="row">
+
+              <div class="col-3 col-sm-3">
+                <div class="card ">
+                  <div class="card-header text-center" style=" background-color: #ad1455;
+    padding: 42px 0;">
+                  </div>
+                  <div class="card-body text-center"  >
+                    <div style="margin-top: -64px;">
+                      
+                    <img id="p_img" src="<?php $auth_user->getUserPic();?>" alt="Profile Image"  runat="server"  height="125" width="125" class="rounded-circle" style="border:1px solid; border-color: #ad1455;"/>
                     </div>
-                    <div class="circle-clipper right">
-                        <div class="circle"></div>
-                    </div>
+                    <h6><?php $auth_user->getUsername();?></h6>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_picture">Change</button>
+                  </div>
                 </div>
+              </div>
+              <div class="col-9 col-sm-9">
+                <div class="card ">
+                  <div class="card-header text-center" style=" border-bottom: 5px solid ;">
+                    <strong>Profile Details</strong>
+                    <div class="float-right">
+                      <i data-feather="info"></i>
+                    </div>
+                  </div>
+                  <div class="card-body "  style="min-height: 250px">
+                    <table class="table table-striped">
+                      <tbody>
+                      	<?php 
+                      	if($auth_user->admin_level() || $auth_user->instructor_level()){
+                      	?>
+                      	<tr>
+                          <th scope="row">Goverment ID:</th>
+                          <td><?php  $auth_user->profile_school_id()?></td>
+                          <td  colspan="1"></td>
+                        </tr>
+                      	<?php
+                      	}
+                      	else{
+                      		?>
+                      		<tr>
+	                          <th scope="row">Student ID:</th>
+	                          <td><?php  $auth_user->profile_school_id()?></td>
+	                          <td  colspan="1"></td>
+	                        </tr>
+                      		<?php
+                      	}
+                      	?>
+                        <tr>
+                          <th scope="row">Name:</th>
+                          <td><?php  $auth_user->profile_name()?></td>
+                          <td  colspan="1"></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Address:</th>
+                          <td><?php  $auth_user->profile_address()?></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Email:</th>
+                          <td><?php  $auth_user->profile_email()?></td>
+                          <td  colspan="1"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_email">Change</button></td>
+                        </tr>
+                        <tr>
+                          <th scope="row">Password:</th>
+                          <td>********</td>
+                          <td colspan="1"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_password">Change</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
             </div>
-            <p>Please wait...</p>
+    </main>
+  </div>
+</div>
+
+<!-- Change Name -->
+<div class="modal fade" id="change_name" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
         </div>
+      </div>
     </div>
-    <!-- #END# Page Loader -->
-    <!-- Overlay For Sidebars -->
-    <div class="overlay"></div>
-    <!-- #END# Overlay For Sidebars -->
-    <?php 
-        include('dash-topnav.php');
-    ?>
-    <section>
-        <?php 
-        include("dash-sidenav-left.php");
-        ?>
-
-    </section>
-
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row clearfix">
-                <div class="col-xs-12 col-sm-3">
-                    <div class="card profile-card">
-                        <div class="profile-header">&nbsp;</div>
-                        <div class="profile-body">
-                            <div class="image-area">
-                                <img src="<?php echo $user_img?>" alt="" width="145" height="145" id="m_img"/>
-                            </div>
-                            <div class="content-area">
-                                <h3><?php echo $username?></h3>
-                                <a  href="#" data-toggle="modal" data-target="#changeprofile" class="btn btn-primary">EDIT</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-9">
-                    <div class="card">
-                        <div class="body">
-                            <div>
-                                <ul class="nav nav-tabs" role="tablist">
-                                    <li role="presentation"  class="active"><a href="#profile" aria-controls="settings" role="tab" data-toggle="tab">Profile</a></li>
-                                    <li role="presentation"><a href="#change_password_settings" aria-controls="settings" role="tab" data-toggle="tab">Change Password</a></li>
-                                </ul>
-
-                                <div class="tab-content ">
-                                    <div role="tabpanel" class="tab-pane fade in active" id="profile">
-                                        <form class="form-horizontal" action="#" method="POST" id="changeemail_form" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label for="NameSurname" class="col-sm-2 control-label">Username</label>
-                                                <div class="col-sm-10">
-                                                    <div class="form-line">
-                                                        <input type="text" class="form-control" id="NameSurname" name="NameSurname" placeholder="Name Surname" value="<?php echo $username?>" disabled="" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="email" class="col-sm-2 control-label">Email</label>
-                                                <div class="col-sm-10">
-                                                    <div class="form-line">
-                                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" value="<?php echo $user_email?>" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-danger">SUBMIT</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div role="tabpanel" class="tab-pane fade in" id="change_password_settings">
-                                        <form class="form-horizontal" action="#" method="POST" id="changepass_form" enctype="multipart/form-data">
-                                            <div class="form-group">
-                                                <label for="oldpassword" class="col-sm-3 control-label">Old Password</label>
-                                                <div class="col-sm-9">
-                                                    <div class="form-line">
-                                                        <input type="password" class="form-control" id="oldpassword" name="oldpassword" placeholder="Old Password" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="newpassword" class="col-sm-3 control-label">New Password</label>
-                                                <div class="col-sm-9">
-                                                    <div class="form-line">
-                                                        <input type="password" class="form-control" id="newpassword" name="newpassword" placeholder="New Password" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="NewPasswordConfirm" class="col-sm-3 control-label">New Password (Confirm)</label>
-                                                <div class="col-sm-9">
-                                                    <div class="form-line">
-                                                        <input type="password" class="form-control" id="newpasswordconfirm" name="newpasswordconfirm" placeholder="New Password (Confirm)" required>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-3 col-sm-9">
-                                                    <button type="submit" class="btn btn-danger">SUBMIT</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  </div>
+</div>
+<!-- Change Address -->
+<div class="modal fade" id="change_address" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
         </div>
-    </section>
-    <!-- /profile area -->
-                    <div id="changeprofile" class="modal fade">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header bg-slate-400">
-                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h5 class="modal-title">PROFILE</h5>
-                                </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Change Email -->
+<div class="modal fade" id="change_email" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Change Password -->
+<div class="modal fade" id="change_password" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Password</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="change_password_form" enctype="multipart/form-data">
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_password_old">Old Password</label>
+                <input type="password" class="form-control" id="update_password_old" name="update_password_old" placeholder="" value=""  required="">
+              </div>
+            </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_password_new">New Password</label>
+                <input type="password" class="form-control" id="update_password_new" name="update_password_new" placeholder="" value=""  required="">
+              </div>
+            </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_password_newconfirm">Confirm Password</label>
+                <input type="password" class="form-control" id="update_password_newconfirm" name="update_password_newconfirm" placeholder="" value=""  required="">
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" id="btn_change_password" value="Save changes">
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Change Picture -->
+<div class="modal fade" id="change_picture" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Change Picture</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form id="change_picture_form" enctype="multipart/form-data">
+      <div class="modal-body text-center">
+        <img id="u_img" src="../assets/img/users/default.jpg" alt="Change Profile Image"  runat="server"  height="125" width="125" class="rounded-circle" style="border:1px solid; border-color: #ad1455;"/>
+        <br>  <br>
+          
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                <input type="file" class="form-control" id="change_profile" name="change_profile" >
+              </div>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+         <input type="submit" class="btn btn-primary" id="btn_change_picture" value="Save changes">
+        </div>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+        <script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="../assets/js/jquery-3.3.1.min.js" ></script>
+      <script>window.jQuery || document.write('<script src="../assets/js/jquery-slim.min.js"><\/script>')</script><script src="../assets/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+      <script src="../assets/alertifyjs/alertify.min.js"></script>
+        <script src="../assets/js/feather.min.js"></script>
+        <!-- <script src="../assets/js/Chart.min.js"></script> -->
+        <!-- <script src="../assets/js/dashboard.js"></script> -->
 
-                                <form action="#" method="POST"  class="form-horizontal" id="changeprofile_form" enctype="multipart/form-data">
-                                
-                                    <div class="modal-body">
-                                           <?php 
-                                            if (isset($user_img)) {
-                                                ?>
-                                                <img id="c_img" src="<?php echo $user_img;?>" alt="your image"  runat="server"  height="250" width="250" class="img-circle" style="border:1px solid;"/>
-                                                <?php
-                                            } 
-                                            else{
-                                              ?>
-                                              <img id="blah" src="../assets/images/placeholder.jpg" alt="your image"  runat="server"  height="250" width="250" class="img-circle" style="border:1px solid;"/>
-                                              <?php
-                                            }
-                                            ?>
-                                        <div class="form-group">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <label>Profile Image</label>
-                                                    <input type="file" class="form-control" id="profileimg" name="profileimg">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                       <button  type="submit" class="btn btn-primary" id="update_profile">Update</button>
-                                       <button type="button" class="btn btn-link" data-dismiss="modal">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-    <?php 
-        include("dash-js.php");
-    ?>
 
-<script type="text/javascript">
-        function readURL(input) {
-        
-           if (input.files && input.files[0]) {
-             var reader = new FileReader();
+
+        <script>
+  feather.replace()
+   function readURL(input) {
+    if (input.files && input.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        $('#u_img').attr('src', e.target.result);
+        $('#c_img').attr('src', e.target.result);
+        $('#p_img').attr('src', e.target.result);
+      }
+    
+      reader.readAsDataURL(input.files[0]);
+    }
+   }
+
+   
+     
          
-             reader.onload = function(e) {
-               $('#c_img').attr('src', e.target.result);
-               $('#r_img').attr('src', e.target.result);
-               $('#m_img').attr('src', e.target.result);
-               
          
-             }
-         
-             reader.readAsDataURL(input.files[0]);
-           }
-         }
-         
-         $("#profileimg").change(function() {
+         $("#change_profile").change(function() {
            readURL(this);
          });
-           $(document).on('submit', '#changepass_form', function(event){
+            $(document).on('submit', '#change_picture_form', function(event){
               event.preventDefault();
-                  
-                var oldpassword = $('#oldpassword').val();
-                var newpassword = $('#newpassword').val();
-                var newpasswordconfirm = $('#newpasswordconfirm').val();
-                      $.ajax({
-                        url:"update_profile_pass.php",
-                        type:'POST',
-                        data:new FormData(this),
-                        cache: false,
-                        contentType:false,
-                        processData:false,
-                        success:function(data)
-                        {
-                          alert(data);
-                          
-                        }
-                      }); 
-              
-            });
-           
-            $(document).on('submit', '#changeprofile_form', function(event){
-              event.preventDefault();
-                    var profileimg = '';
-                    if( document.getElementById("profileimg").files.length == 0 ){
+
+            var formData = new FormData(this);
+            formData.append('action', "change_picture");
+
+             var profileimg = '';
+              if( document.getElementById("change_profile").files.length == 0 ){
                   console.log("no files selected");
               }
               else{
-                profileimg = $('#update_profile').val();
+                profileimg = $('#btn_change_picture').val();
 
               }
                       $.ajax({
-                        url:"update_profile_img.php",
+                        url:"action/profile.php",
                         type:'POST',
-                        data:new FormData(this),
+                        data: formData,
                         cache: false,
                         contentType:false,
                         processData:false,
                         success:function(data)
                         {
-                          alert(data);
+                          var newdata = JSON.parse(data);
+                         
+                          if(newdata.success){
+                             alert(newdata.success);
+                             
+                          }
+                          else{
+                             alert(newdata.error);
+                          }
 
-                           $('#changeprofile').modal('hide');
+                          $('#change_picture').modal('hide');
                         }
                       }); 
               
             });
-               $(document).on('submit', '#changeemail_form', function(event){
-              event.preventDefault();
-              var email = $('#email').val();
 
-               $.ajax({
-                 url:"update_profile_email.php",
-                 type:'POST',
-                 data:new FormData(this),
-                 cache: false,
-                 contentType:false,
-                 processData:false,
-                 success:function(data)
-                 {
-                   alert(data);
-                 }
-               }); 
-              
-            });
+
+
+
+
+           $(document).on('submit', '#change_password_form', function(event){
+            event.preventDefault();
+            var formData = new FormData(this);
+            formData.append('action', "change_password");
+
+              $.ajax({
+                url:"action/profile.php",
+                method:'POST',
+                data: formData,
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  var newdata = JSON.parse(data);
+                  // alert(newdata.user_ID);
+                  if(newdata.success){
+                     alert(newdata.success); 
+                     $('#change_password').modal('hide');
+                     
+                  }
+                  else{
+                     alert(newdata.error);
+                  }
+                  alertify.alert("asdasd").setHeader('Account');
+                  // $('#account_form')[0].reset();
+                  // $('#student_modal').modal('hide');
+                  // dataTable.ajax.reload();
+                }
+              });
+           
+          });
 </script>
-</body>
-
+      </body>
 </html>
