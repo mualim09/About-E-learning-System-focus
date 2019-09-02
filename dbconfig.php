@@ -8,7 +8,7 @@
 class Database
 {   
     private $host = "localhost";
-    private $db_name = "cvsu_elearning1";
+    private $db_name = "cvsu_elearning2";
     private $username = "root";
     private $password = "";
     public $conn;
