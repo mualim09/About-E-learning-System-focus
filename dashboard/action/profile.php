@@ -75,8 +75,45 @@ if (isset($_POST['action']))
 		}
 
 	}
-	else{
+	else if ($_POST['action'] == "change_email")
+	{
 		
+		
+		$user_type = "";
+		$user_type_acro = "";
+		if ($_SESSION['lvl_ID'] == "1")
+		{
+			$user_type = "student";
+			$id_type = "rsd";
+		}
+		if ($_SESSION['lvl_ID'] == "2")
+		{
+			$user_type = "instructor";
+			$id_type = "rid";
+		}
+		if ($_SESSION['lvl_ID'] == "3")
+		{
+			$user_type = "admin";
+			$id_type = "rad";
+		}
+		$update_email =  $_REQUEST["update_email"];
+
+		
+		$query ="UPDATE `record_".$user_type."_details` SET `".$id_type."_Email` = '".$update_email."' WHERE `user_ID` = ".$_SESSION['user_ID'];
+		$stmt = $profile->runQuery($query);
+		$result = $stmt->execute();
+
+		if(!empty($result))
+		{
+			$output['success'] ="Succesfully Updated";
+		}
+		else{
+			$output['error'] ="Failed to Update";
+		}
+
+	}
+	else{
+		$output['error'] ="Unexpected Error";
 		
 	}
 	

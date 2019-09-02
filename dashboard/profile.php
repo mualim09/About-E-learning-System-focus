@@ -115,7 +115,7 @@ include('x-nav.php');
                         </tr>
                         <tr>
                           <th scope="row">Email:</th>
-                          <td><?php  $auth_user->profile_email()?></td>
+                          <td id="profile_email"><?php  $auth_user->profile_email()?></td>
                           <td  colspan="1"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_email">Change</button></td>
                         </tr>
                         <tr>
@@ -182,20 +182,27 @@ include('x-nav.php');
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Change Email</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        ...
+       <form id="change_email_form" enctype="multipart/form-data">
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_email">Email</label>
+                <input type="email" class="form-control" id="update_email" name="update_email" placeholder="" value=""  required="">
+              </div>
+            </div>
       </div>
       <div class="modal-footer">
         <div class="btn-group">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <input type="submit" class="btn btn-primary" id="btn_change_email" value="Save changes">
         </div>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -369,10 +376,39 @@ include('x-nav.php');
                   else{
                      alert(newdata.error);
                   }
-                  alertify.alert("asdasd").setHeader('Account');
-                  // $('#account_form')[0].reset();
-                  // $('#student_modal').modal('hide');
-                  // dataTable.ajax.reload();
+              
+                }
+              });
+           
+          });
+
+             $(document).on('submit', '#change_email_form', function(event){
+            event.preventDefault();
+            var formData = new FormData(this);
+            formData.append('action', "change_email");
+
+              $.ajax({
+                url:"action/profile.php",
+                method:'POST',
+                data: formData,
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  var newdata = JSON.parse(data);
+                  // alert(newdata.user_ID);
+                  if(newdata.success){
+                     alert(newdata.success); 
+                     
+                    var update_email = $('#update_email').val();
+                    $('#change_email').modal('hide');
+                    $('#profile_email').html(update_email);
+                     
+                  }
+                  else{
+                     alert(newdata.error);
+                  }
+              
                 }
               });
            
