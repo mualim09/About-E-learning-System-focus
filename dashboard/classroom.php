@@ -40,6 +40,13 @@ $pageTitle = "Manage Classroom";
           font-size: 3.5rem;
         }
       }
+      #rm_card a{
+        color:white;
+      }
+      #rm_card_btn a{
+        color:black;
+      }
+      
     </style>
     <!-- Custom styles for this template -->
     <link href="../assets/css/dashboard.css" rel="stylesheet">
@@ -75,10 +82,22 @@ include('x-nav.php');
         </ol>
       </nav>
       <div class="table-responsive">
-         <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
+        <?php 
+         if($auth_user->student_level()) { 
+            ?>
+            <button type="button" class="btn btn-sm btn-success float-right join_classroom" data-toggle="modal" data-target="#join_classroom_modal">Join Classroom</button>
+            <?php
+          }
+          else{
+            ?>
+            <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
+            <?php
+          }
+        ?>
+         
          <br><br>
-        <table class="table table-striped table-sm" id="classroom_data">
-          <thead>
+        <table class="table table-borderless  table-sm" id="classroom_data" >
+  <!--         <thead>
             <tr>
               <th>#</th>
               <th>Course Code</th>
@@ -90,7 +109,7 @@ include('x-nav.php');
           <tbody>
             
      
-          </tbody>
+          </tbody> -->
         </table>
 
 
@@ -108,30 +127,73 @@ include('x-nav.php');
       <form method="post" id="classroom_form" enctype="multipart/form-data">
             <div class="form-row">
                 <div class="form-group col-md-12">
-                  <label for="add_classroom_course">Couse Name</label>
-                  <input type="text" class="form-control" id="add_classroom_course" name="add_classroom_course" placeholder="" value=""  required="">
+                  <label for="classroom_course">Couse Name</label>
+                  <input type="text" class="form-control" id="classroom_course" name="classroom_course" placeholder="" value=""  required="">
                 </div>
                 <div class="form-group col-md-12">
-                  <label for="add_classroom_descr">Description:</label>
-                  <textarea class="form-control" id="add_classroom_descr" name="add_classroom_descr" placeholder="" value="" required=""></textarea>
+                  <label for="classroom_descr">Description:</label>
+                  <textarea class="form-control" id="classroom_descr" name="classroom_descr" placeholder="" value="" required=""></textarea>
                 </div>
                 <div class="form-group col-md-12">
-                  <label for="add_classroom_course">Password</label>
-                  <input type="text" class="form-control" id="add_classroom_course" name="add_classroom_password" placeholder="" value=""  required="">
+                  <label for="classroom_password">Password</label>
+                  <input type="text" class="form-control" id="classroom_password" name="classroom_password" placeholder="" value=""  required="">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="student_sex">Status<span class="text-danger">*</span></label>
+                  <select class="form-control" id="class_status" name="class_status" required="">
+                  <?php 
+                   $auth_user->ref_status();
+                  ?>
+                </select>
                 </div>
               </div>   
       </div>
+
       <div class="modal-footer">
-        
-        <div class="btn-group">
-        <button type="submit" class="btn btn-primary submit" id="submit_classroom" value="submit_classroom">Submit</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <input type="hidden" name="classroom_ID" id="classroom_ID" />
+          <input type="hidden" name="action" id="action" />
+        <div class="btn-group" id='sbtng'>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_teacher">Submit</button>
         </div>
       </div>
        </form>
     </div>
   </div>
 </div>
+
+<!-- Modal -->
+<div class="modal fade" id="join_classroom_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Join Classroom</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-row">
+                <div class="form-group col-md-12">
+                  <label for="join_code">Course Code</label>
+                  <input type="text" class="form-control" id="join_code" name="join_code" placeholder="" value=""  required="">
+                </div>
+                <div class="form-group col-md-12">
+                  <label for="classroom_course">Password</label>
+                  <input type="text" class="form-control" id="join_password" name="join_password" placeholder="" value=""  required="">
+                </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="btn-group">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Submit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <div class="modal fade" id="classroom_modal_delete" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -147,8 +209,9 @@ include('x-nav.php');
         <div class="btn-group">
         <button type="submit" class="btn btn-danger" id="classroom_delform">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        <input type="hidden" id="classroom_delete_id" name="classroom_delete_id" value="" >
+        
         </div>
+        <input type="hidden" id="classroom_delete_id" name="classroom_delete_id" value="" >
         </div>
       </div>
       <div class="modal-footer">
@@ -175,6 +238,11 @@ include('x-script.php');
             "processing":true,
             "serverSide":true,
             "order":[],
+               "bAutoWidth": false,
+            "searching": true,
+            // "paging":   false,
+            "ordering": false,
+            "info":     false,
             "ajax":{
               url:"datatable/classroom/fetch.php",
               type:"POST"
@@ -194,7 +262,7 @@ include('x-script.php');
           $(document).on('submit', '#classroom_form', function(event){
             event.preventDefault();
              var formData = new FormData(this);
-              formData.append('action', "classroom_add");
+              // formData.append('action', "classroom_add");
               $.ajax({
                 url:"datatable/classroom/insert.php",
                 method:'POST',
@@ -214,51 +282,56 @@ include('x-script.php');
 
           $(document).on('click', '.add', function(){
             $('#classroom_modal_title').text('Add New Classroom');
-            $("#acc_username").prop("disabled", false);
+
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\btng_null\b/g, "");
+            btng.classList.add("btn-group");
+
             $('#classroom_form')[0].reset();
             $('#submit_input').show();
             $('#submit_input').text('Submit');
-            $('#submit_input').val('submit_Classroom');
-            $('#operation').val("submit_Classroom");
+            $('#submit_input').val('classroom_add');
+            $('#action').val("classroom_add");
           });
 
           $(document).on('click', '.view', function(){
-            var Classroom_ID = $(this).attr("id");
+            var classroom_ID = $(this).attr("id");
             $('#classroom_modal_title').text('View Classroom');
             $('#classroom_modal').modal('show');
-            $("#acc_pass").hide();
-            $("#acc_cpass").hide();
-            $("#l_acc_pass").hide();
-            $("#l_acc_cpass").hide();
+
+
+            $('#submit_input').hide();
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\bbtn-group\b/g, "");
+            btng.classList.add("btng_null");
             
              $.ajax({
                 url:"datatable/classroom/fetch_single.php",
                 method:'POST',
-                data:{action:"classroom_view",Classroom_ID:Classroom_ID},
+                data:{action:"classroom_view",classroom_ID:classroom_ID},
                 dataType    :   'json',
                 success:function(data)
                 {
 
-                $("#acc_username").prop("disabled", true);
-                $("#acc_email").prop("disabled", true);
-                $("#acc_name").prop("disabled", true);
-                $("#acc_lvl").prop("disabled", true);
-                $("#acc_add").prop("disabled", true);
 
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
-                  
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
+
+                $("#classroom_course").prop("disabled", true);
+                $("#classroom_descr").prop("disabled", true);
+                $("#classroom_password").prop("disabled", true);
+                $("#class_status").prop("disabled", true);
+
+                  $('#classroom_course').val(data.class_Name);
+                  $('#classroom_descr').val(data.class_Description);
+                  $('#classroom_password').val(data.class_Password);
+                  $('#class_status').val(data.class_status).change();
+        
 
                   $('#submit_input').hide();
-                  $('#Classroom_ID').val(Classroom_ID);
-                  $('#submit_input').text('Update');
-                  $('#submit_input').val('Classroom_edit');
-                  $('#operation').val("Classroom_edit");
+                  $('#classroom_ID').val(classroom_ID);
+                  $('#submit_input').text('View');
+                  $('#submit_input').val('classroom_view');
+                
+                  $('#action').val("classroom_view");
                   
                 }
               });
@@ -266,45 +339,37 @@ include('x-script.php');
 
             });
           $(document).on('click', '.edit', function(){
-            var Classroom_ID = $(this).attr("id");
+            var classroom_ID = $(this).attr("id");
             $('#classroom_modal_title').text('Edit Classroom');
             $('#classroom_modal').modal('show');
           
-            $("#acc_pass").show();
-            $("#acc_cpass").show();
-            $("#l_acc_pass").show();
-            $("#l_acc_cpass").show();
-
+            $('#submit_input').show();
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\btng_null\b/g, "");
+            btng.classList.add("btn-group");
             
              $.ajax({
                 url:"datatable/classroom/fetch_single.php",
                 method:'POST',
-                data:{action:"classroom_view",Classroom_ID:Classroom_ID},
+                data:{action:"classroom_edit",classroom_ID:classroom_ID},
                 dataType    :   'json',
                 success:function(data)
                 {
-                  $("#acc_username").prop("disabled", true);
-                  $("#acc_email").prop("disabled", false);
-                  $("#acc_name").prop("disabled", false);
-                  $("#acc_lvl").prop("disabled", false);
-                  $("#acc_add").prop("disabled", false);
-                  $("#acc_pass").prop("disabled", false);
-                  $("#acc_cpass").prop("disabled", false);
+                  $("#classroom_course").prop("disabled", false);
+                  $("#classroom_descr").prop("disabled", false);
+                  $("#classroom_password").prop("disabled", false);
+                  $("#class_status").prop("disabled", false);
 
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
-                  
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
+                  $('#classroom_course').val(data.class_Name);
+                  $('#classroom_descr').val(data.class_Description);
+                  $('#classroom_password').val(data.class_Password);
+                  $('#class_status').val(data.class_status).change();
 
                   $('#submit_input').show();
-                  $('#Classroom_ID').val(Classroom_ID);
+                  $('#classroom_ID').val(classroom_ID);
                   $('#submit_input').text('Update');
-                  $('#submit_input').val('Classroom_update');
-                  $('#operation').val("Classroom_edit");
+                  $('#submit_input').val('classroom_edit');   
+                  $('#action').val("classroom_edit");
                   
                 }
               });
@@ -320,6 +385,59 @@ include('x-script.php');
              $('#classroom_delete_id').val(classroom_ID);
             });
 
+            $(document).on('click', '.enable_class', function(){
+            var classroom_ID = $(this).attr("id");
+          
+           alertify.confirm(
+            'Are you sure you want to enable this classroom?', 
+            function(){ 
+               $.ajax({
+               type        :   'POST',
+               url:"datatable/classroom/insert.php",
+                data:{action:"enable_classroom",classroom_ID:classroom_ID},
+               dataType    :   'json',
+               complete     :   function(data) {
+
+                  alertify.alert(data.responseText).setHeader('Classroom');
+                 dataTable.ajax.reload();
+               }
+              });
+              alertify.success('Ok') 
+            }, 
+            function(){ 
+              alertify.error('Cancel')
+            }).setHeader('Classroom');
+            
+            });
+
+
+            $(document).on('click', '.disable_class', function(){
+            var classroom_ID = $(this).attr("id");
+           
+
+            alertify.confirm(
+            'Are you sure you want to disable this classroom?', 
+            function(){ 
+               $.ajax({
+               type        :   'POST',
+               url:"datatable/classroom/insert.php",
+                data:{action:"disabled_classroom",classroom_ID:classroom_ID},
+               dataType    :   'json',
+               complete     :   function(data) {
+
+                  alertify.alert(data.responseText).setHeader('Classroom');
+                 dataTable.ajax.reload();
+               }
+              });
+              alertify.success('Ok') 
+            }, 
+            function(){ 
+              alertify.error('Cancel')
+            }).setHeader('Classroom');
+
+            });
+                        
+
            
 
 
@@ -334,7 +452,6 @@ include('x-script.php');
                $('#classroom_modal_delete').modal('hide');
                alertify.alert(data.responseText).setHeader('Delete this Classroom');
                dataTable.ajax.reload();
-               dataTable_product_data.ajax.reload();
                 
              }
             })

@@ -8,7 +8,7 @@ require_once("../class.user.php");
 $auth_user = new USER();
 // $page_level = 3;
 // $auth_user->check_accesslevel($page_level);
-$pageTitle = "Manage Student Record";
+$pageTitle = "Manage Student";
 ?>
 <!doctype html>
 <html lang="en">
@@ -61,23 +61,25 @@ include('x-nav.php');
         
       </div>
       <nav aria-label="breadcrumb" >
-        <ol class="breadcrumb bcrum" >
-          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
-          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Student Management</li>
+        <ol class="breadcrumb bcrum">
+          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page">Student Record Management</li>
         </ol>
       </nav>
       <div class="table-responsive">
-         <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#student_modal">Add</button>
+          <button type="button" class="btn btn-sm btn-success add" >
+            Add 
+          </button>
          <br><br>
         <table class="table table-striped table-sm" id="student_data">
           <thead>
             <tr>
               <th>#</th>
-              <th>Student#</th>
-              <th>Full Name</th>
+              <th>LRN ID</th>
+              <th>Name</th>
               <th>Sex</th>
-              <th>Course</th>
-              <th>Status</th>
+              <th>Marital</th>
+              <th>Marital</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -88,112 +90,103 @@ include('x-nav.php');
         </table>
 
 
+<!--modal student -->
 <div class="modal fade" id="student_modal" tabindex="-1" role="dialog" aria-labelledby="student_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="student_modal_title">Add New Student</h5>
+        <h5 class="modal-title" id="student_modal_title">Add Attendance</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="student_modal_content">
-    
       <form method="post" id="student_form" enctype="multipart/form-data">
-
-              <div  class="form-row ">
-                <div class="form-group col-md-3">
-                   <img id="student_profile" src="../assets/img/users/default.jpg" alt="Profile Image"  runat="server"  height="125" width="125" class="" style="border:1px solid; border-color: grey;"/>
+      <div class="modal-body" id="product_modal_content">
+            <div class="form-row">
+               
+                <div class="form-group col-md-4">
+                  <img id="s_img" src="../assets/img/users/default.jpg" alt="Student Image"  runat="server"  height="125" width="125" class="img-thumbnail" style="border:1px solid; border-color: #4caf50; min-width:125px; min-height:125px; max-width:125px; max-height:125px; background-size:cover;"/>
+                  <br><br>
+                  <input type="file" class="form-control" id="student_img" name="student_img" placeholder="" value="" >
                 </div>
-                <div class="form-group col-md-3" style="margin-top:25px;">
-                  <label for="student_picture">Choose Picture:</label>
-                  <input type="file" class="form-control" id="select_profile" name="student_picture" >
+                <div class="form-group col-md-4">
+                  
                 </div>
-              </div>
-               <div class="form-row ">
-
+                <div class="form-group col-md-4">
+                  <label for="student_lrn">LRN ID<span class="text-danger">*</span></label>
+                  <input type="number" class="form-control" id="student_lrn" name="student_lrn" placeholder="" value="" required="">
+                </div>
                 <div class="form-group col-md-3">
-                  <label for="student_fname">First Name:</label>
+                  <label for="student_fname">First Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="student_fname" name="student_fname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
-                  <label for="student_mname">Middle Name:</label>
+                  <label for="student_mname">Middle Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="student_mname" name="student_mname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
-                  <label for="student_lname">Last Name:</label>
+                  <label for="student_lname">Last Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" id="student_lname" name="student_lname" placeholder="" value="" required="">
                 </div>
-                <div class="form-group col-md-3">
-                  <label for="student_lname">Suffix: <i>(If None Select N/A)</i></label>
-                  <select class="form-control" id="acc_lvl" name="acc_lvl">
-                    <?php 
-                     $auth_user->user_suffix_option();
-                    ?>
-                  </select>
-                </div>
-                 <div class="form-group col-md-4">
-                  <label for="student_lname">Birthday</label>
-                  <input type="date" class="form-control" id="student_lname" name="student_lname" placeholder="" value="" required="">
+                  <div class="form-group col-md-3">
+                  <label for="student_suffix">Suffix<span class="text-danger">*</span></label>
+                  <select class="form-control" id="student_suffix" name="student_suffix">
+                  <?php 
+                   $auth_user->user_suffix_option();
+                  ?>
+                </select>
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="student_lname">Sex:</i></label>
-                  <select class="form-control" id="acc_lvl" name="acc_lvl">
-                    <?php 
-                     $auth_user->user_sex_option();
-                    ?>
-                  </select>
+                  <label for="student_bday">Birthday<span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" id="student_bday" name="student_bday" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="student_lname">Civil Status:</i></label>
-                  <select class="form-control" id="acc_lvl" name="acc_lvl">
-                    <?php 
-                     $auth_user->user_marital_option();
-                    ?>
-                  </select>
+                  <label for="student_sex">Sex<span class="text-danger">*</span></label>
+                  <select class="form-control" id="student_sex" name="student_sex" required="">
+                  <?php 
+                   $auth_user->user_sex_option();
+                  ?>
+                </select>
                 </div>
-
-
-                 <div class="form-group col-md-6">
-                  <label for="student_lname">Contact</label>
-                  <input type="text" class="form-control" id="student_lname" name="student_lname" placeholder="" value="" required="">
+                <div class="form-group col-md-4">
+                  <label for="student_marital">Marital<span class="text-danger">*</span></label>
+                  <select class="form-control" id="student_marital" name="student_marital" required="">
+                  <?php 
+                   $auth_user->user_marital_option();
+                  ?>
+                </select>
                 </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_email">Email:</label>
-                  <input type="email" class="form-control" id="acc_email" name="acc_email" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="student_lname">Course:</i></label>
-                  <select class="form-control" id="acc_lvl" name="acc_lvl">
-                    <?php 
-                     $auth_user->user_course_option();
-                    ?>
-                  </select>
+                 <div class="form-group col-md-12">
+                  <label for="student_email">Email<span class="text-danger">*</span></label>
+                  <input type="email" class="form-control" id="student_email" name="student_email" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-12">
-                  <label for="acc_add">Address:</label>
-                  <input type="text" class="form-control" id="acc_add" name="acc_add" placeholder="" value="" required="">
+                  <label for="student_address">Address<span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="student_address" name="student_address" placeholder="" value="" required="">
                 </div>
-              </div> 
+            
+      </div>
       </div>
       <div class="modal-footer">
-        <input type="hidden" name="account_ID" id="account_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
+          <input type="hidden" name="student_ID" id="student_ID" />
+          <input type="hidden" name="operation" id="operation" />
+        <div class="btn-group" id='sbtng'>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_student">Submit</button>
         </div>
       </div>
-       </form>
+      </form>
     </div>
   </div>
 </div>
+<!--/modal student -->
 
+<!--delete modal -->
 <div class="modal fade" id="delstudent_modal" tabindex="-1" role="dialog" aria-labelledby="student_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="student_modal_title">Delete this Account</h5>
+        <h5 class="modal-title" id="student_modal_title">Delete this Student</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -201,7 +194,7 @@ include('x-nav.php');
       <div class="modal-body">
         <div class="text-center">
         <div class="btn-group">
-        <button type="submit" class="btn btn-danger" id="account_delform">Delete</button>
+        <button type="submit" class="btn btn-danger" id="student_delform">Delete</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
         </div>
@@ -211,7 +204,9 @@ include('x-nav.php');
       </div>
     </div>
   </div>
-</div>
+</div><!--/delete modal -->
+
+
       </div>
     </main>
   </div>
@@ -222,32 +217,28 @@ include('x-script.php');
 ?>
         <script type="text/javascript">
    
+          function readURL(input) {
+          if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+              $('#s_img').attr('src', e.target.result);
+            }
+          
+            reader.readAsDataURL(input.files[0]);
+          }
+         }
 
-            function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#student_profile').attr('src', e.target.result);
-      }
-    
-      reader.readAsDataURL(input.files[0]);
-    }
-   }
-     
-         
-         
-         $("#select_profile").change(function() {
+          $("#student_img").change(function() {
            readURL(this);
-         });
-
+          });
           $(document).ready(function() {
              
-            var dataTable = $('#student_data').DataTable({
+            var student_dataTable = $('#student_data').DataTable({
             "processing":true,
             "serverSide":true,
             "order":[],
             "ajax":{
-              url:"datatable/record_student/fetch.php",
+              url:"datatable/student/fetch.php",
               type:"POST"
             },
             "columnDefs":[
@@ -261,21 +252,21 @@ include('x-script.php');
 
 
 
-          $(document).on('submit', '#account_form', function(event){
+          $(document).on('submit', '#student_form', function(event){
             event.preventDefault();
 
               $.ajax({
-                url:"datatable/record_student/insert.php",
+                url:"datatable/student/insert.php",
                 method:'POST',
                 data:new FormData(this),
                 contentType:false,
                 processData:false,
                 success:function(data)
                 {
-                  alertify.alert(data).setHeader('Account');
-                  $('#account_form')[0].reset();
+                  alertify.alert(data).setHeader('Student Record');
+                  $('#student_form')[0].reset();
                   $('#student_modal').modal('hide');
-                  dataTable.ajax.reload();
+                  student_dataTable.ajax.reload();
                 }
               });
            
@@ -283,126 +274,170 @@ include('x-script.php');
 
           $(document).on('click', '.add', function(){
             $('#student_modal_title').text('Add New Student');
-            $("#acc_username").prop("disabled", false);
-            $('#account_form')[0].reset();
+            $('#student_modal').modal('show');
+            $('#student_form')[0].reset();
+
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\btng_null\b/g, "");
+            btng.classList.add("btn-group");
+
+            $('#s_img').attr('src', "../assets/img/users/default.jpg");
+            $("#student_lrn").prop("disabled", false);
+            $("#student_fname").prop("disabled", false);
+            $("#student_mname").prop("disabled", false);
+            $("#student_lname").prop("disabled", false);
+            $("#student_suffix").prop("disabled", false);
+            $("#student_bday").prop("disabled", false);
+            $("#student_sex").prop("disabled", false);
+            $("#student_marital").prop("disabled", false);
+            $("#student_email").prop("disabled", false);
+            $("#student_address").prop("disabled", false);
+
+
+            $("#student_img").show();
             $('#submit_input').show();
+
             $('#submit_input').text('Submit');
-            $('#submit_input').val('submit_account');
-            $('#operation').val("submit_account");
+            $('#submit_input').val('submit_student');
+            $('#operation').val("submit_student");
           });
 
           $(document).on('click', '.view', function(){
-            var account_ID = $(this).attr("id");
-            $('#student_modal_title').text('View Account');
+            var student_ID = $(this).attr("id");
+            $('#student_modal_title').text('View Student');
             $('#student_modal').modal('show');
-            $("#acc_pass").hide();
-            $("#acc_cpass").hide();
-            $("#l_acc_pass").hide();
-            $("#l_acc_cpass").hide();
             
+
+            $('#submit_input').hide();
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\bbtn-group\b/g, "");
+            btng.classList.add("btng_null");
+
+                
+                $("#student_img").hide();
+                
              $.ajax({
-                url:"datatable/record_student/fetch_single.php",
+                url:"datatable/student/fetch_single.php",
                 method:'POST',
-                data:{action:"account_view",account_ID:account_ID},
+                data:{action:"student_view",student_ID:student_ID},
                 dataType    :   'json',
                 success:function(data)
                 {
-
-                $("#acc_username").prop("disabled", true);
-                $("#acc_email").prop("disabled", true);
-                $("#acc_name").prop("disabled", true);
-                $("#acc_lvl").prop("disabled", true);
-                $("#acc_add").prop("disabled", true);
-
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
+                  $("#student_lrn").prop("disabled", true);
+                  $("#student_fname").prop("disabled", true);
+                  $("#student_mname").prop("disabled", true);
+                  $("#student_lname").prop("disabled", true);
+                  $("#student_suffix").prop("disabled", true);
+                  $("#student_bday").prop("disabled", true);
+                  $("#student_sex").prop("disabled", true);
+                  $("#student_marital").prop("disabled", true);
+                  $("#student_email").prop("disabled", true);
+                  $("#student_address").prop("disabled", true);
                   
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
+
+                  $('#s_img').attr('src', data.student_img);
+                  $('#student_lrn').val(data.student_lrn);
+                  $('#student_fname').val(data.student_fname);
+                  $('#student_mname').val(data.student_mname);
+                  $('#student_lname').val(data.student_lname);
+                  $('#student_suffix').val(data.student_suffix).change();
+                  $('#student_bday').val(data.student_bday);
+                  $('#student_sex').val(data.student_sex).change();
+                  $('#student_marital').val(data.student_marital).change();
+                  $('#student_email').val(data.student_email);
+                  $('#student_address').val(data.student_address);
 
                   $('#submit_input').hide();
-                  $('#account_ID').val(account_ID);
+                  $('#student_ID').val(student_ID);
                   $('#submit_input').text('Update');
-                  $('#submit_input').val('account_edit');
-                  $('#operation').val("account_edit");
+                  $('#submit_input').val('student_view');
+                  $('#operation').val("student_view");
                   
                 }
               });
 
 
             });
-          $(document).on('click', '.edit', function(){
-            var account_ID = $(this).attr("id");
-            $('#student_modal_title').text('Edit Account');
-            $('#student_modal').modal('show');
-          
-            $("#acc_pass").show();
-            $("#acc_cpass").show();
-            $("#l_acc_pass").show();
-            $("#l_acc_cpass").show();
 
+
+            $(document).on('click', '.edit', function(){
+            var student_ID = $(this).attr("id");
+            $('#student_modal_title').text('View Student');
+            $('#student_modal').modal('show');
             
+
+            var btng = document.getElementById("sbtng");
+            btng.className = btng.className.replace(/\btng_null\b/g, "");
+            btng.classList.add("btn-group");
+
+                
+                $("#student_img").show();
+                
              $.ajax({
-                url:"datatable/record_student/fetch_single.php",
+                url:"datatable/student/fetch_single.php",
                 method:'POST',
-                data:{action:"account_view",account_ID:account_ID},
+                data:{action:"student_update",student_ID:student_ID},
                 dataType    :   'json',
                 success:function(data)
                 {
-                  $("#acc_username").prop("disabled", true);
-                  $("#acc_email").prop("disabled", false);
-                  $("#acc_name").prop("disabled", false);
-                  $("#acc_lvl").prop("disabled", false);
-                  $("#acc_add").prop("disabled", false);
-                  $("#acc_pass").prop("disabled", false);
-                  $("#acc_cpass").prop("disabled", false);
-
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
+                  $("#student_lrn").prop("disabled", false);
+                  $("#student_fname").prop("disabled", false);
+                  $("#student_mname").prop("disabled", false);
+                  $("#student_lname").prop("disabled", false);
+                  $("#student_suffix").prop("disabled", false);
+                  $("#student_bday").prop("disabled", false);
+                  $("#student_sex").prop("disabled", false);
+                  $("#student_marital").prop("disabled", false);
+                  $("#student_email").prop("disabled", false);
+                  $("#student_address").prop("disabled", false);
                   
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
+
+                  $('#s_img').attr('src', data.student_img);
+                  $('#student_lrn').val(data.student_lrn);
+                  $('#student_fname').val(data.student_fname);
+                  $('#student_mname').val(data.student_mname);
+                  $('#student_lname').val(data.student_lname);
+                  $('#student_suffix').val(data.student_suffix).change();
+                  $('#student_bday').val(data.student_bday);
+                  $('#student_sex').val(data.student_sex).change();
+                  $('#student_marital').val(data.student_marital).change();
+                  $('#student_email').val(data.student_email);
+                  $('#student_address').val(data.student_address);
 
                   $('#submit_input').show();
-                  $('#account_ID').val(account_ID);
+                  $('#student_ID').val(student_ID);
                   $('#submit_input').text('Update');
-                  $('#submit_input').val('account_update');
-                  $('#operation').val("account_edit");
+                  $('#submit_input').val('student_update');
+                  $('#operation').val("student_update");
                   
                 }
               });
 
 
             });
+   
             $(document).on('click', '.delete', function(){
-            var account_ID = $(this).attr("id");
+            var student_ID = $(this).attr("id");
              $('#delstudent_modal').modal('show');
-             $('.submit').hide();
+             // $('.submit').hide();
              
-             $('#account_ID').val(account_ID);
+             $('#student_ID').val(student_ID);
             });
 
            
 
 
-          $(document).on('click', '#account_delform', function(event){
-             var account_ID =  $('#account_ID').val();
+          $(document).on('click', '#student_delform', function(event){
+             var student_ID =  $('#student_ID').val();
             $.ajax({
              type        :   'POST',
-             url:"datatable/record_student/insert.php",
-             data        :   {operation:"delete_account",account_ID:account_ID},
+             url:"datatable/student/insert.php",
+             data        :   {operation:"delete_student",student_ID:student_ID},
              dataType    :   'json',
              complete     :   function(data) {
                $('#delstudent_modal').modal('hide');
-               alertify.alert(data.responseText).setHeader('Delete this Account');
-               dataTable.ajax.reload();
-               dataTable_product_data.ajax.reload();
+               alertify.alert(data.responseText).setHeader('Delete this Student');
+               student_dataTable.ajax.reload();
                 
              }
             })

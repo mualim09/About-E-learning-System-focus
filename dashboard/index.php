@@ -20,12 +20,10 @@ $pageTitle = "Dashboard";
 
     <!-- Bootstrap core CSS -->
     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="../assets/css/icomoon/styles.css" rel="stylesheet" type="text/css">
 
 
     <style>
-      .sidebar .nav-link.active {
-          color: #4caf50 !important;
-      }
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -59,7 +57,6 @@ include('x-nav.php');
      <!--    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 class="h2">Dashboard</h1> 
       </div>-->
-
     <div class="row">
                 <div class="col-sm-12 text-center " style="min-height: 100px;">
                      <img src="../assets/img/logo/logo.png" height="80" style="margin-left: -450px;"> <H3 style="margin-top: -50px;">CAVITE STATE UNIVERSITY</H3>
@@ -97,13 +94,18 @@ include('x-nav.php');
                 </div>
               </div>
             </div>
+
+
+
+
+
     </main>
   </div>
 </div>
-<script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/jquery-slim.min.js"><\/script>')</script><script src="../assets/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-        <script src="../assets/js/feather.min.js"></script>
-        <!-- <script src="../assets/js/Chart.min.js"></script> -->
-        <script src="../assets/js/dashboard.js"></script>
+<?php 
+include('x-script.php');
+?>
+
+  
       </body>
 </html>

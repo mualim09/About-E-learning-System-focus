@@ -3,6 +3,15 @@ echo $current_url = $_SERVER['REQUEST_URI'];
 $url_explde = explode('/', $current_url);
 $pagefile_name = $url_explde[3];
 
+// room_module
+// room_student
+// room_announcement
+// room_activity
+if(isset($rtab_n))
+{
+  $pagefile_name = "room";
+}
+
 function navlist($pagefile_name,$name,$link,$icon){
  
   if ($pagefile_name == $link) {
@@ -26,8 +35,33 @@ function navlist($pagefile_name,$name,$link,$icon){
 
 
 ?>
-<nav class="col-md-2 d-none d-md-block bg-light sidebar">
-      <div class="sidebar-sticky">
+<style>
+  .nav-link{
+      color:white !important; 
+  }
+  svg {
+    color:white !important; 
+  }
+  .nav-link:hover{
+    background-color:#4caf50   ;
+  }
+
+
+    ul ul a {
+       
+        padding-left: 50px !important;
+     
+    }
+    ul ul a:hover {
+        background: #eee;
+        padding-left: 50px !important;
+     
+    }
+    </style>
+<nav class="col-md-2 d-none d-md-block bg-light sidebar" style="background: #6c757d !important;
+        color: white" >
+      <div class="sidebar-sticky" style="overflow-x: hidden;
+    overflow-y: auto;">
         <div style="height: 120px;" class="text-center">
            <img id="c_img" src="<?php $auth_user->getUserPic();?>" alt="Profile Image"  runat="server"  height="85" width="85" class="rounded-circle" style="border:1px solid;"/>
            <br>
@@ -35,28 +69,31 @@ function navlist($pagefile_name,$name,$link,$icon){
         </div>
 
         <ul class="nav flex-column">
-          <div style="background: #eee;
+          
+          <div style="background: #383d41;
     font-size: 12px;
     font-weight: 600;
     padding: 8px 16px;">MAIN NAVIGATION</div>
           <?php 
-          navlist($pagefile_name,"Dashboard","index","home");
+       
+          navlist($pagefile_name,"Dashboard","index",'home');
+          if($auth_user->student_level() || $auth_user->instructor_level() ) { 
+          navlist($pagefile_name,"My Room","classroom",'monitor');
+          }
+          if($auth_user->admin_level()) { 
           navlist($pagefile_name,"Account Management","account","users");
-          navlist($pagefile_name,"Student Management","student","users");
-          navlist($pagefile_name,"Instructor Management","instructor","users");
-          navlist($pagefile_name,"Quiz Management","test","users");
-          navlist($pagefile_name,"Query Simulator","query_simulator","database");
+          navlist($pagefile_name,"Student Management ","student","book");
+          navlist($pagefile_name,"Instructor Management (.)","instructor","book");
+       
+          navlist($pagefile_name,"Query Simulator (.)","query_simulator","database");
           navlist($pagefile_name,"Classroom","classroom","clipboard");
-           
+          }
           ?>
-          <div class="text-center " style=" position: absolute;bottom: 0; color:#4caf50; padding:5px;">
+        </ul>
+      <div class="text-center " style=" position: absolute;bottom: 0; color:white; padding:5px;">
             <hr>
             <strong>CvSU E-learning for Information Management</strong>
           </div>
-
-        </ul>
-        <!-- <div class="text-center">CvSU E-learning for Information Management</div> -->
-        
       </div>
 
     </nav>

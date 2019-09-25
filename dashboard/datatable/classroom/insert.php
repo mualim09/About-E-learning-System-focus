@@ -7,9 +7,9 @@ if($_POST["action"] == "classroom_add")
 {	
 	try
 	{	$user_ID = $_SESSION['user_ID'];
-		$classroom_course = $_POST["add_classroom_course"];
-		$classroom_descr = $_POST["add_classroom_descr"];
-		$classroom_password = $_POST["add_classroom_password"];
+		$classroom_course = $_POST["classroom_course"];
+		$classroom_descr = $_POST["classroom_descr"];
+		$classroom_password = $_POST["classroom_password"];
 
 		$last_id = $classroom->insert_classroom($user_ID,$classroom_course,$classroom_descr,$classroom_password);
 		$y = date("Y");
@@ -44,16 +44,100 @@ if($_POST["action"] == "classroom_add")
 }
 if($_POST["action"] == "classroom_delete")
 {	
-	$classroom_ID = $_POST["classroom_ID"];
-	$sql = "DELETE FROM `class_room` WHERE `class_room`.`class_ID` = $classroom_ID";
-	$statement = $classroom->runQuery($sql);
-			
-	$result = $statement->execute();
-	if(!empty($result))
+	try
 	{
-		echo 'Successfully Deleted';
+		$classroom_ID = $_POST["classroom_ID"];
+		$sql = "DELETE FROM `class_room` WHERE `class_room`.`class_ID` = $classroom_ID";
+		$statement = $classroom->runQuery($sql);
+				
+		$result = $statement->execute();
+		if(!empty($result))
+		{
+			echo 'Successfully Deleted';
+		}
+
+	}
+	catch (PDOException $e)
+	{	
+	    echo "There is some problem in connection: " . $e->getMessage();
 	}
 }
+
+if($_POST["action"] == "classroom_edit")
+{
+	try
+	{
+		$classroom_ID = $_POST["classroom_ID"];
+		$classroom_course = $_POST["classroom_course"];
+		$classroom_descr = $_POST["classroom_descr"];
+		$classroom_password = $_POST["classroom_password"];
+		$class_status = $_POST["class_status"];
+
+		$sql = "UPDATE `class_room` 
+		SET 
+		`class_Name` = '$classroom_course',
+		`class_Description` = '$classroom_descr',
+		`status_ID` = '$class_status',
+		`class_Password` = '$classroom_password' 
+		WHERE `class_room`.`class_ID` =  $classroom_ID";
+		$statement = $classroom->runQuery($sql);
+				
+		$result = $statement->execute();
+		if(!empty($result))
+		{
+			echo 'Successfully Enable';
+		}
+	}
+	catch (PDOException $e)
+	{	
+	    echo "There is some problem in connection: " . $e->getMessage();
+	}
+	
+}
+if($_POST["action"] == "enable_classroom")
+{
+	try
+	{
+		$classroom_ID = $_POST["classroom_ID"];
+
+		$sql = "UPDATE `class_room` SET `status_ID` = '1' WHERE `class_room`.`class_ID` = $classroom_ID";
+		$statement = $classroom->runQuery($sql);
+				
+		$result = $statement->execute();
+		if(!empty($result))
+		{
+			echo 'Successfully Enable';
+		}
+	}
+	catch (PDOException $e)
+	{	
+	    echo "There is some problem in connection: " . $e->getMessage();
+	}
+	
+}
+if($_POST["action"] == "disabled_classroom")
+{
+	try
+	{
+		$classroom_ID = $_POST["classroom_ID"];
+
+		$sql = "UPDATE `class_room` SET `status_ID` = '2' WHERE `class_room`.`class_ID` = $classroom_ID";
+		$statement = $classroom->runQuery($sql);
+				
+		$result = $statement->execute();
+		if(!empty($result))
+		{
+			echo 'Successfully Disabled';
+		}
+	}
+	catch (PDOException $e)
+	{	
+	    echo "There is some problem in connection: " . $e->getMessage();
+	}
+}
+
+
+
 
 ?>
 

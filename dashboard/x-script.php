@@ -5,7 +5,7 @@
       <script src="../assets/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
         <script src="../assets/js/feather.min.js"></script>
         <script src="../assets/js/dashboard.js"></script>
-        <script type="text/javascript" src="../assets/datatables/datatables.min.js"></script>
-        <script src="../assets/alertifyjs/alertify.min.js"></script>
+        <script type="text/javascript" src="../assets/plugins/datatables/datatables.min.js"></script>
+        <script src="../assets/plugins/alertifyjs/alertify.min.js"></script>
    
    

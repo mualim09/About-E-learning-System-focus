@@ -83,7 +83,7 @@ if(isset($_POST["operation"]))
 		}
 		else{
 			$newpass = $account->encryptIt($acc_pass);
-			$sql = "UPDATE `user` SET `lvl_ID` = :acc_lvl,  `user_Pass` = :acc_pass, `user_Email` = :acc_email, `user_Address` = :acc_address WHERE `user`.`user_ID` = :account_ID;";
+			$sql = "UPDATE `usezr` SET `lvl_ID` = :acc_lvl,  `user_Pass` = :acc_pass, `user_Email` = :acc_email, `user_Address` = :acc_address WHERE `user`.`user_ID` = :account_ID;";
 			$statement = $account->runQuery($sql);
 				
 			$result = $statement->execute(

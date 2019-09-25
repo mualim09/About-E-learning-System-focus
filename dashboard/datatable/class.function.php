@@ -58,8 +58,107 @@ class DTFunction
             echo $e->getMessage();
         } 
     }
+    public function  student_level()
+    {
+        if ($_SESSION['lvl_ID'] == "1")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    public function  instructor_level()
+    {
+        if ($_SESSION['lvl_ID'] == "2")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }   
+    }
+    public function  admin_level()
+    {
+        if ($_SESSION['lvl_ID'] == "3")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
-    public function insert_classroom($user_ID,$classroom_course,$classroom_descr,$classroom_password){
+    public function generate_account($id,$user_type){
+        try{
+        $user_type_acro = "";
+
+        if ($user_type == "student")
+        {
+            $user_type_acro = "rsd";
+             $sc_id = "rsd_StudNum";
+        }
+        if ($user_type == "instructor")
+        {
+            $user_type_acro = "rid";
+            $sc_id = "rid_EmpID";
+        }
+        if ($user_type == "admin")
+        {
+            $user_type_acro = "rad";
+            $sc_id = "rad_EmpID";
+
+        }
+            $q1 ="SELECT * FROM `record_".$user_type."_details` WHERE ".$user_type_acro."_ID = '$id'";
+
+            $stmt1 = $this->conn->prepare($q1);
+            $stmt1->execute();
+            $result1 = $stmt1->fetchAll();
+            
+
+            foreach($result1 as $row)
+            {
+                $lastname = $row[$user_type_acro."_LName"];
+                $sc_id = $row[$sc_id];
+
+            }
+            $ac_user = $sc_id;
+            $ac_pass = strtolower($lastname).'123';
+
+
+            $n_pass = password_hash($ac_pass, PASSWORD_DEFAULT);
+
+            $q2 ="INSERT INTO `user_account` (`user_ID`, `lvl_ID`, `user_Img`, `user_Name`, `user_Pass`, `user_Registered`) VALUES (NULL, '2', NULL, '$ac_user', '$n_pass', CURRENT_TIMESTAMP);";
+            $stmt2 = $this->conn->prepare($q2);
+            $stmt2->execute();
+            $last_id = $this->conn->lastInsertId();
+
+
+
+            $q3  = "UPDATE `record_instructor_details` SET `user_ID` = '$last_id' WHERE `record_instructor_details`.`rid_ID` = '$id'";
+            $stmt3 = $this->conn->prepare($q3);
+            $r3 = $stmt3->execute();
+
+            if(!empty($r3))
+            {
+                echo '<div class="text-center"><strong>Username:</strong>'.$ac_user.'<br>';
+                echo '<strong>Password:</strong>'.$ac_pass.'<br>';
+                echo 'Account Successfully Created</div>';
+            }
+            
+
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+
+    }
+
+  public function insert_classroom($user_ID,$classroom_course,$classroom_descr,$classroom_password){
         try
         { 
             $sql = "INSERT INTO `class_room` (`class_ID`, `user_ID`, `class_Code`, `class_Name`, `class_Description`, `status_ID`, `class_Password`) VALUES (NULL, '$user_ID', NULL, '$classroom_course', '$classroom_descr', 1, '$classroom_password');";
@@ -73,9 +172,6 @@ class DTFunction
             echo $e->getMessage();
         } 
     }
-
-
-    
 }
 
 

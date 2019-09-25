@@ -84,26 +84,26 @@ include('x-nav.php');
                   <div class="card-body "  style="min-height: 250px">
                     <table class="table table-striped">
                       <tbody>
-                      	<?php 
-                      	if($auth_user->admin_level() || $auth_user->instructor_level()){
-                      	?>
-                      	<tr>
+                        <?php 
+                        if($auth_user->admin_level() || $auth_user->instructor_level()){
+                        ?>
+                        <tr>
                           <th scope="row">Goverment ID:</th>
                           <td><?php  $auth_user->profile_school_id()?></td>
                           <td  colspan="1"></td>
                         </tr>
-                      	<?php
-                      	}
-                      	else{
-                      		?>
-                      		<tr>
-	                          <th scope="row">Student ID:</th>
-	                          <td><?php  $auth_user->profile_school_id()?></td>
-	                          <td  colspan="1"></td>
-	                        </tr>
-                      		<?php
-                      	}
-                      	?>
+                        <?php
+                        }
+                        else{
+                          ?>
+                          <tr>
+                            <th scope="row">Student ID:</th>
+                            <td><?php  $auth_user->profile_school_id()?></td>
+                            <td  colspan="1"></td>
+                          </tr>
+                          <?php
+                        }
+                        ?>
                         <tr>
                           <th scope="row">Name:</th>
                           <td><?php  $auth_user->profile_name()?></td>
@@ -281,138 +281,123 @@ include('x-nav.php');
         <script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="../assets/js/jquery-3.3.1.min.js" ></script>
       <script>window.jQuery || document.write('<script src="../assets/js/jquery-slim.min.js"><\/script>')</script><script src="../assets/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-      <script src="../assets/alertifyjs/alertify.min.js"></script>
+      <script src="../assets/plugins/alertifyjs/alertify.min.js"></script>
         <script src="../assets/js/feather.min.js"></script>
         <!-- <script src="../assets/js/Chart.min.js"></script> -->
         <!-- <script src="../assets/js/dashboard.js"></script> -->
 
 
 
-        <script>
-  feather.replace()
-   function readURL(input) {
-    if (input.files && input.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function(e) {
-        $('#u_img').attr('src', e.target.result);
-        $('#c_img').attr('src', e.target.result);
-        $('#p_img').attr('src', e.target.result);
-      }
-    
-      reader.readAsDataURL(input.files[0]);
+<script>
+    feather.replace()
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $('#u_img').attr('src', e.target.result);
+                $('#c_img').attr('src', e.target.result);
+                $('#p_img').attr('src', e.target.result);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
     }
-   }
 
-   
-     
-         
-         
-         $("#change_profile").change(function() {
-           readURL(this);
-         });
-            $(document).on('submit', '#change_picture_form', function(event){
-              event.preventDefault();
+    $("#change_profile").change(function() {
+        readURL(this);
+    });
+    $(document).on('submit', '#change_picture_form', function(event) {
+        event.preventDefault();
 
-            var formData = new FormData(this);
-            formData.append('action', "change_picture");
+        var formData = new FormData(this);
+        formData.append('action', "change_picture");
 
-             var profileimg = '';
-              if( document.getElementById("change_profile").files.length == 0 ){
-                  console.log("no files selected");
-              }
-              else{
-                profileimg = $('#btn_change_picture').val();
+        var profileimg = '';
+        if (document.getElementById("change_profile").files.length == 0) {
+            console.log("no files selected");
+        } else {
+            profileimg = $('#btn_change_picture').val();
 
-              }
-                      $.ajax({
-                        url:"action/profile.php",
-                        type:'POST',
-                        data: formData,
-                        cache: false,
-                        contentType:false,
-                        processData:false,
-                        success:function(data)
-                        {
-                          var newdata = JSON.parse(data);
-                         
-                          if(newdata.success){
-                             alert(newdata.success);
-                             
-                          }
-                          else{
-                             alert(newdata.error);
-                          }
+        }
+        $.ajax({
+            url: "action/profile.php",
+            type: 'POST',
+            data: formData,
+            cache: false,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                var newdata = JSON.parse(data);
 
-                          $('#change_picture').modal('hide');
-                        }
-                      }); 
-              
-            });
+                if (newdata.success) {
+                    alert(newdata.success);
 
-
-
-
-
-           $(document).on('submit', '#change_password_form', function(event){
-            event.preventDefault();
-            var formData = new FormData(this);
-            formData.append('action', "change_password");
-
-              $.ajax({
-                url:"action/profile.php",
-                method:'POST',
-                data: formData,
-                contentType:false,
-                processData:false,
-                success:function(data)
-                {
-                  var newdata = JSON.parse(data);
-                  // alert(newdata.user_ID);
-                  if(newdata.success){
-                     alert(newdata.success); 
-                     $('#change_password').modal('hide');
-                     
-                  }
-                  else{
-                     alert(newdata.error);
-                  }
-              
+                } else {
+                    alert(newdata.error);
                 }
-              });
-           
-          });
 
-             $(document).on('submit', '#change_email_form', function(event){
-            event.preventDefault();
-            var formData = new FormData(this);
-            formData.append('action', "change_email");
+                $('#change_picture').modal('hide');
+            }
+        });
 
-              $.ajax({
-                url:"action/profile.php",
-                method:'POST',
-                data: formData,
-                contentType:false,
-                processData:false,
-                success:function(data)
-                {
-                  var newdata = JSON.parse(data);
-                  // alert(newdata.user_ID);
-                  if(newdata.success){
-                     alert(newdata.success); 
-                     
+    });
+
+    $(document).on('submit', '#change_password_form', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('action', "change_password");
+
+        $.ajax({
+            url: "action/profile.php",
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                var newdata = JSON.parse(data);
+                // alert(newdata.user_ID);
+                if (newdata.success) {
+                    alert(newdata.success);
+                    $('#change_password').modal('hide');
+
+                } else {
+                    alert(newdata.error);
+                }
+
+            }
+        });
+
+    });
+
+    $(document).on('submit', '#change_email_form', function(event) {
+        event.preventDefault();
+        var formData = new FormData(this);
+        formData.append('action', "change_email");
+
+        $.ajax({
+            url: "action/profile.php",
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function(data) {
+                var newdata = JSON.parse(data);
+                // alert(newdata.user_ID);
+                if (newdata.success) {
+                    alert(newdata.success);
+
                     var update_email = $('#update_email').val();
                     $('#change_email').modal('hide');
                     $('#profile_email').html(update_email);
-                     
-                  }
-                  else{
-                     alert(newdata.error);
-                  }
-              
+
+                } else {
+                    alert(newdata.error);
                 }
-              });
-           
-          });
+
+            }
+        });
+
+    });
 </script>
       </body>
 </html>

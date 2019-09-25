@@ -30,7 +30,7 @@ $pagefile_name = $url_explde[2];
 
     <style>
       body {
-      background: url('assets/img/background/cvsu.jpg') no-repeat center center fixed;
+      background: url('assets/img/background/bg-login.png') no-repeat center center fixed;
       -webkit-background-size: cover;
       -moz-background-size: cover;
       background-size: cover;
@@ -55,7 +55,7 @@ $pagefile_name = $url_explde[2];
     <link href="assets/css/floating-labels.css" rel="stylesheet">
 
   <!-- include the style -->
-  <link rel="stylesheet" href="assets/alertifyjs/css/alertify.min.css" />
+  <link rel="stylesheet" href="assets/plugins/alertifyjs/css/alertify.min.css" />
   <!-- include a theme -->
-  <link rel="stylesheet" href="assets/alertifyjs/css/themes/default.min.css" />
+  <link rel="stylesheet" href="assets/plugins/alertifyjs/css/themes/default.min.css" />
   </head>
