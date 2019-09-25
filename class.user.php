@@ -461,6 +461,43 @@ class USER
 			return false;
 		}
 	}
+	 public function  classroom_details($classroom_ID)
+	{
+		$output = array();
+		$query ="SELECT cr.*,
+(case  
+ when (ua.lvl_ID = 1) then (SELECT CONCAT(rsd.rsd_FName,' ',rsd.rsd_MName,' ',rsd.rsd_LName) FROM record_student_details rsd WHERE rsd.user_ID = ua.user_ID)
+when (ua.lvl_ID = 2)  then (SELECT CONCAT(rid.rid_FName,' ',rid.rid_MName,' ',rid.rid_LName) FROM record_instructor_details rid WHERE rid.user_ID = ua.user_ID)
+when (ua.lvl_ID = 3)  then (SELECT CONCAT(rad.rad_FName,' ',rad.rad_MName,' ',rad.rad_LName) FROM record_admin_details rad WHERE rad.user_ID = ua.user_ID)
+end)  Posted_By 
+FROM `class_room` `cr` 
+LEFT JOIN `user_account` `ua` ON `ua`.`user_ID` = `cr`.`user_ID`
+LEFT JOIN `user_level` `ul` ON `ul`.`lvl_ID` = `ua`.`lvl_ID`
+WHERE `cr`.class_ID  = '".$classroom_ID."' 
+			LIMIT 1";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+
+		foreach($result as $row)
+		{
+
+
+			$output["class_ID"] = $row["class_ID"];
+			$output["class_Code"] = $row["class_Code"];
+			$output["class_Name"] = $row["class_Name"];
+			$output["class_Description"] = $row["class_Description"];
+			$output["class_Password"] = $row["class_Password"];
+			$output["class_status"] = $row["status_ID"];
+			$output["Instructor"] = $row["Posted_By"];
+			
+
+		
+		}
+		return $output;
+	}
+
+	
 	
 
 

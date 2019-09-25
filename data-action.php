@@ -53,7 +53,7 @@ if (isset($_POST['operation'])) {
 			else
 			{
 			
-				$message["error"] = "Error Login" ;
+				$message["error"] = "Error Register" ;
 
 			}
 		}

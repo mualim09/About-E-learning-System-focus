@@ -18,7 +18,7 @@ $header = new USER();
   </nav>
   	<div class="w-100 bg-dark text-center">
   		<center class="text-white">
-          Cavite State University - E-Learning System<br>
+          Cavite State University - Information System<br>
 All Rights Reserved<br>Copyright &copy; 2019 <?php 
 												if (date('Y') !== "2019") 
 												{

@@ -67,9 +67,9 @@ include('x-nav.php');
         </ol>
       </nav>
                      <div class="col-sm-12 sql_simulator">
-     <link rel="stylesheet" href="../assets/sql_simulator/css/codemirror.css">
-  <link rel="stylesheet" href="../assets/sql_simulator/css/demo.css">
-  <script src="../assets/sql_simulator/css/codemirror.js"></script>            
+     <link rel="stylesheet" href="../assets/plugins/sql_simulator/css/codemirror.css">
+  <link rel="stylesheet" href="../assets/plugins/sql_simulator/css/demo.css">
+  <script src="../assets/plugins/sql_simulator/css/codemirror.js"></script>            
                <main>
    <label for='commands'>Enter some SQL</label> 
    <div class="btn-group float-right">
@@ -150,8 +150,8 @@ SELECT name,hired_on FROM employees ORDER BY hired_on;
 include('x-script.php');
 ?>
 
-  <script src="../assets/sql_simulator/js/sql.js"></script>
-  <script type="text/javascript" src="../assets/sql_simulator/css/gui.js"></script>
+  <script src="../assets/plugins/sql_simulator/js/sql.js"></script>
+  <script type="text/javascript" src="../assets/plugins/sql_simulator/css/gui.js"></script>
   <script type="text/javascript">
   // $(document).on('click', '#load_sample_command', function(){
   

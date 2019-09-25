@@ -61,13 +61,12 @@ include('x-nav.php');
         
       </div>
       <nav aria-label="breadcrumb" >
-        <ol class="breadcrumb bcrum" >
-          <li class="breadcrumb-item " ><a href="index" class="bcrum_i_a">Dashboard</a></li>
-          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Account Management</li>
+        <ol class="breadcrumb bcrum">
+          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page">Account Management</li>
         </ol>
       </nav>
       <div class="table-responsive">
-        
          <div class="btn-group">
           <button type="button" class="btn btn-sm btn-success add dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Add 
@@ -83,10 +82,10 @@ include('x-nav.php');
           <thead>
             <tr>
               <th>#</th>
-              <th>Level</th>
-              <th>Username</th>
+              <th>Student Name</th>
+              <th>Grade</th>
+              <th>Status</th>
               <th>Date</th>
-              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -96,192 +95,30 @@ include('x-nav.php');
         </table>
 
 
-<div class="modal fade" id="account_modal_admin" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
+<div class="modal fade" id="account_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Add New Admin Account</h5>
+        <h5 class="modal-title" id="account_modal_title">Add </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-       <div class="modal-body" id="account_modal_admin_content">
+      <div class="modal-body" id="product_modal_content">
     
-      <form method="post" id="modal_admin_form" enctype="multipart/form-data">
-
-              <div  class="form-row ">
-                <div class="form-group col-md-3">
-                   <img id="reg_admin_profile" src="../assets/img/users/default.jpg" alt="Profile Image"  runat="server"  height="125" width="125" class="" style="border:1px solid; border-color: grey;"/>
-                </div>
-                <div class="form-group col-md-3" style="margin-top:25px;">
-                  <label for="reg_admin_profile">Choose Picture:</label>
-                  <input type="file" class="form-control" id="select_reg_admin_profile" name="reg_admin_picture" >
-                </div>
-              </div>
-               <div class="form-row ">
-                <div class="form-group col-md-3">
-                  <label for="reg_admin_fname">First Name:</label>
-                  <input type="text" class="form-control" id="reg_admin_fname" name="reg_admin_fname" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="reg_admin_mname">Middle Name:</label>
-                  <input type="text" class="form-control" id="reg_admin_mname" name="reg_admin_mname" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="reg_admin_lname">Last Name:</label>
-                  <input type="text" class="form-control" id="reg_admin_lname" name="reg_admin_lname" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-3">
-                  <label for="reg_admin_suffix">Suffix: <i>(If None Select N/A)</i></label>
-                  <select class="form-control" id="reg_admin_suffix" name="reg_admin_suffix">
-                    <?php 
-                     $auth_user->user_suffix_option();
-                    ?>
-                  </select>
-                </div>
-                 <div class="form-group col-md-4">
-                  <label for="reg_admin_bday">Birthday</label>
-                  <input type="date" class="form-control" id="reg_admin_bday" name="reg_admin_bday" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="reg_admin_sex">Sex:</i></label>
-                  <select class="form-control" id="reg_admin_sex" name="reg_admin_sex">
-                    <?php 
-                     $auth_user->user_sex_option();
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group col-md-4">
-                  <label for="reg_admin_civil">Civil Status:</i></label>
-                  <select class="form-control" id="reg_admin_civil" name="reg_admin_civil">
-                    <?php 
-                     $auth_user->user_marital_option();
-                    ?>
-                  </select>
-                </div>
-
-
-                 <div class="form-group col-md-6">
-                  <label for="reg_admin_contact">Contact</label>
-                  <input type="text" class="form-control" id="reg_admin_contact" name="reg_admin_contact" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="reg_admin_email">Email:</label>
-                  <input type="email" class="form-control" id="reg_admin_email" name="reg_admin_email" placeholder="" value="" required="">
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="reg_admin_faculty">Faculty:</i></label>
-                  <select class="form-control" id="reg_admin_faculty" name="reg_admin_faculty">
-                    <?php 
-                     $auth_user->user_course_option();
-                    ?>
-                  </select>
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="reg_admin_address">Address:</label>
-                  <input type="text" class="form-control" id="reg_admin_address" name="reg_admin_address" placeholder="" value="" required="">
-                </div>
-              </div> 
+     
       </div>
       <div class="modal-footer">
         <input type="hidden" name="account_ID" id="account_ID" />
+        <input type="hidden" name="operation" id="operation" />
         <div class="btn-group">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary submit" id="submit_admin_account" value="submit_admin_account">Submit</button>
+        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
         </div>
       </div>
-       </form>
     </div>
   </div>
 </div>
-
-
-
-<div class="modal fade" id="account_modal_instructor" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Add New Instructor Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <button class="btn btn-primary float-right" id="browse_enrolled">Browse Instructor</button>
-         <br><br>
-          <form method="post" id="account_form" enctype="multipart/form-data">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="acc_username">Full Name</label>
-                  <input type="text" class="form-control" id="student_username" name="acc_username" placeholder="" value=""  required="" disabled="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_schoolID">Employee ID #</label>
-                  <input type="text" class="form-control" id="student_schoolID" name="acc_schoolID" placeholder="" value=""  required="" disabled="">
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="acc_email">Password:<i>(lastname123)</i></label>
-                  <input type="password" class="form-control" id="student_password" name="acc_email" placeholder="****" value="" required="" disabled="">
-                </div>
-              </div>  
-      </div>
-      <div class="modal-footer">
-
-        <input type="hidden" name="account_ID" id="account_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-       </form>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="account_modal_student" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Add New Student Account</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-         <button class="btn btn-primary float-right" id="browse_enrolled">Browse Enrolled</button>
-         <br><br>
-          <form method="post" id="account_form" enctype="multipart/form-data">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                  <label for="acc_username">Full Name</label>
-                  <input type="text" class="form-control" id="student_username" name="acc_username" placeholder="" value=""  required="" disabled="">
-                </div>
-                <div class="form-group col-md-6">
-                  <label for="acc_schoolID">School ID #</label>
-                  <input type="text" class="form-control" id="student_schoolID" name="acc_schoolID" placeholder="" value=""  required="" disabled="">
-                </div>
-                <div class="form-group col-md-12">
-                  <label for="acc_email">Password:<i>(lastname123)</i></label>
-                  <input type="password" class="form-control" id="student_password" name="acc_email" placeholder="****" value="" required="" disabled="">
-                </div>
-              </div>  
-      </div>
-      <div class="modal-footer">
-
-        <input type="hidden" name="account_ID" id="account_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group">
-          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-       </form>
-    </div>
-  </div>
-</div>
-
-
 
 <div class="modal fade" id="delaccount_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">

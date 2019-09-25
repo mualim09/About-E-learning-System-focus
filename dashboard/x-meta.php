@@ -4,5 +4,5 @@
     <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
     <meta name="developer" content="Rhalp Darren R. Cabrera">
     <meta name="generator" content="Jekyll v3.8.5">
-    <link rel="icon" href="../assets/img/logo/logo.png" type="image/x-icon">
+    <link rel="icon" href="../assets/img/logo/logo.ico" type="image/x-icon">
     <title><?php echo $pageTitle?></title>
