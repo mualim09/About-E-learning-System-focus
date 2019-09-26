@@ -1,9 +1,48 @@
-MIT License
+CvSU-E-Learning - (IS) Information System 
+=======================
 
-Copyright (c) 2019 Rhalp Darren R. Cabrera
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+**CvSU-E-Learning - (IS) Information System .** It was developed with [Bootstrap 4.x Framework](http://getbootstrap.com)
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+Installation
+----------------
+You can choose one from multiple ways for installation.
+
+**GitHub**
+- Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
+- Clone to your machine
+```
+git clone https://github.com/rhalp10/Greengate-Annex.git
+```
+
+
+Browser Support
+----------
+- IE 10 +
+- Microsoft Edge (Latest)
+- Mozilla Firefox (Latest)
+- Google Chrome (Latest)
+- Opera (Latest)
+- Safari (Latest)
+- Brave (Latest)
+
+Change Logs
+----------
+See  **[commits](https://github.com/rhalp10/CvSU-E-Learning/commits/master)**
+
+# What's Included?
+
+- [Bootstrap 4.3.1](https://getbootstrap.com) - An open source design system for HTML, CSS, and JS.
+- [FPDF](http://www.fpdf.org/) - An open source PHP class which allows to generate PDF files with pure PHP.
+- [OWL Carousel 2.3.4](https://owlcarousel2.github.io/OwlCarousel2/) - Touch enabled jQuery plugin that lets you create a beautiful responsive carousel slider.
+- [DataTables](https://datatables.net) - DataTables is a plug-in for the jQuery Javascript library. It is a highly flexible tool, built upon the foundations of progressive enhancement, that adds all of these advanced features to any HTML table.
+- [Jquery 3.3.1](https://jquery.com) - jQuery is a fast, small, and feature-rich JavaScript library. It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler with an easy-to-use API that works across a multitude of browsers. With a combination of versatility and extensibility, jQuery has changed the way that millions of people write JavaScript.
+- [AlertifyJS](https://alertifyjs.com/) - AlertifyJS is a javascript framework for developing pretty browser dialogs and notifications.
+- [jQuery Bootstrap Calendar](https://github.com/zatorck/jquery-bootstrap-year-calendar)  - simple jQuery and Bootstrap 3&4 calendar.
+
+
+# License
+
+The CvSU - E-Learning - (IS) Information System  is open source software [licensed as MIT](https://github.com/rhalp10/CvSU-E-Learning).
