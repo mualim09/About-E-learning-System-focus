@@ -1,8 +1,8 @@
-CvSU-E-Learning - (IS) Information System 
+CvSU E-Learning - (IS) Information System 
 =======================
 
 
-**CvSU-E-Learning - (IS) Information System .** It was developed with [Bootstrap 4.x Framework](http://getbootstrap.com)
+**CvSU E-Learning - (IS) Information System .** It was developed with [Bootstrap 4.x Framework](http://getbootstrap.com)
 
 
 
@@ -45,4 +45,4 @@ See  **[commits](https://github.com/rhalp10/CvSU-E-Learning/commits/master)**
 
 # License
 
-The CvSU - E-Learning - (IS) Information System  is open source software [licensed as MIT](https://github.com/rhalp10/CvSU-E-Learning).
+The CvSU E-Learning - (IS) Information System  is open source software [licensed as MIT](https://github.com/rhalp10/CvSU-E-Learning).
