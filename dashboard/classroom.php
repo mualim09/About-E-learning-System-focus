@@ -173,6 +173,8 @@ include('x-nav.php');
         </button>
       </div>
       <div class="modal-body">
+        <form method="post" id="joinclass_form" enctype="multipart/form-data">
+        
         <div class="form-row">
                 <div class="form-group col-md-12">
                   <label for="join_code">Course Code</label>
@@ -187,9 +189,10 @@ include('x-nav.php');
       <div class="modal-footer">
         <div class="btn-group">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary" id="joinclass_submit"  value="joinclass_submit">Submit</button>
         </div>
       </div>
+      </form>
     </div>
   </div>
 </div>
@@ -279,6 +282,33 @@ include('x-script.php');
               });
            
           });
+
+
+          $(document).on('submit', '#joinclass_form', function(event){
+            event.preventDefault();
+      
+
+             var formData = new FormData(this);
+              formData.append('action', "joinclass_submit");
+              $.ajax({
+                url:"datatable/classroom/insert.php",
+                method:'POST',
+                data:formData,
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alert(data);
+                  $('#join_classroom_modal').modal('hide');
+                  $('#joinclass_form')[0].reset();
+                  
+                }
+              });
+           
+          });
+
+
+          
 
           $(document).on('click', '.add', function(){
             $('#classroom_modal_title').text('Add New Classroom');
