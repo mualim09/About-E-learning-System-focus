@@ -51,7 +51,7 @@ if ($auth_user->is_loggedin() !="") {
                   <div id="f_register">
                      <form class="form-signin" id="register_form" method="POST">
                         <div class="form-label-group">
-                           <input type="text" id="reg_studentnum" class="form-control" placeholder="Student Number" name="reg_studentnum" onkeypress="return isNumberKey(event)" maxlength="15" required>
+                           <input type="password" id="reg_studentnum" class="form-control" placeholder="Student Number" name="reg_studentnum" required>
                            <label for="acc_username">Student Number</label>
                         </div>
                         <div class="form-row">
@@ -86,14 +86,7 @@ if ($auth_user->is_loggedin() !="") {
 include('x-script.php');
 ?>
 <script type="text/javascript">
-    function isNumberKey(evt)
-      {
-         var charCode = (evt.which) ? evt.which : event.keyCode
-         if (charCode > 31 && (charCode < 48 || charCode > 57))
-            return false;
- 
-         return true;
-      }
+
  $('#f_register').hide();
 
    $(document).on('submit', '#login_form', function(event){
@@ -110,13 +103,8 @@ include('x-script.php');
                 {
                   var newdata = JSON.parse(data);
                   if (newdata.success) {
-                     
-
-                    alertify.alert(newdata.success, 
-                        function(){
-                         window.location.assign("dashboard/");
-                         }).setHeader('Login Success');
-                    alertify.success('Ok');
+                      alertify.alert(newdata.success).setHeader('Login Success');
+                     window.location.assign("dashboard/");
                   }
                   else{
                     alertify.alert(newdata.error).setHeader('Error Login');
@@ -139,14 +127,8 @@ include('x-script.php');
                 {
                   var newdata = JSON.parse(data);
                   if (newdata.success) {
-                      // alertify.alert(newdata.success).setHeader('Register Success');
-                     
-
-                      alertify.alert(newdata.success, 
-                        function(){
-                        window.location.assign("dashboard/");
-                         }).setHeader('Register Success');
-                      alertify.success('Ok');
+                      alertify.alert(newdata.success).setHeader('Register Success');
+                     window.location.assign("dashboard/");
                   }
                   else{
                     alertify.alert(newdata.error).setHeader('Error Register');
