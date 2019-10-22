@@ -34,7 +34,7 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= 'ORDER BY question_ID DESC ';
+	$query .= 'ORDER BY question_ID ASC ';
 }
 if($_POST["length"] != -1)
 {
@@ -45,41 +45,58 @@ $statement->execute();
 $result = $statement->fetchAll();
 $data = array();
 $filtered_rows = $statement->rowCount();
-$i = 1;
+
+
+function cbrc($break_d)
+{
+		if($break_d == 1){
+			$color = "green";
+		}
+		else{
+			$color="red";
+		}
+		return $color;
+}
+$num = 1;
+
+
 foreach($result as $row)
 {
 	
-	$choice = json_decode($row["choice"]);
-	$arrlength = count($choice);
-	$z = '';
-	for($x = 0; $x < $arrlength; $x++) {
-	    $z .= $choice[$x];
+	// $choice = json_decode($row["choice"]);
+	// $arrlength = count($choice);
+	// $z = '';
+	// for($x = 0; $x < $arrlength; $x++) {
+	//     $z .= $choice[$x];
 	    
-	}
-
+	// }
+	$break_c = explode(",",$row["choice"]);
+	$break_d = explode(",",$row["is_correct"]);
 	
-	$x = 1;
-
 	$sub_array = array();
-	$sub_array[] = $row["question_ID"] ;
-	$sub_array[] = $row["choice_ID"] ;
-	$sub_array[] = $row["is_correct"] ;
-	$sub_array[] = $row["choice"] ;
+	
+	$sub_array[] = '<div class="btn-group float-right">
+					  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					    Action
+					  </button>
+					  <div class="dropdown-menu">
+					    <a class="dropdown-item edit_question"  id="'.$row["question_ID"].'">Edit</a>
+					     <div class="dropdown-divider"></div>
+					    <a class="dropdown-item delete_question" id="'.$row["question_ID"].'">Delete</a>
+					  </div>
+					</div>
 
-
-
-	$sub_array[] = '
-	<div class="btn-group">
-	  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-	    Action
-	  </button>
-	  <div class="dropdown-menu">
-	    <a class="dropdown-item edit_question"  id="'.$row["question_ID"].'">Edit</a>
-	     <div class="dropdown-divider"></div>
-	    <a class="dropdown-item delete_question" id="'.$row["question_ID"].'">Delete</a>
-	  </div>
-	</div>';
-	$i++;
+					<div class="form-group col-md-4">
+                      <label >'.$num.'.) '.$row["question"].'</label>
+                      <div class="d-flex flex-column bd-highlight mb-3">
+					    <div class="p-2 bd-highlight" style="color:'.cbrc($break_d[0]).'"> A. '.$break_c[0].'</div>
+					    <div class="p-2 bd-highlight" style="color:'.cbrc($break_d[1]).'"> B. '.$break_c[1].'</div>
+					    <div class="p-2 bd-highlight" style="color:'.cbrc($break_d[2]).'"> C. '.$break_c[2].'</div>
+					    <div class="p-2 bd-highlight" style="color:'.cbrc($break_d[3]).'"> D. '.$break_c[3].'</div>
+					  </div>
+                    </div>
+                    ';
+	$num++;
 	$data[] = $sub_array;
 }
 
