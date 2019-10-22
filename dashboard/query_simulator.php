@@ -8,7 +8,7 @@ require_once("../class.user.php");
 $auth_user = new USER();
 // $page_level = 3;
 // $auth_user->check_accesslevel($page_level);
-$pageTitle = "Manage Account";
+$pageTitle = "Query Simulator";
 ?>
 <!doctype html>
 <html lang="en">
@@ -73,8 +73,7 @@ include('x-nav.php');
                <main>
    <label for='commands'>Enter some SQL</label> 
    <div class="btn-group float-right">
-    <a class="btn btn-danger " href="query_simulator">Clear</a>
-    <a class="btn btn-success " href="query_simulator?req_sample=1">Load sample</a>
+    <a class="btn btn-info " href="query_simulator?req_sample=1">Load sample</a>
   </div>
    <br>   <br>
 <style type="text/css">
@@ -99,7 +98,10 @@ table th {
   text-align: left;
   background-color: #4CAF50;
   color: white;
+
+
 }
+
 </style>
     <textarea id="commands" >
       <?php 
@@ -132,10 +134,24 @@ SELECT name,hired_on FROM employees ORDER BY hired_on;
       }
       ?>
     </textarea>
-<button id="execute" class="zbtn btn-success">Execute</button>
-<button id='savedb'  class="zbtn btn-success">Save DB</button>
-<label class="button">Load an SQLite database file: <input type='file' id='dbfile' class="form-control" ></label>
 
+<!--   <button id="execute" class="btn btn-success btn-sm" >Execute</button>
+  <button id="savedb"  class="btn btn-success btn-sm" >Save DB</button> -->
+  <br>
+<div class="form-inline ">
+    <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
+      <div class="btn-group mr-2" role="group" aria-label="First group">
+        <button type="button" id="execute" class="btn btn-secondary">Execute</button>
+        <button type="button" class="btn btn-danger"  id="clear_textarea">Clear</button>
+        <button type="button" id="savedb" class="btn btn-success">Save DB</button>
+      </div>
+     
+    </div>
+    <div >
+        <input type='file' id='dbfile' class="form-control" placeholder="Input group example" aria-label="Input group example" aria-describedby="btnGroupAddon">
+        <small id="emailHelp" class="form-text text-muted">Load an SQLite database file.</small>
+    </div>
+</div>
 <div id="error" class="error"></div>
 
 <pre id="output">Results will be displayed here</pre>
@@ -160,6 +176,10 @@ include('x-script.php');
   //   console.log ( x[0].innerHTML);
   //   $(".CodeMirror-code div pre span").html("heey");
   //   });
+   $(document).on('click', '#clear_textarea', function(){
+    window.location.assign("query_simulator");
+  });
+  
 
   </script>
   </body>
