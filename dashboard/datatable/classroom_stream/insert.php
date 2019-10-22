@@ -101,6 +101,35 @@ if($_POST["operation"] == "post_submit")
 		
 	
 	}
+	if($_POST["operation"] == "post_comment")
+	{
+		$user_ID = $_SESSION['user_ID'];
+		$comment = $_POST['comment'];
+		$post_ID = $_POST['post_ID'];
+
+		$statement = $room->runQuery(
+			"INSERT INTO `class_room_comment` (`comment_ID`, `user_ID`, `post_ID`, `comment_content`, `comment_Date`)
+			 VALUES (NULL, :user_ID, :post_ID, :comment, CURRENT_TIMESTAMP);"
+		);
+		$result = $statement->execute(
+			array(
+				':post_ID'	=>	$post_ID,
+				':comment'	=>	$comment,
+				':user_ID'	=>	$user_ID
+			)
+		);
+		
+		if(!empty($result))
+		{
+			echo 'Successfully Commented';
+		}
+		
+		
+		
+	}
+
+
+	
 }
 ?>
 
