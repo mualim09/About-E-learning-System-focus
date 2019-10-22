@@ -7,28 +7,28 @@ $query = '';
 $output = array();
 $query .= " 
 SELECT 
-`rsd`.`rsd_ID`,
-`rsd`.`user_ID`,
-`rsd`.`rsd_Img`,
-`rsd`.`rsd_StudNum`,
-`rsd`.`rsd_FName`,
-`rsd`.`rsd_MName`,
-`rsd`.`rsd_LName`,
+`rad`.`rad_ID`,
+`rad`.`user_ID`,
+`rad`.`rad_Img`,
+`rad`.`rad_EmpID`,
+`rad`.`rad_FName`,
+`rad`.`rad_MName`,
+`rad`.`rad_LName`,
 `rs`.`sex_Name`,
 `rm`.`marital_Name`,
 `sf`.`suffix`
 ";
-$query .= " FROM `record_student_details` `rsd`
-LEFT JOIN `ref_marital` `rm` ON `rm`.`marital_ID` = `rsd`.`marital_ID`
-LEFT JOIN `ref_sex` `rs` ON `rs`.`sex_ID` = `rsd`.`sex_ID`
-LEFT JOIN `ref_suffixname` `sf` ON `sf`.`suffix_ID` = `rsd`.`suffix_ID`";
+$query .= " FROM `record_admin_details` `rad`
+LEFT JOIN `ref_marital` `rm` ON `rm`.`marital_ID` = `rad`.`marital_ID`
+LEFT JOIN `ref_sex` `rs` ON `rs`.`sex_ID` = `rad`.`sex_ID`
+LEFT JOIN `ref_suffixname` `sf` ON `sf`.`suffix_ID` = `rad`.`suffix_ID`";
 if(isset($_POST["search"]["value"]))
 {
- $query .= 'WHERE rsd_ID LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR rsd_StudNum LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR rsd_FName LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR rsd_MName LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR rsd_LName LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= 'WHERE rad_ID LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR rad_EmpID LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR rad_FName LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR rad_MName LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR rad_LName LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR suffix LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR sex_Name LIKE "%'.$_POST["search"]["value"].'%" ';
 }
@@ -40,7 +40,7 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= 'ORDER BY rsd_LName ASC ';
+	$query .= 'ORDER BY rad_ID DESC ';
 }
 if($_POST["length"] != -1)
 {
@@ -64,20 +64,20 @@ foreach($result as $row)
 		$suffix = $row["suffix"];
 	}
 
-	if($row["rsd_MName"] ==" " || $row["rsd_MName"] == NULL || empty($row["rsd_MName"]) )
+	if($row["rad_MName"] ==" " || $row["rad_MName"] == NULL || empty($row["rad_MName"]) )
 	{
 		$mname = " ";
 	}
 	else
 	{
-		$mname = $row["rsd_MName"].'. ';
+		$mname = $row["rad_MName"].'. ';
 	}
 
 		if(empty($row["user_ID"]))
 	{
 		$reg = "<span class='badge badge-danger'>Unregistered</span>";
 		$acreg = "UN";
-		$btnrg = '<button type="button" class="btn btn-success btn-sm gen_account"  id="'.$row["rsd_ID"].'">Generate Account</button>';
+		$btnrg = '<button type="button" class="btn btn-success btn-sm gen_account"  id="'.$row["rad_ID"].'">Generate Account</button>';
 	}
 	else
 	{
@@ -88,25 +88,25 @@ foreach($result as $row)
 	$sub_array = array();
 	
 		
-		$sub_array[] = $row["rsd_ID"];
-		$sub_array[] =  $row["rsd_StudNum"];
-		$sub_array[] =  addslashes(ucwords(strtolower($row["rsd_LName"].', '.$row["rsd_FName"].' '.$mname.' '.$suffix)));
+		$sub_array[] = $row["rad_ID"];
+		$sub_array[] =  $row["rad_EmpID"];
+		$sub_array[] =  addslashes(ucwords(strtolower($row["rad_LName"].', '.$row["rad_FName"].' '.$mname.' '.$suffix)));
 		$sub_array[] =  $row["sex_Name"];
 		$sub_array[] =  $row["marital_Name"];
 		$sub_array[] =  $reg;
 		$sub_array[] = '
 		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rsd_ID"].'">View</button>
-		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rsd_ID"].'">Edit</button>
+		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rad_ID"].'">View</button>
+		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rad_ID"].'">Edit</button>
 		  '.$btnrg.'
 		</div>
 		';
 		// <div class="dropdown-divider"></div>
-		 // <a class="dropdown-item delete" id="'.$row["rsd_ID"].'">Delete</a>
+		 // <a class="dropdown-item delete" id="'.$row["rad_ID"].'">Delete</a>
 	$data[] = $sub_array;
 }
 
-$q = "SELECT * FROM `record_student_details`";
+$q = "SELECT * FROM `record_admin_details`";
 $filtered_rec = $student->get_total_all_records($q);
 
 $output = array(

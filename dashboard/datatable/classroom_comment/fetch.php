@@ -8,11 +8,12 @@ $output = array();
 $query .= "SELECT 
 crc.*,
 ua.user_ID,
+ua.user_Img,
 (case  
  when (ua.lvl_ID = 1) then (SELECT CONCAT(rsd.rsd_FName,' ',rsd.rsd_MName,'. ',rsd.rsd_LName,' (',ul.lvl_Name,')') FROM record_student_details rsd WHERE rsd.user_ID = ua.user_ID)
 when (ua.lvl_ID = 2)  then (SELECT CONCAT(rid.rid_FName,' ',rid.rid_MName,'. ',rid.rid_LName,' (',ul.lvl_Name,')') FROM record_instructor_details rid WHERE rid.user_ID = ua.user_ID)
 when (ua.lvl_ID = 3)  then (SELECT CONCAT(rad.rad_FName,' ',rad.rad_MName,'. ',rad.rad_LName,' (',ul.lvl_Name,')') FROM record_admin_details rad WHERE rad.user_ID = ua.user_ID)
-end)  Posted_By 
+end)  Posted_By
 
 ";
 $query .= " FROM `class_room_comment` `crc`
@@ -56,11 +57,17 @@ $filtered_rows = $statement->rowCount();
 $i = 1;
 foreach($result as $row)
 {
+		if (!empty($row['user_Img'])) {
+		 $s_img = 'data:image/jpeg;base64,'.base64_encode($row['user_Img']);
+		}
+		else{
+		  $s_img = "../assets/img/users/default.jpg";
+		}
 	
 		$sub_array = array();
 	
 		$sub_array[] = '  <li class="media">
-		    <img class="mr-3 rounded" src="../assets/img/users/default.jpg" alt="Generic placeholder image" style="max-width:64px; max-height:64px; border:1px solid;">
+		    <img class="mr-3 rounded" src="'.$s_img.'" alt="Generic placeholder image" style="max-width:64px; max-height:64px; border:1px solid;">
 		    <div class="media-body">
 		      <h5 class="mt-0 mb-1" style="font-size: 1.00rem;">'.$row["Posted_By"].'</h5>
 		      '.$row["comment_content"].'

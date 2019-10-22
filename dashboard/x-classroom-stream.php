@@ -77,6 +77,7 @@
               <div class="input-group-prepend ">
              <!--    <div class="input-group-text btn-primary" id="send_comment" style="background-color:#007bff !important; color:white!important;">SEND</div> -->
                 <input type="submit" class="input-group-text btn-primary" id="send_comment" style="background-color:#007bff !important; color:white!important;"type="" value="SEND">
+                
               </div>
             </div>
           </form>
@@ -144,10 +145,10 @@ include('x-script.php');
           });
 
             function comment_data(post_ID){
-                  var dataTable = $('#comment_data').DataTable({
+                  var comment_dataTable = $('#comment_data').DataTable({
                 "processing":true,
                 "serverSide":true,
-            "bAutoWidth": false,
+                "bAutoWidth": false,
                 "order":[],
                 "ajax":{
                   url:"datatable/classroom_comment/fetch.php?post_ID="+post_ID,
@@ -166,14 +167,7 @@ include('x-script.php');
             
 
 
-   $(document).on('submit', '#comment_form', function(event){
-            event.preventDefault();
-            
-            var comment_box = $('#comment_box').val();
-           alert(comment_box);
-           $('#comment_box').val('');
-           
-          });
+
           $(document).on('submit', '#post_form', function(event){
             event.preventDefault();
 
@@ -305,12 +299,34 @@ include('x-script.php');
                $('#delpost_modal').modal('hide');
                alertify.alert(data.responseText).setHeader('Delete this Post');
                dataTable.ajax.reload();
-               dataTable_product_data.ajax.reload();
                 
              }
             })
            
           });
+
+              $(document).on('submit', '#comment_form', function(event){
+              // $(document).on('click', '#send_comment', function(){
+              event.preventDefault();
+              
+              var comment_box = $('#comment_box').val();
+              var post_ID = $('#post_ID').val();
+               $.ajax({
+                  url:"datatable/classroom_stream/insert.php",
+                  method:'POST',
+                  data:{operation:"post_comment",comment:comment_box,post_ID:post_ID},
+                  dataType    :   'json',
+                  complete     :   function(data) {
+                  comment_data(post_ID);
+                  $('#comment_data').DataTable().destroy();
+                  }
+                });
+                
+               
+              });
+
+
+
           
           } );
 

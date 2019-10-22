@@ -75,11 +75,11 @@ include('x-nav.php');
           <thead>
             <tr>
               <th>#</th>
-              <th>LRN ID</th>
+              <th>Student ID</th>
               <th>Name</th>
               <th>Sex</th>
               <th>Marital</th>
-              <th>Marital</th>
+              <th>Account Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -236,7 +236,7 @@ include('x-script.php');
             var student_dataTable = $('#student_data').DataTable({
             "processing":true,
             "serverSide":true,
-            "order":[],
+            "ordering":false,
             "ajax":{
               url:"datatable/student/fetch.php",
               type:"POST"
@@ -441,6 +441,31 @@ include('x-script.php');
                 
              }
             })
+           
+          });
+
+          $(document).on('click', '.gen_account', function(event){
+             var student_ID = $(this).attr("id");
+             alertify.confirm('Are you sure you want to create this person account?', 
+            function(){
+              $.ajax({
+               type        :   'POST',
+               url:"datatable/student/insert.php",
+               data        :   {operation:"gen_account",student_ID:student_ID},
+               dataType    :   'json',
+               complete     :   function(data) {
+                 alertify.alert(data.responseText).setHeader('Generated Account');
+                 student_dataTable.ajax.reload();
+                  
+               }
+              })
+
+               student_dataTable.ajax.reload();
+               alertify.success('Ok') 
+             },
+            function(){ 
+              alertify.error('Cancel')
+            }).setHeader('Generate Account');
            
           });
           

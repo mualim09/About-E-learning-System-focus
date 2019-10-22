@@ -57,35 +57,29 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Account</h1>
+        <h1 class="h2">Manage Account Record</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
         <ol class="breadcrumb bcrum">
           <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Dashboard</a></li>
-          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page">Account Management</li>
+          <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page">Account Record Management</li>
         </ol>
       </nav>
       <div class="table-responsive">
-         <div class="btn-group">
-          <button type="button" class="btn btn-sm btn-success add dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+  <!--         <button type="button" class="btn btn-sm btn-success add" >
             Add 
-          </button>
-          <div class="dropdown-menu">
-            <a class="dropdown-item"  data-toggle="modal" data-target="#account_modal_admin">Admin</a>
-            <a class="dropdown-item"   data-toggle="modal" data-target="#account_modal_instructor">Instructor</a>
-            <a class="dropdown-item"  data-toggle="modal" data-target="#account_modal_student">Student</a>
-          </div>
-        </div>
+          </button> -->
          <br><br>
-        <table class="table table-striped table-sm" id="account_data">
+        <table class="table table-striped table-sm" id="admin_data">
           <thead>
             <tr>
               <th>#</th>
-              <th>Student Name</th>
-              <th>Grade</th>
-              <th>Status</th>
-              <th>Date</th>
+              <th width="30%">Name</th>
+              <th>Username</th>
+              <th>User Level</th>
+              <th>Register Date</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -94,55 +88,44 @@ include('x-nav.php');
           </tbody>
         </table>
 
-
-<div class="modal fade" id="account_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
+<!-- Modal -->
+<div class="modal fade" id="changepass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Add </h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="product_modal_content">
-    
-     
-      </div>
-      <div class="modal-footer">
-        <input type="hidden" name="account_ID" id="account_ID" />
-        <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_account">Submit</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="modal fade" id="delaccount_modal" tabindex="-1" role="dialog" aria-labelledby="product_modal_title" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="account_modal_title">Delete this Account</h5>
+        <h5 class="modal-title" id="exampleModalLongTitle">Change pass</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <div class="text-center">
-        <div class="btn-group">
-        <button type="submit" class="btn btn-danger" id="account_delform">Delete</button>
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </div>
-        </div>
+        <form id="change_password_form" enctype="multipart/form-data">
+            <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_password_new">New Password</label>
+                <input type="password" class="form-control" id="update_password_new" name="update_password_new" placeholder="" value=""  required="">
+              </div>
+            </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+                  <label for="update_password_newconfirm">Confirm Password</label>
+                <input type="password" class="form-control" id="update_password_newconfirm" name="update_password_newconfirm" placeholder="" value=""  required="">
+              </div>
+            </div>
       </div>
       <div class="modal-footer">
+        <input type="hidden" id="account_ID" name="account_ID" value="">
+        <input type="hidden" name="operation" value="change_password">
+         <div class="btn-group">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-primary" id="btn_change_password" value="Save changes">
       </div>
+      </div>
+      </form>
     </div>
   </div>
 </div>
+
       </div>
     </main>
   </div>
@@ -154,10 +137,9 @@ include('x-script.php');
         <script type="text/javascript">
    
 
-
           $(document).ready(function() {
              
-            var dataTable = $('#account_data').DataTable({
+            var admin_dataTable = $('#admin_data').DataTable({
             "processing":true,
             "serverSide":true,
             "order":[],
@@ -176,7 +158,7 @@ include('x-script.php');
 
 
 
-          $(document).on('submit', '#account_form', function(event){
+          $(document).on('submit', '#change_password_form', function(event){
             event.preventDefault();
 
               $.ajax({
@@ -187,142 +169,30 @@ include('x-script.php');
                 processData:false,
                 success:function(data)
                 {
-                  alertify.alert(data).setHeader('Account');
-                  $('#account_form')[0].reset();
-                  $('#account_modal').modal('hide');
-                  dataTable.ajax.reload();
+                  alertify.alert(data).setHeader('Account Record');
+                  $('#change_password_form')[0].reset();
+                  $('#changepass').modal('hide');
+                  admin_dataTable.ajax.reload();
                 }
               });
            
           });
 
-          $(document).on('click', '.add', function(){
-            $('#account_modal_title').text('Add New Account');
-            $("#acc_username").prop("disabled", false);
-            $('#account_form')[0].reset();
-            $('#submit_input').show();
-            $('#submit_input').text('Submit');
-            $('#submit_input').val('submit_account');
-            $('#operation').val("submit_account");
-          });
-
-          $(document).on('click', '.view', function(){
-            var account_ID = $(this).attr("id");
-            $('#account_modal_title').text('View Account');
-            $('#account_modal').modal('show');
-            $("#acc_pass").hide();
-            $("#acc_cpass").hide();
-            $("#l_acc_pass").hide();
-            $("#l_acc_cpass").hide();
+         
+   
+            $(document).on('click', '.change', function(){
+             var acc_ID = $(this).attr("id");
+             $('#account_ID').val(acc_ID);
+             $('#changepass').modal('show');
             
-             $.ajax({
-                url:"datatable/account/fetch_single.php",
-                method:'POST',
-                data:{action:"account_view",account_ID:account_ID},
-                dataType    :   'json',
-                success:function(data)
-                {
-
-                $("#acc_username").prop("disabled", true);
-                $("#acc_email").prop("disabled", true);
-                $("#acc_name").prop("disabled", true);
-                $("#acc_lvl").prop("disabled", true);
-                $("#acc_add").prop("disabled", true);
-
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
-                  
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
-
-                  $('#submit_input').hide();
-                  $('#account_ID').val(account_ID);
-                  $('#submit_input').text('Update');
-                  $('#submit_input').val('account_edit');
-                  $('#operation').val("account_edit");
-                  
-                }
-              });
-
-
-            });
-          $(document).on('click', '.edit', function(){
-            var account_ID = $(this).attr("id");
-            $('#account_modal_title').text('Edit Account');
-            $('#account_modal').modal('show');
-          
-            $("#acc_pass").show();
-            $("#acc_cpass").show();
-            $("#l_acc_pass").show();
-            $("#l_acc_cpass").show();
-
-            
-             $.ajax({
-                url:"datatable/account/fetch_single.php",
-                method:'POST',
-                data:{action:"account_view",account_ID:account_ID},
-                dataType    :   'json',
-                success:function(data)
-                {
-                  $("#acc_username").prop("disabled", true);
-                  $("#acc_email").prop("disabled", false);
-                  $("#acc_name").prop("disabled", false);
-                  $("#acc_lvl").prop("disabled", false);
-                  $("#acc_add").prop("disabled", false);
-                  $("#acc_pass").prop("disabled", false);
-                  $("#acc_cpass").prop("disabled", false);
-
-                  $('#acc_username').val(data.user_Name);
-                  $('#acc_email').val(data.user_Email);
-                  $('#acc_name').val(data.user_Fullname);
-                  $('#acc_pass').val(data.user_Pass);
-                  $('#acc_lvl').val(data.lvl_ID).change();
-                  
-                  $('#acc_cpass').val(data.user_Pass);
-                  $('#acc_add').val(data.user_Address);
-
-                  $('#submit_input').show();
-                  $('#account_ID').val(account_ID);
-                  $('#submit_input').text('Update');
-                  $('#submit_input').val('account_update');
-                  $('#operation').val("account_edit");
-                  
-                }
-              });
-
-
-            });
-            $(document).on('click', '.delete', function(){
-            var account_ID = $(this).attr("id");
-             $('#delaccount_modal').modal('show');
-             $('.submit').hide();
-             
-             $('#account_ID').val(account_ID);
             });
 
            
 
 
-          $(document).on('click', '#account_delform', function(event){
-             var account_ID =  $('#account_ID').val();
-            $.ajax({
-             type        :   'POST',
-             url:"datatable/account/insert.php",
-             data        :   {operation:"delete_account",account_ID:account_ID},
-             dataType    :   'json',
-             complete     :   function(data) {
-               $('#delaccount_modal').modal('hide');
-               alertify.alert(data.responseText).setHeader('Delete this Account');
-               dataTable.ajax.reload();
-               dataTable_product_data.ajax.reload();
-                
-             }
-            })
-           
-          });
+
+
+
           
           } );
 

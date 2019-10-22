@@ -59,31 +59,48 @@ class USER
 		{	
 			
 			$stmt = $this->conn->prepare("SELECT * FROM `record_student_details` WHERE rsd_StudNum = :reg_studentnum OR rsd_Email = :reg_email LIMIT 1");
+
+			$stmtx = $this->conn->prepare("SELECT * FROM `user_account` WHERE user_Name =  :reg_studentnum LIMIT 1");
+
+
 			$stmt->bindparam(":reg_studentnum", $reg_studentnum);	
+			$stmtx->bindparam(":reg_studentnum", $reg_studentnum);	
 			$stmt->bindparam(":reg_email", $reg_email);	
 			$stmt->execute();
+			$stmtx->execute();
 			$userRow=$stmt->fetch(PDO::FETCH_ASSOC);
-			if($stmt->rowCount() == 1)
+		
+			if ($stmtx->rowCount() > 0)
 			{
-				$rsd_ID = $userRow["rsd_ID"];
-				$new_password = password_hash($reg_password, PASSWORD_DEFAULT);
-
-				$stmt = $this->conn->prepare("INSERT INTO `user_account` (`user_ID`, `lvl_ID`, `user_Img`, `user_Name`, `user_Pass`, `user_Registered`) VALUES (NULL, 1, NULL, :reg_studentnum, :reg_password, CURRENT_TIMESTAMP);");
-						
-				$stmt->bindparam(":reg_studentnum", $reg_studentnum);	 
-				$stmt->bindparam(":reg_password", $new_password);	
-				$stmt->execute();
-				$user_ID = $this->conn->lastInsertId();
-
-				$stmt = $this->conn->prepare("UPDATE `record_student_details` SET `user_ID` = :user_ID WHERE `record_student_details`.`rsd_ID` = :rsd_ID;");
-				$stmt->bindparam(":user_ID", $user_ID);	
-				$stmt->bindparam(":rsd_ID", $rsd_ID); 
-				$stmt->execute();		
-
-				
-				
-				return $stmt;
+				// echo "User Already Register";
+				return false;
 			}
+			else
+			{
+				if($stmt->rowCount() == 1)
+				{
+					$rsd_ID = $userRow["rsd_ID"];
+					$new_password = password_hash($reg_password, PASSWORD_DEFAULT);
+
+					$stmt = $this->conn->prepare("INSERT INTO `user_account` (`user_ID`, `lvl_ID`, `user_Img`, `user_Name`, `user_Pass`, `user_Registered`) VALUES (NULL, 1, NULL, :reg_studentnum, :reg_password, CURRENT_TIMESTAMP);");
+							
+					$stmt->bindparam(":reg_studentnum", $reg_studentnum);	 
+					$stmt->bindparam(":reg_password", $new_password);	
+					$stmt->execute();
+					$user_ID = $this->conn->lastInsertId();
+
+					$stmt = $this->conn->prepare("UPDATE `record_student_details` SET `user_ID` = :user_ID WHERE `record_student_details`.`rsd_ID` = :rsd_ID;");
+					$stmt->bindparam(":user_ID", $user_ID);	
+					$stmt->bindparam(":rsd_ID", $rsd_ID); 
+					$stmt->execute();		
+
+					
+					
+					return $stmt;
+				}
+
+			}
+
 			
 
 
@@ -91,7 +108,8 @@ class USER
 		}
 		catch(PDOException $e)
 		{
-			echo $e->getMessage();
+			// echo $e->getMessage();
+			return false;
 		}				
 	}
 	
@@ -144,6 +162,7 @@ class USER
 	{
 		echo $_SESSION['user_Name'];
 	}
+
 	public function getUserPic()
 	{
 		echo $_SESSION['user_Img'] ;
@@ -227,6 +246,24 @@ class USER
 				$suffix =  $row["suffix"];
 			}
 		}
+		
+	}
+	public function get_test($test_ID)
+	{
+		$query ="SELECT * FROM `class_room_test` WHERE test_ID = $test_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		return $result;
+		
+	}
+	public function get_score($score_ID)
+	{
+		$query ="SELECT * FROM `class_room_test_score` WHERE score_ID = $score_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		return $result;
 		
 	}
 	public function user_sex_option()
@@ -496,6 +533,96 @@ WHERE `cr`.class_ID  = '".$classroom_ID."'
 		}
 		return $output;
 	}
+	public function test_choices($choices_ID,$i_x_n){
+		
+		$query ="SELECT * FROM `class_room_test_choices` WHERE question_ID = $choices_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		
+		$x = 1;
+		foreach($result as $row)
+		{
+			?>
+			<div class="form-check ">
+                <input class="form-check-input" type="radio" name="q_coption<?php echo $i_x_n?>" id="inlineRadio<?php echo $x?>" value="<?php echo $row["choice_ID"]?>">
+                <label class="form-check-label" for="inlineRadio<?php echo $x?>"><?php echo $row["choice"]?></label>
+             </div>
+			<?php
+
+			$x++;
+		}
+	}
+	public function test_question($test_ID){
+		$query ="SELECT * FROM `class_room_test_questions` WHERE test_ID = $test_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		$count = $stmt->rowCount();
+		$x = 1;
+		if($count < 1){
+			echo "NO CONTENT";
+		}
+		else{
+			foreach($result as $row)
+			{
+				?>
+				<div class="form-group col-md-12">
+	              <label for=""><?php echo $x?>.) <?php echo $row["question"]?></label>
+	              <?php $this->test_choices($row["question_ID"],$x)?>
+	            </div>
+				<?php
+
+				$x++;
+			}
+
+		}
+		
+		?><input type="hidden" name="qcount" value="<?php echo $count;?>">
+		<?php
+	}
+
+	public function test_time($test_ID){
+		$query ="SELECT test_Timer FROM `class_room_test` WHERE test_ID =$test_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row)
+		{
+			$time = $row["test_Timer"];
+		}
+		return $time;
+	}
+	public function getSidenavUserInfo()
+	{
+		 // $_SESSION['user_Name'];
+		$uID = $_SESSION['user_ID'];
+		$sql = "SELECT 
+				(case  
+				 when (ua.lvl_ID = 1) then (SELECT CONCAT(rsd.rsd_FName,' ',LEFT(rsd.rsd_MName, 1),'. ',rsd.rsd_LName) FROM record_student_details rsd WHERE rsd.user_ID = ua.user_ID)
+				when (ua.lvl_ID = 2)  then (SELECT CONCAT(rid.rid_FName,' ',LEFT(rid.rid_MName, 1),'. ',rid.rid_LName) FROM record_instructor_details rid WHERE rid.user_ID = ua.user_ID)
+				when (ua.lvl_ID = 3)  then (SELECT CONCAT(rad.rad_FName,' ',LEFT(rad.rad_MName, 1),'. ',rad.rad_LName) FROM record_admin_details rad WHERE rad.user_ID = ua.user_ID)
+				end) fullname
+				FROM `user_account` ua WHERE ua.user_ID = $uID LIMIT 1";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		foreach($result as $row)
+		{
+			$fullname = ucwords($row["fullname"]);
+		}
+		echo $fullname;
+		if($this->student_level() ){
+			echo "<br><small>(Student)</small>";
+		}
+		if($this->instructor_level() ){
+			echo "<br><small>(Insturctor)</small>";
+		}
+		if($this->admin_level() ){
+			echo "<br><small>(Admin)</small>";
+		}
+	}
+
 
 	
 	

@@ -47,6 +47,19 @@ if($_POST["action"] == "classroom_delete")
 	try
 	{
 		$classroom_ID = $_POST["classroom_ID"];
+
+		$sql0 = "DELETE FROM `class_room_student` WHERE `class_ID` = $classroom_ID";
+		$statement0 = $classroom->runQuery($sql0);
+				
+		$result0 = $statement0->execute();
+
+		$sql1 = "DELETE FROM `class_room_test` WHERE `class_ID` = $classroom_ID";
+		$statement1 = $classroom->runQuery($sql1);
+				
+		$result1 = $statement1->execute();
+
+		
+
 		$sql = "DELETE FROM `class_room` WHERE `class_room`.`class_ID` = $classroom_ID";
 		$statement = $classroom->runQuery($sql);
 				
@@ -125,6 +138,8 @@ if($_POST["action"] == "disabled_classroom")
 		$statement = $classroom->runQuery($sql);
 				
 		$result = $statement->execute();
+
+		
 		if(!empty($result))
 		{
 			echo 'Successfully Disabled';
@@ -134,6 +149,89 @@ if($_POST["action"] == "disabled_classroom")
 	{	
 	    echo "There is some problem in connection: " . $e->getMessage();
 	}
+}
+
+
+if($_POST["action"] == "joinclass_submit")
+{
+	
+	
+	try
+	{
+		$class_Code = $_POST["join_code"];
+		$class_Password = $_POST["join_password"];
+		$user_ID = $_SESSION['user_ID'];
+
+		$sql = "SELECT * FROM `class_room` WHERE 
+		class_Code  = '$class_Code' AND 
+		class_Password = '$class_Password'";
+		$statement = $classroom->runQuery($sql);
+				
+		$statement->execute();
+		$result = $statement->fetchAll();
+
+		//CHECK IF CLASS EXIST
+		if ($statement->rowCount() > 0)
+		{
+			try
+			{
+				//GET CLASS ID
+				foreach($result as $row)
+				{
+					$class_ID = $row["class_ID"];
+				}
+				//GET STUDENT RSD ID
+				$sql1 = "SELECT rsd_ID FROM `record_student_details` WHERE user_ID = '$user_ID' LIMIT 1";
+				$statement1 = $classroom->runQuery($sql1);
+				$statement1->execute();
+	            $result1 = $statement1->fetchAll();
+				foreach($result1 as $row)
+				{
+					$rsd_ID = $row["rsd_ID"];
+				}
+
+				//CHECK IF STUDENT IS ALREADY IN CLASS
+				$sqlx = "SELECT * FROM `class_room_student` 
+				WHERE 
+				rsd_ID = '$rsd_ID' and 
+				class_ID  = '$class_ID' LIMIT 1";
+				$statementx = $classroom->runQuery($sqlx);
+				$statementx->execute();
+				if ($statementx->rowCount() > 0)
+				{
+					echo 'You already join to this room';
+				}
+				else
+				{
+					//INSERT STUDENT IN CLASS
+					$sql2 = "INSERT INTO `class_room_student` 
+					(`crs_ID`, `class_ID`, `rsd_ID`, `status_ID`) 
+					VALUES (NULL, '$class_ID', '$rsd_ID', '2');";
+					$statement2 = $classroom->runQuery($sql2);
+							
+					$result2 = $statement2->execute();
+
+					if(!empty($result2))
+					{
+						echo 'Successfully Join Wait For Approval';
+					}
+				}
+			}
+			catch (PDOException $e)
+			{	
+			    echo "There is some problem in connection: " . $e->getMessage();
+			}	
+		}
+		else{
+			echo 'Wrong Password Or Class ID';
+		}
+		
+	}
+	catch (PDOException $e)
+	{	
+	    echo "There is some problem in connection: " . $e->getMessage();
+	}
+	
 }
 
 

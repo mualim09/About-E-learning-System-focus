@@ -1,9 +1,11 @@
 
+ 
+
  <nav class="navbar  navbar-expand-lg  navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow" style="background-color: #4caf50  !important;">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#" style="width:relative; font-size: 0.6rem;">
       CvSU E-learning for Information Management
     </a>
-    
+
     <ul class="navbar-nav px-3 ml-auto">
 
 
@@ -18,5 +20,6 @@
         </div>
       </li>
     </ul>
+    
   </nav>
 

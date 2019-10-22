@@ -8,7 +8,11 @@ $query = '';
 $output = array();
 
 if($account->student_level()) { 
-	$query .= "SELECT *";
+	$query .= "SELECT *,
+	(SELECT count(class_ID) 
+	FROM `class_room_student` `crs1` 
+	WHERE `crs1`.`class_ID` = `crs`.`class_ID`) 
+	as `crsx_count` ";
 	$query .= " FROM `class_room_student` `crs`
 LEFT JOIN `class_room` `cr` ON `cr`.`class_ID` = `crs`.`class_ID`
 LEFT JOIN `record_student_details` `rsd` ON `rsd`.`rsd_ID` = `crs`.`rsd_ID`
@@ -48,7 +52,11 @@ LEFT JOIN `ref_status` `rs` ON `rs`.`status_ID` = `cr`.`status_ID`";
 }
 else
 {
-	$query .= "SELECT *";
+	$query .= "SELECT *,
+	(SELECT count(class_ID) 
+	FROM `class_room_student` `crs1` 
+	WHERE `crs1`.`class_ID` = `cr`.`class_ID`) 
+	as `crsx_count` ";
 	$query .= "FROM `class_room` `cr`
 	LEFT JOIN `ref_status` `rs` ON `rs`.`status_ID` = `cr`.`status_ID`";
 
@@ -118,6 +126,17 @@ foreach($result as $row)
     	$ddot = "";
     }
 
+     
+     
+     if($row["crsx_count"] <= 1)
+     {
+     	 $crsx_count = $row["crsx_count"]." Student";
+     }
+     else
+     {
+     	 $crsx_count = $row["crsx_count"]." Students";
+     }
+
     if($account->student_level()) { 
     	$fbtn ='';
     }
@@ -142,7 +161,7 @@ foreach($result as $row)
 	  <div class="card-header text-white" style="background-color:#495057">
 	  <a href="classroom_content?classroom_ID='.$row["class_ID"].'&type=stream">'.$row["class_Name"].'</a>
 	   <br>
-	 2 student
+	 '.$crsx_count.'
 
 		 '.$fbtn.'
 
@@ -165,7 +184,18 @@ foreach($result as $row)
 	$data[] = $sub_array;
 }
 
-$q = "SELECT * FROM `user_account`";
+if (isset($_SESSION['user_ID'])) {
+		$q = "SELECT * FROM `class_room_student` `crs`
+		LEFT JOIN `class_room` `cr` ON `cr`.`class_ID` = `crs`.`class_ID`
+		LEFT JOIN `record_student_details` `rsd` ON `rsd`.`rsd_ID` = `crs`.`rsd_ID`
+		LEFT JOIN `user_account` `ua` ON `ua`.`user_ID` = `rsd`.`user_ID`
+		LEFT JOIN `ref_status` `rs` ON `rs`.`status_ID` = `cr`.`status_ID`
+		 WHERE `rsd`.`user_ID` = '$user_ID'";
+}
+else{
+	$q = "SELECT * FROM `class_room_student`";
+}
+
 $filtered_rec = $account->get_total_all_records($q);
 
 $output = array(

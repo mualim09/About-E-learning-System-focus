@@ -2,7 +2,7 @@
 require_once('../class.function.php');
 $account = new DTFunction();  		 // Create new connection by passing in your configuration array
 
-
+session_start();
 
 $query = '';
 $output = array();
@@ -11,10 +11,16 @@ $query .= " FROM `class_room_test`  `crt`
 LEFT JOIN `ref_status`  `rs` ON `rs`.`status_ID` = `crt`.`status_ID`
 LEFT JOIN `ref_test_type`  `rtt` ON `rtt`.`tstt_ID` = `crt`.`tstt_ID`";
 
-
+if($account->student_level()) 
+{
+	$cxza = "AND rs.status_ID = 1 ";
+}
+else{
+	$cxza ="";
+}
 if (isset($_REQUEST['class_ID'])) {
 	$class_ID = $_REQUEST['class_ID'];
- 	$query .= '  WHERE crt.class_ID = '.$class_ID.' AND';
+ 	$query .= '  WHERE crt.class_ID = '.$class_ID.' '.$cxza.'AND';
 }
 else{
 	 $query .= ' WHERE';
@@ -51,20 +57,93 @@ $filtered_rows = $statement->rowCount();
 foreach($result as $row)
 {
 	
-	if($row["status_Name"] == "Enable"){
+	if($row["status_Name"] == "Enable")
+	{
 		$span = "<div class='btn btn-sm btn-success' style='min-width:65px;'>".$row["status_Name"]."</div>";
 	}
 	else{
 		$span = "<div class='btn btn-sm btn-danger' style='min-width:65;'>".$row["status_Name"]."</div>";
 
 	}
+
+
+
+
+	$atmp_count = $account->atmp_count($_SESSION["user_ID"],$row["test_ID"]);
+	//CHECK IF ACTIVITY IS EXPIRED
+	$timenow = date("Y/m/d h:i:s");
+	$test_Expired = $row["test_Expired"];
+
+	// $te_dc = date_create($test_Expired);
+	// $tn_dc = date_create($timenow);
+	
+	// $fd_te_dc= date_format($te_dc,"Y/m/d h:i a");
+	// $fd_tn_dc = date_format($tn_dc,"Y/m/d h:i a");
+
+
+	 $micro_timenow = strtotime($timenow);
+	 $micro_timeexp = strtotime($test_Expired);
+
+
+	
+	
+
+	if ($atmp_count == 2 || $atmp_count == 1)
+	{
+		$takex = '
+  	<a class="btn btn-secondary btn-sm "   href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Retake Test</a>
+		';
+
+	}
+	else{
+		$takex = '<a class="btn btn-secondary btn-sm "  href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Take Test</a>';
+	}
+	if ($micro_timenow > $micro_timeexp){
+		
+		// $takex = '<a class="dropdown-item "  href="#" >Activity Expired</a>';
+		$takex = '';
+		
+
+	}
+
+
+
+	if($account->student_level()){
+	$btnx = '
+    <a class="dropdown-item studview_score" id="'.$row["test_ID"].'">View Scores</a>
+    '.$takex;
+	}
+	
+	
+	if($account->admin_level() || $account->instructor_level()){
+	$btnx = '
+  	<a  class="btn btn-secondary btn-sm "   href="questionaire?test_ID='.$row["test_ID"].'" target="_BLANK">View Questionaire</a>
+  	<button type="button" class="btn btn-info btn-sm view_score"  id="'.$row["test_ID"].'">View Scores</button>
+     '.$takex.'
+  	<button type="button" class="btn btn-primary btn-sm edit"  id="'.$row["test_ID"].'">Edit</button>
+  	<button type="button" class="btn btn-danger btn-sm delete"  id="'.$row["test_ID"].'">Delete</button>
+
+    ';
+	}
+	
+
+	
+	$format_date_added=date_create($row["test_Added"]);
+	$format_date_expired=date_create($test_Expired);
+	
+	$format_date_added = date_format($format_date_added,"Y/m/d h:i a");
+	$format_date_expired = date_format($format_date_expired,"Y/m/d h:i a");
+
 	$sub_array = array();
 	$sub_array[] = $row["test_ID"];
 	// $sub_array[] = $row["class_ID"];
 	$sub_array[] = $row["test_Name"];
 	$sub_array[] = $row["tstt_Name"];
-	$sub_array[] = $row["test_Added"];
-	$sub_array[] = $row["test_Expired"];
+	$sub_array[] = $format_date_added;
+	$sub_array[] = $format_date_expired;
+
+
+
 	if($row["test_Timer"] > 1){
 		$m = " Mins";
 	}
@@ -75,18 +154,11 @@ foreach($result as $row)
 	$sub_array[] = $span;
 
 		$sub_array[] = '
-<div class="btn-group">
-  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Action
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item view"  id="'.$row["test_ID"].'">View</a>
-    <a class="dropdown-item view_questionaire"  id="'.$row["test_ID"].'">View Questionaire</a>
-    <a class="dropdown-item edit"  id="'.$row["test_ID"].'">Edit</a>
-     <div class="dropdown-divider"></div>
-    <a class="dropdown-item delete" id="'.$row["test_ID"].'">Delete</a>
-  </div>
-</div>';
+		<div class="btn-group" role="group" aria-label="Basic example">
+		'.$btnx.'
+		</div>
+
+		';
 	$data[] = $sub_array;
 }
 

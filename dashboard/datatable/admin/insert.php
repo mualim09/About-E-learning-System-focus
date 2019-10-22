@@ -161,36 +161,6 @@ if(isset($_POST["operation"]))
 		$admin->generate_account($admin_ID,"admin");
 
 	}
-	if($_POST["operation"] == "change_password")
-	{
-		$account_ID = $_POST["account_ID"];
-		$update_password_new = $_POST["update_password_new"];
-		$update_password_newconfirm = $_POST["update_password_newconfirm"];
-		if($update_password_new === $update_password_newconfirm)
-		{
-			$new_password = password_hash($update_password_newconfirm, PASSWORD_DEFAULT);
-			try
-			{
-				$stmt = $admin->runQuery("UPDATE `user_account` SET `user_Pass` = :user_Pass WHERE `user_account`.`user_ID` = :user_ID");
-				$stmt->bindparam(":user_ID", $account_ID);	
-				$stmt->bindparam(":user_Pass", $new_password);	
-				$stmt->execute();	
-				echo "Password successfully change";
-			}
-			catch (PDOException $e)
-			{
-			    echo "There is some problem in connection: " . $e->getMessage();
-			}
-			
-		}
-		else
-		{
-			echo "Password not match";
-		}
-
-
-	}
-	
 }
 ?>
 

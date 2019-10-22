@@ -69,7 +69,7 @@ if($_POST["operation"] == "studentlist_submit")
 		
 		if(!empty($result))
 		{
-			echo 'Successfully Deleted';
+			echo 'Successfully Updated';
 		}
 		
 	

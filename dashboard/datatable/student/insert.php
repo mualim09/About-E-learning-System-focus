@@ -73,7 +73,7 @@ if(isset($_POST["operation"]))
 				$result = $stmt->execute();
 				if(!empty($result))
 				{
-				    echo  "Student Record Succesfully Updated";  
+				    echo  "Student Record Succesfully Added";  
 				    
 				}
 			} 
@@ -166,6 +166,13 @@ if(isset($_POST["operation"]))
 		}
 		
 	
+	}
+		if($_POST["operation"] == "gen_account")
+	{
+		$student_ID = $_POST["student_ID"];
+
+		$student->generate_account($student_ID,"student");
+
 	}
 }
 ?>

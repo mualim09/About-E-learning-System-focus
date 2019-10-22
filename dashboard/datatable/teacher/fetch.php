@@ -40,7 +40,7 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= 'ORDER BY rid_ID DESC ';
+	$query .= 'ORDER BY rid_LName ASC ';
 }
 if($_POST["length"] != -1)
 {
@@ -90,22 +90,18 @@ foreach($result as $row)
 		
 		$sub_array[] = $row["rid_ID"];
 		$sub_array[] =  $row["rid_EmpID"];
-		$sub_array[] =  $row["rid_FName"].' '.$mname.$row["rid_LName"].' '.$suffix;
+		$sub_array[] =  addslashes(ucwords(strtolower($row["rid_LName"].', '.$row["rid_FName"].' '.$mname.' '.$suffix)));
 		$sub_array[] =  $row["sex_Name"];
 		$sub_array[] =  $row["marital_Name"];
 		$sub_array[] =  $reg;
+	
 		$sub_array[] = '
-		<div class="btn-group">
-		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Action
-		  </button>
-		  <div class="dropdown-menu">
-		    <a class="dropdown-item view"  id="'.$row["rid_ID"].'">View</a>
-		    <a class="dropdown-item edit"  acreg="'.$acreg.'"  id="'.$row["rid_ID"].'">Edit</a>
-		    '.$btnrg.'
-		
-		  </div>
-		</div>';
+		<div class="btn-group" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rid_ID"].'">View</button>
+		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rid_ID"].'">Edit</button>
+		  '.$btnrg.'
+		</div>
+		';
 		// <div class="dropdown-divider"></div>
 		// <a class="dropdown-item delete" id="'.$row["rid_ID"].'">Delete</a>
 	$data[] = $sub_array;

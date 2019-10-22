@@ -1,6 +1,14 @@
-<button type="button" class="btn btn-sm btn-success add" >
+
+           <?php 
+              if($auth_user->student_level()) 
+              {
+              }
+               else{
+                ?><button type="button" class="btn btn-sm btn-success add" >
             Add 
-          </button>
+          </button><?php
+               }
+              ?>
          <br><br>
         <table class="table table-striped table-sm" id="studentlist_data">
           <thead>
@@ -9,7 +17,15 @@
               <th>Student ID</th>
               <th width="50%">Name</th>
               <th width="10%">Sex</th>
-              <th>Action</th>
+              <?php 
+              if($auth_user->student_level()) 
+              {
+              }
+               else{
+                ?> <th>Action</th><?php
+               }
+              ?>
+             
             </tr>
           </thead>
           <tbody>
@@ -143,7 +159,7 @@ include('x-script.php');
             "serverSide":true,
             "order":[],
             "ajax":{
-              url:"datatable/classroom_student/fetch.php",
+              url:"datatable/classroom_student/fetch.php?classroom_ID="+<?php echo $classroom_ID?>,
               type:"POST"
             },
             "columnDefs":[

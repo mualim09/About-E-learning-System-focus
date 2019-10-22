@@ -100,16 +100,19 @@ class DTFunction
         {
             $user_type_acro = "rsd";
              $sc_id = "rsd_StudNum";
+             $xlv = 1;
         }
         if ($user_type == "instructor")
         {
             $user_type_acro = "rid";
             $sc_id = "rid_EmpID";
+            $xlv = 2;
         }
         if ($user_type == "admin")
         {
             $user_type_acro = "rad";
             $sc_id = "rad_EmpID";
+            $xlv = 3;
 
         }
             $q1 ="SELECT * FROM `record_".$user_type."_details` WHERE ".$user_type_acro."_ID = '$id'";
@@ -131,14 +134,14 @@ class DTFunction
 
             $n_pass = password_hash($ac_pass, PASSWORD_DEFAULT);
 
-            $q2 ="INSERT INTO `user_account` (`user_ID`, `lvl_ID`, `user_Img`, `user_Name`, `user_Pass`, `user_Registered`) VALUES (NULL, '2', NULL, '$ac_user', '$n_pass', CURRENT_TIMESTAMP);";
+            $q2 ="INSERT INTO `user_account` (`user_ID`, `lvl_ID`, `user_Img`, `user_Name`, `user_Pass`, `user_Registered`) VALUES (NULL, '$xlv', NULL, '$ac_user', '$n_pass', CURRENT_TIMESTAMP);";
             $stmt2 = $this->conn->prepare($q2);
             $stmt2->execute();
             $last_id = $this->conn->lastInsertId();
 
 
 
-            $q3  = "UPDATE `record_instructor_details` SET `user_ID` = '$last_id' WHERE `record_instructor_details`.`rid_ID` = '$id'";
+            $q3  = "UPDATE `record_".$user_type."_details` SET `user_ID` = '$last_id' WHERE `".$user_type_acro."_ID` = '$id'";
             $stmt3 = $this->conn->prepare($q3);
             $r3 = $stmt3->execute();
 
@@ -172,6 +175,115 @@ class DTFunction
             echo $e->getMessage();
         } 
     }
+      public function insert_choice($question_ID,$is_correct,$choice)
+    {
+        try
+        { 
+            $sql = " INSERT INTO `class_room_test_choices` 
+            (`choice_ID`, `question_ID`, `is_correct`, `choice`)
+             VALUES (NULL, '$question_ID', '$is_correct', '$choice');";
+            $statement = $this->runQuery($sql);
+            $result = $statement->execute();
+            
+            return $last_id = $this->conn->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+    }
+    public function insert_question($question,$test_ID)
+    {
+       
+        try
+        { 
+            $sql = " INSERT INTO `class_room_test_questions` (`question_ID`, `test_ID`, `question`) 
+            VALUES (NULL, $test_ID, '$question');";
+            $statement = $this->runQuery($sql);
+            $result = $statement->execute();
+            
+            return $last_id = $this->conn->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+    }
+    public function  setnewChoice($choice_ID,$newChoice)
+       {
+       
+        try
+        { 
+            $sql = "UPDATE `class_room_test_choices` SET `choice` = '$newChoice' WHERE `class_room_test_choices`.`choice_ID` = $choice_ID;";
+            $statement = $this->runQuery($sql);
+            $result = $statement->execute();
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+    }
+
+    public function check_choice($choice_ID)
+    {
+           
+        try
+        { 
+            $sql = " SELECT is_correct FROM `class_room_test_choices` WHERE choice_ID =  $choice_ID and is_correct = 1;";
+            $statement = $this->runQuery($sql);
+            $statement->execute();
+            $result = $statement->rowCount();
+            return $result;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+    }
+    public function test_score($score,$user_ID,$test_ID){
+         try
+        { 
+            $sql = "INSERT INTO `class_room_test_score` 
+            (`score_ID`, `test_ID`, `score`, `user_ID`) 
+            VALUES (NULL, '$test_ID', '$score', '$user_ID');";
+            $statement = $this->runQuery($sql);
+            $statement->execute();
+            
+            return $last_id = $this->conn->lastInsertId();
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+
+    }
+    public function atmp_count($user_ID,$test_ID){
+         try
+        { 
+            $sql = "SELECT `count` atmp_count FROM 
+            `class_room_test_attemp` 
+            WHERE user_ID = '$user_ID' and test_ID = '$test_ID'";
+            $statement = $this->runQuery($sql);
+            $statement->execute();
+            
+            $result = $statement->fetchAll();
+            
+            $atmp_count = 0;
+            foreach($result as $row)
+            {
+                $atmp_count = $row["atmp_count"];
+            }
+            return $atmp_count;
+        }
+        catch(PDOException $e)
+        {
+            echo $e->getMessage();
+        } 
+
+    }
+
+    
 }
 
 

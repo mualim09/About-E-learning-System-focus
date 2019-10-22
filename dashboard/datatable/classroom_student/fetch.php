@@ -1,7 +1,7 @@
 <?php
 require_once('../class.function.php');
 $room = new DTFunction();  		 // Create new connection by passing in your configuration array
-
+session_start();
 
 $query = '';
 $output = array();
@@ -17,6 +17,7 @@ $query .= "SELECT
 `sx`.`sex_Name`,
 `crs`.`status_ID`
 ";
+
 $query .= " FROM `class_room_student` `crs`
 LEFT JOIN `record_student_details` `rsd` ON `rsd`.`rsd_ID` = `crs`.`rsd_ID`
 LEFT JOIN `ref_suffixname` `sn` ON `sn`.`suffix_ID` = `rsd`.`suffix_ID`
@@ -24,15 +25,24 @@ LEFT JOIN `ref_sex` `sx` ON `sx`.`sex_ID` = `rsd`.`sex_ID`
 
 ";
 
+if (isset($_REQUEST['classroom_ID'])) {
+	$classroom_ID = $_REQUEST['classroom_ID'];
+ 	$query .= '  WHERE `crs`.`class_ID` =  '.$classroom_ID.' AND';
+ 	
+}
+else{
+	 $query .= ' WHERE';
+}
 if(isset($_POST["search"]["value"]))
 {
- $query .= 'WHERE crs_ID LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= '(crs_ID LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR rsd_StudNum LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR rsd_FName LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR rsd_MName LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR rsd_LName LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR sex_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR sex_Name LIKE "%'.$_POST["search"]["value"].'%" )';
 }
+
 
 
 if(isset($_POST["order"]))
@@ -41,7 +51,7 @@ if(isset($_POST["order"]))
 }
 else
 {
-	$query .= 'ORDER BY rsd_FName ASC ';
+	$query .= 'ORDER BY rsd_LName ASC ';
 }
 if($_POST["length"] != -1)
 {
@@ -108,26 +118,38 @@ foreach($result as $row)
 		
 		$sub_array[] = $row["crs_ID"];
 		$sub_array[] = $row["rsd_StudNum"];
-		$sub_array[] =  $row["rsd_FName"].' '.$mname.htmlspecialchars($row["rsd_LName"]).' '.$suffix;
+		$sub_array[] =  addslashes(ucwords(strtolower(htmlspecialchars($row["rsd_LName"]).', '.$row["rsd_FName"].' '.$mname.' '.$suffix)));
 		$sub_array[] = $row["sex_Name"];
-		$sub_array[] = '
-		<div class="btn-group">
-		'.$zxc.'
-		  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-		    Action
-		  </button>
-		  <div class="dropdown-menu">
-		    
-		    <a class="dropdown-item '.$zx.'" id="'.$row["crs_ID"].'">'.$zxcd.'</a>
-		     <div class="dropdown-divider"></div>
-		    <a class="dropdown-item delete" id="'.$row["crs_ID"].'">Remove</a>
-		  </div>
-		</div>';
+		if($room->student_level()) { 
+		}
+		else{
+			$sub_array[] = '
+			<div class="btn-group">
+			'.$zxc.'
+			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    Action
+			  </button>
+			  <div class="dropdown-menu">
+			    
+			    <a class="dropdown-item '.$zx.'" id="'.$row["crs_ID"].'">'.$zxcd.'</a>
+			     <div class="dropdown-divider"></div>
+			    <a class="dropdown-item delete" id="'.$row["crs_ID"].'">Remove</a>
+			  </div>
+			</div>';
+		}
+		
 
 	$data[] = $sub_array;
 }
+if (isset($_REQUEST['classroom_ID'])) {
+	$classroom_ID = $_REQUEST['classroom_ID'];
+ 	$q = 'SELECT * FROM `class_room_student`  WHERE `class_ID` =  '.$classroom_ID.' ';
+ 	
+}
+else{
+	$q = "SELECT * FROM `class_room_student`";
+}
 
-$q = "SELECT * FROM `class_room_student`";
 $filtered_rec = $room->get_total_all_records($q);
 
 $output = array(

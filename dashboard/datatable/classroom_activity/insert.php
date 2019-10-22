@@ -1,6 +1,7 @@
 <?php
 require_once('../class.function.php');
 $account = new DTFunction(); 
+session_start();
 if(isset($_POST["operation"]))
 {
 
@@ -132,6 +133,48 @@ if(isset($_POST["operation"]))
 		
 	
 	}
+
+	if($_POST["operation"] == "test_view")
+	{
+		try{
+			$test_ID = $_POST["test_ID"];
+			$user_ID = $_SESSION["user_ID"];
+			$statement = $account->runQuery(
+			"SELECT * FROM `class_room_test_score` WHERE test_ID = :test_ID and user_ID = :user_ID 
+			ORDER BY `score_ID` DESC   LIMIT 1"
+			);
+			$statement->execute(
+				array(
+					':test_ID'	=>	$test_ID,
+					':user_ID'	=>	$user_ID
+				)
+			);
+			
+			$result = $statement->fetchAll();
+
+			if($statement->rowCount() > 0){
+				foreach($result as $row)
+				{
+					$score = 'Score: '.$row['score'];
+				}
+			}
+			else
+			{
+				$score = 'No score';
+			}
+			echo $score;
+			
+		}
+		catch (PDOException $e)
+		{
+		    echo "There is some problem in connection: " . $e->getMessage();
+		}
+		
+	}
+
+	
+
+	
 }
 ?>
 

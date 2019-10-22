@@ -1,6 +1,14 @@
 
+        <?php 
+              if($auth_user->student_level()) 
+              {
+              }
+               else{
+                ?> <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#test_modal">Add Activity</button><?php
+               }
+              ?>
 
-        <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#test_modal">Add Activity</button>
+       
           <button type="button" class="btn btn-sm btn-info float-right material" data-toggle="modal" data-target="#material_modal">Class  Materials</button>
          <br><br>
         <table class="table table-striped table-sm" id="activity_data">
@@ -199,7 +207,16 @@
         </button>
       </div>
       <div class="modal-body">
-          <button type="button" class="btn btn-sm btn-success add_materials" >Add Materials</button>
+          
+          
+        <?php 
+        if($auth_user->student_level()) 
+        {
+        }
+         else{
+          ?><button type="button" class="btn btn-sm btn-success add_materials" >Add Materials</button><?php
+         }
+        ?>
           <br><br>
           <table class="table table-striped table-sm" id="material_data">
            <thead>
@@ -218,7 +235,6 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
       </div>
     </div>
 </div>
@@ -284,6 +300,38 @@
       </div>
     </div>
   </div>
+   <!-- VIEW STUDENT SCORES -->
+<div class="modal fade" id="student_scores" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">STUDENT SCORES</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <table class="table table-striped table-sm" id="scorestudent_data">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>LRN</th>
+              <th>Name</th>
+              <th>Score</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+     
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
     </main>
   </div>
@@ -314,6 +362,14 @@ include('x-script.php');
             ],
 
           });
+            <?php 
+            if($auth_user->student_level()) 
+            { 
+              ?>
+              dataTable.columns( [6] ).visible( false );
+              <?php
+            }
+            ?>
             var materials_dataTable = $('#material_data').DataTable({
             "processing":true,
             "serverSide":true,
@@ -331,6 +387,28 @@ include('x-script.php');
             ],
 
           });
+            function scorestudent_test($test_ID){
+              var scorestud_dataTable = $('#scorestudent_data').DataTable({
+              "processing":true,
+              "serverSide":true,
+              "order":[],
+              "ordering": false,
+              "bAutoWidth": false,
+              "searching": false,
+              "paging":     false,
+              "ajax":{
+                url:"datatable/classroom/fetch_studentscore.php?test_ID="+$test_ID+"&class_ID="+<?php echo $classroom_ID?>,
+                type:"POST"
+              },
+              "columnDefs":[
+                {
+                  "targets":[0],
+                  "orderable":false,
+                },
+              ],
+
+            });
+          }
           function qestionaire(test_ID){
                var questionaire_dataTable = $('#questionaire_data').DataTable({
               "processing":true,
@@ -514,6 +592,17 @@ include('x-script.php');
          
           
             });
+            $(document).on('click', '.view_score', function(){
+            var test_ID = $(this).attr("id");
+            
+             $('#student_scores').modal('show');
+       
+         
+             scorestudent_test(test_ID);
+             $('#scorestudent_data').DataTable().destroy();
+         
+          
+            });
 
           $(document).on('click', '.edit_question', function(){
             var question_ID = $(this).attr("id");
@@ -588,6 +677,29 @@ include('x-script.php');
             })
            
           });
+
+           $(document).on('click', '.studview_score', function(event){
+
+              var test_ID =  $(this).attr("id");
+              $('#test_ID').val(test_ID);
+
+               $.ajax({
+                url:"datatable/classroom_activity/insert.php",
+                method:'POST',
+                data:{operation:"test_view",test_ID:test_ID},
+                dataType    :   'json',
+                complete:function(data)
+                {
+                  alertify.alert(data.responseText).setHeader('Test Score');
+                  
+                  
+                }
+              });
+           
+          });
+
+
+          
           
           } );
 
