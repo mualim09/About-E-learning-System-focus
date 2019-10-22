@@ -16,9 +16,9 @@ foreach($attchresult as $row)
 
 header('Content-Description: File Description');
 
-header('Content-Type: '.$attachment_MIME);
+header('Content-Type: $attachment_MIME');
 
-header('Content-Disposition: attachment; filename='.$attachment_Name[1]);
+header('Content-Disposition: attachment; filename=\''.$attachment_Name[1].'\'');
 
 header('Content-Transfer-Encoding: binary');
 
