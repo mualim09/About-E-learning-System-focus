@@ -1,4 +1,4 @@
-Copyright (c) 2019 Rhalp Darren R. Cabrera 
+Copyright (c) 2019 [Rhalp Darren R. Cabrera](https://github.com/rhalp10)
 
 Licensed under the Apache License, Version 2.0 (the "License") modified with
 Commons Clause Restriction; you may not use this file except in compliance with
@@ -11,7 +11,7 @@ under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
 CONDITIONS OF ANY KIND, either express or implied. See the License for the
 specific language governing permissions and limitations under the License.
 
-"Commons Clause" License Condition v1.0
+["Commons Clause" License Condition v1.0](https://commonsclause.com/)
 
 The Software is provided to you by the Licensor under the License, as defined
 below, subject to the following condition.
@@ -30,6 +30,6 @@ include this Commons Clause License Condition notice.
 
 Software: [CvSU-E-Learning](https://github.com/rhalp10/CvSU-E-Learning)
 
-License: Apache 2.0
+License: [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0)
 
 Licensor: Rhalp Darren R. Cabrera
