@@ -1,4 +1,4 @@
-Copyright (c) 2019 Rhalp Darren R. Cabrera <rhalpdarrencabrera@gmail.com> (https://www.facebook.com/rhalp10)
+Copyright (c) 2019 Rhalp Darren R. Cabrera 
 
 Licensed under the Apache License, Version 2.0 (the "License") modified with
 Commons Clause Restriction; you may not use this file except in compliance with
