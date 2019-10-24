@@ -45,4 +45,4 @@ See  **[commits](https://github.com/rhalp10/CvSU-E-Learning/commits/master)**
 
 # License
 
-The CvSU E-Learning - (IS) Information System  is open source software licensed as [Apache 2.0 with Commons Clause](https://github.com/rhalp10/CvSU-E-Learning/blob/master/LICENSE.md)
+The CvSU E-Learning - (IS) Information System licensed as [Apache 2.0 with Commons Clause](https://github.com/rhalp10/CvSU-E-Learning/blob/master/LICENSE.md)
