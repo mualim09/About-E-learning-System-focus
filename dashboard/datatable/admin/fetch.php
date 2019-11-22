@@ -95,9 +95,9 @@ foreach($result as $row)
 		$sub_array[] =  $row["marital_Name"];
 		$sub_array[] =  $reg;
 		$sub_array[] = '
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rad_ID"].'">View</button>
-		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rad_ID"].'">Edit</button>
+		<div class="" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-outline-info btn-sm view"  id="'.$row["rad_ID"].'">View</button>
+		  <button type="button" class="btn btn-outline-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rad_ID"].'">Edit</button>
 		  '.$btnrg.'
 		</div>
 		';

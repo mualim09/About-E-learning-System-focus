@@ -20,6 +20,7 @@ if(isset($_REQUEST["test_ID"])){
     foreach($result as $row)
     {
       $test_Name = $row["test_Name"];
+      $test_Timer = $row["test_Timer"];
     }
 }
  $stmt4 = $auth_user->runQuery("SELECT * FROM `class_room_test_attemp` WHERE user_ID = ".$_SESSION['user_ID']." AND test_ID = ".$test_ID."");
@@ -129,7 +130,7 @@ include('x-nav.php');
      
               $auth_user->test_question($test_ID);
 
-              $test_timer = 10;
+              // $test_timer = 10;
             ?>
             <input type="hidden" name="q_operation" value="QandA_answer">
             <input type="hidden" name="q_testID" value="<?php echo $test_ID?>">
@@ -147,6 +148,7 @@ include('x-nav.php');
 <?php 
 include('x-script.php');
 ?>
+
 <script>
 
 
@@ -169,20 +171,22 @@ $(document).ready(function() {
                  alertify.success('Ok') 
                }).setHeader('Answer');
 
+            
+
              }
            });
 
       });
 });
 
-  test_timer(<?php echo $auth_user->test_time($test_ID)?>);
+  test_timer(<?php echo $auth_user->test_time($test_ID)?>,<?php echo $test_ID?>);
 
 
 
-  function test_timer(asd){
+  function test_timer(test_time,roomID){
 
   var xmin = new Date();
-  xmin.setMinutes(xmin.getMinutes() + asd);
+  xmin.setMinutes(xmin.getMinutes() + test_time);
 
   var countDownDate = xmin.getTime();
 
@@ -195,22 +199,40 @@ $(document).ready(function() {
     // Find the distance between now an the count down date
     var distance = countDownDate - now;
 
-    // Time calculations for days, hours, minutes and seconds
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // $("#sampletime").html(distance);
+     $.ajax({
+             type        :   'POST',
+             url:"datatable/classroom_activity/timmer.php",
+             data:{timmerutc:distance,test_ID:<?php echo $test_ID?>},
+             dataType    :   'json',
+             success:function(data)
+             {
+              var distance = data.remaining;
+              // Time calculations for days, hours, minutes and seconds
+              var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+              var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+              var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+              var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    // Display the result in the element with id="demo"
-    document.getElementById("test_countdown").innerHTML =  hours + "h "
-    + minutes + "m " + seconds + "s ";
-    // If the count down is finished, write some text
-    if (distance < 0) {
-      clearInterval(x);
-       alertify.alert("Sorry you exceed the timelimit. Your answer will send automatically").setHeader('Time Out');
-      $('#test_form').submit();
-      document.getElementById("test_countdown").innerHTML = "EXPIRED";
-    }
+              // Display the result in the element with id="demo"
+              document.getElementById("test_countdown").innerHTML =  hours + "h "
+              + minutes + "m " + seconds + "s ";
+              // If the count down is finished, write some text
+              console.log(distance);
+
+
+
+              if (distance < 0) {
+                clearInterval(x);
+                 alertify.alert("Sorry you exceed the timelimit. Your answer will send automatically").setHeader('Time Out');
+                $('#test_form').submit();
+                document.getElementById("test_countdown").innerHTML = "EXPIRED";
+              }
+             }
+             
+           });
+
+ 
   }, 1000);
 }
 

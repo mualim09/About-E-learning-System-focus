@@ -11,8 +11,8 @@ if (isset($_REQUEST['test_ID'])) {
 $query = '';
 $output = array();
 $query .= "SELECT 
+DISTINCT(rs.rsd_ID),
 rs.crs_ID,
-rs.rsd_ID,
 rsd.rsd_StudNum,
 rsd.rsd_FName,
 rsd.rsd_MName,
@@ -20,7 +20,7 @@ rsd.rsd_LName,
 sn.suffix,
 sx.sex_Name,
 rsd.user_ID,
-IF (rts.score is NULL,'0',rts.score) score,
+(SELECT IF (crtsz.score is NULL,'0',crtsz.score) FROM class_room_test_score crtsz  WHERE crtsz.user_ID = `rts`.`user_ID` LIMIT 1) score,
 (SELECT count(test_ID) FROM class_room_test_questions WHERE test_ID = $xtest_ID) over
 ";
 $query .= "  FROM `class_room_student` `rs`
@@ -30,9 +30,11 @@ LEFT JOIN `ref_sex` `sx` ON `sx`.`sex_ID` = `rsd`.`sex_ID`
 LEFT JOIN `class_room_test_score` `rts` ON `rts`.`user_ID` = `rsd`.`user_ID`";
 
 
-if (isset($_REQUEST['class_ID'])) {
+if (isset($_REQUEST['class_ID']) || isset($_REQUEST['section_ID'])) {
 	$class_ID = $_REQUEST['class_ID'];
- 	$query .= '  WHERE rs.class_ID  = '.$class_ID.' AND';
+	$section_ID = $_REQUEST['section_ID'];
+ 	$query .= '  WHERE rs.class_ID  = '.$class_ID.' AND rs.section_ID  = '.$section_ID.' AND';
+
 }
 else{
 	 $query .= ' WHERE';
@@ -86,11 +88,37 @@ foreach($result as $row)
 		}
 		$sub_array = array();
 
+		if(empty($row["score"])){
+			$score = 0;
+		}
+		else{
+			$score = $row["score"];
+		}
+
 		
+
+		try {
+		    $percent_over = (70 / 100) * $row["over"];
+		
+		    if($score >= $percent_over){
+		    	$remarks = "Passed";
+		    }
+		    else{
+		    	$remarks = "Failed";
+		    }
+
+		} catch(DivisionByZeroError $e){
+		   $remarks = "Failed";
+		}
+			catch(ErrorException $e) {
+		    $remarks = "Failed";
+		}
+
 		$sub_array[] = $i;
 		$sub_array[] = $row["rsd_StudNum"];
 		$sub_array[] =  $row["rsd_FName"].' '.$mname.$row["rsd_LName"].' '.$suffix;
-		$sub_array[] = $row["score"]."/".$row["over"];
+		$sub_array[] = $score."/".$row["over"];
+		$sub_array[] = $remarks;
 		
 	
 

@@ -64,7 +64,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Classroom</h1>
+        <h1 class="h2" style="font-size:16px;">Manage Classroom</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -85,12 +85,12 @@ include('x-nav.php');
         <?php 
          if($auth_user->student_level()) { 
             ?>
-            <button type="button" class="btn btn-sm btn-success float-right join_classroom" data-toggle="modal" data-target="#join_classroom_modal">Join Classroom</button>
+            <button type="button" class="btn btn-sm btn-outline-success float-right join_classroom" data-toggle="modal" data-target="#join_classroom_modal">Manage Topic</button>
             <?php
           }
           else{
             ?>
-            <button type="button" class="btn btn-sm btn-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
+            <button type="button" class="btn btn-sm btn-outline-success add" data-toggle="modal" data-target="#classroom_modal">Add</button>
             <?php
           }
         ?>
@@ -152,9 +152,9 @@ include('x-nav.php');
       <div class="modal-footer">
           <input type="hidden" name="classroom_ID" id="classroom_ID" />
           <input type="hidden" name="action" id="action" />
-        <div class="btn-group" id='sbtng'>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_teacher">Submit</button>
+        <div class="" id='sbtng'>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-primary submit" id="submit_input" value="submit_teacher">Submit</button>
         </div>
       </div>
        </form>
@@ -167,7 +167,7 @@ include('x-nav.php');
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Join Classroom</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Join Topic</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -177,8 +177,13 @@ include('x-nav.php');
         
         <div class="form-row">
                 <div class="form-group col-md-12">
-                  <label for="join_code">Course Code</label>
+                  <label for="join_code">Topic Code</label>
                   <input type="text" class="form-control" id="join_code" name="join_code" placeholder="" value=""  required="">
+                </div>
+
+                <div class="form-group col-md-12">
+                  <label for="join_section">Section</label>
+                  <input type="text" class="form-control" id="join_section" name="join_section" placeholder="" value=""  required="">
                 </div>
                 <div class="form-group col-md-12">
                   <label for="classroom_course">Password</label>
@@ -187,9 +192,9 @@ include('x-nav.php');
         </div>
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary" id="joinclass_submit"  value="joinclass_submit">Submit</button>
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-primary" id="joinclass_submit"  value="joinclass_submit">Submit</button>
         </div>
       </div>
       </form>
@@ -313,9 +318,9 @@ include('x-script.php');
           $(document).on('click', '.add', function(){
             $('#classroom_modal_title').text('Add New Classroom');
 
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
 
             $('#classroom_form')[0].reset();
             $('#submit_input').show();
@@ -331,9 +336,9 @@ include('x-script.php');
 
 
             $('#submit_input').hide();
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\bbtn-group\b/g, "");
-            btng.classList.add("btng_null");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\bbtn-group\b/g, "");
+            // btng.classList.add("btng_null");
             
              $.ajax({
                 url:"datatable/classroom/fetch_single.php",
@@ -374,9 +379,9 @@ include('x-script.php');
             $('#classroom_modal').modal('show');
           
             $('#submit_input').show();
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
             
              $.ajax({
                 url:"datatable/classroom/fetch_single.php",

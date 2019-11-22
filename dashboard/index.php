@@ -63,8 +63,12 @@ include('x-nav.php');
                 </div>
             </div>
             <div class="row">
+               <div class="col-12 col-sm-12">
+                <img src="../assets/img/background/index.png" height="300"  width="100%">
+                <br><br>
+               </div>
               <div class="col-6 col-sm-6">
-                <div class="card ">
+                <div class="card " style="border:solid 0.9px ;">
                   <div class="card-header text-center" style=" border-bottom: 5px solid ;">
                    <strong>UNIVERSITY MISSION</strong>
                   </div>
@@ -82,7 +86,7 @@ include('x-nav.php');
                 </div>
               </div>
               <div class="col-6 col-sm-6">
-                <div class="card ">
+                <div class="card " style="border:solid 0.9px ;">
                   <div class="card-header text-center" style=" border-bottom: 5px solid ;">
                     <strong>UNIVERSITY VISION</strong>
                   </div>

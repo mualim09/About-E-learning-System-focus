@@ -77,7 +77,7 @@ foreach($result as $row)
 	{
 		$reg = "<span class='badge badge-danger'>Unregistered</span>";
 		$acreg = "UN";
-		$btnrg = '<button type="button" class="btn btn-success btn-sm gen_account"  id="'.$row["rsd_ID"].'">Generate Account</button>';
+		$btnrg = '<button type="button" class="btn btn-outline-success btn-sm gen_account"  id="'.$row["rsd_ID"].'">Generate Account</button>';
 	}
 	else
 	{
@@ -95,9 +95,9 @@ foreach($result as $row)
 		$sub_array[] =  $row["marital_Name"];
 		$sub_array[] =  $reg;
 		$sub_array[] = '
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rsd_ID"].'">View</button>
-		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rsd_ID"].'">Edit</button>
+		<div class="" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-outline-info btn-sm view"  id="'.$row["rsd_ID"].'">View</button>
+		  <button type="button" class="btn btn-outline-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rsd_ID"].'">Edit</button>
 		  '.$btnrg.'
 		</div>
 		';

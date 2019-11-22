@@ -23,9 +23,10 @@ LEFT JOIN `user_account` `ua` ON `ua`.`user_ID` = `rp`.`user_ID`
 LEFT JOIN `user_level` `ul` ON `ul`.`lvl_ID` = `ua`.`lvl_ID`";
 
 
-if (isset($_REQUEST['class_ID'])) {
+if (isset($_REQUEST['class_ID']) || isset($_REQUEST['section_ID']) ) {
 	$class_ID = $_REQUEST['class_ID'];
- 	$query .= '  WHERE rp.class_ID = '.$class_ID.' AND';
+	$section_ID = $_REQUEST['section_ID'];
+ 	$query .= '  WHERE rp.class_ID = '.$class_ID.' AND rp.section_ID = '.$section_ID.' AND';
 }
 else{
 	 $query .= ' WHERE';
@@ -68,8 +69,8 @@ foreach($result as $row)
 		$sub_array[] = $row["post_Date"];
 		
 		if($_SESSION['user_ID'] === $row["user_ID"]){
-			$edit_by_user_who_posted = '<button type="button"class="btn btn-primary btn-sm  edit" user-id="'.$row["user_ID"].'" id="'.$row["post_ID"].'">Edit</button>';
-			$delete_by_user_who_posted='<button type="button" class="btn btn-danger btn-sm  delete" id="'.$row["post_ID"].'">Delete</button>';
+			$edit_by_user_who_posted = '<button type="button"class="btn btn-outline-primary btn-sm  edit" user-id="'.$row["user_ID"].'" id="'.$row["post_ID"].'">Edit</button>';
+			$delete_by_user_who_posted='<button type="button" class="btn btn-outline-danger btn-sm  delete" id="'.$row["post_ID"].'">Delete</button>';
 		}
 		else{
 			$edit_by_user_who_posted='';
@@ -77,8 +78,8 @@ foreach($result as $row)
 
 		}
 		$sub_array[] = '
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["post_ID"].'">View</button>
+		<div class="" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-outline-info btn-sm view"  id="'.$row["post_ID"].'">View</button>
 		  '.$edit_by_user_who_posted.'
 		    '.$delete_by_user_who_posted.'
 		</div>

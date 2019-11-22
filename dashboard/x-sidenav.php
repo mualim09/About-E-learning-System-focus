@@ -89,7 +89,7 @@ function navlist($pagefile_name,$name,$link,$icon){
        
           navlist($pagefile_name,"Dashboard","index",'home');
           if($auth_user->student_level() || $auth_user->instructor_level() ) { 
-          navlist($pagefile_name,"My Room","classroom",'monitor');
+          navlist($pagefile_name,"Topics","classroom",'monitor');
           navlist($pagefile_name,"Query Simulator","query_simulator","database");
           }
           if($auth_user->admin_level()) { 
@@ -99,7 +99,7 @@ function navlist($pagefile_name,$name,$link,$icon){
           navlist($pagefile_name,"Instructor Management","instructor","book");
        
           navlist($pagefile_name,"Query Simulator","query_simulator","database");
-          navlist($pagefile_name,"Classroom","classroom","clipboard");
+          // navlist($pagefile_name,"Classroom","classroom","clipboard");
           }
           ?>
         </ul>

@@ -26,5 +26,11 @@
         .sidebar .nav-link.active{
         	background-color:#495057;
         }
+
+        .uctext 
+        {
+            text-transform: uppercase;
+        }
+
     </style>
     

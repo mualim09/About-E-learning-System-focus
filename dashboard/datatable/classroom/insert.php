@@ -159,6 +159,7 @@ if($_POST["action"] == "joinclass_submit")
 	try
 	{
 		$class_Code = $_POST["join_code"];
+		$class_Section = $_POST["join_section"];
 		$class_Password = $_POST["join_password"];
 		$user_ID = $_SESSION['user_ID'];
 
@@ -190,32 +191,56 @@ if($_POST["action"] == "joinclass_submit")
 					$rsd_ID = $row["rsd_ID"];
 				}
 
-				//CHECK IF STUDENT IS ALREADY IN CLASS
-				$sqlx = "SELECT * FROM `class_room_student` 
-				WHERE 
-				rsd_ID = '$rsd_ID' and 
-				class_ID  = '$class_ID' LIMIT 1";
-				$statementx = $classroom->runQuery($sqlx);
-				$statementx->execute();
-				if ($statementx->rowCount() > 0)
-				{
-					echo 'You already join to this room';
-				}
-				else
-				{
-					//INSERT STUDENT IN CLASS
-					$sql2 = "INSERT INTO `class_room_student` 
-					(`crs_ID`, `class_ID`, `rsd_ID`, `status_ID`) 
-					VALUES (NULL, '$class_ID', '$rsd_ID', '2');";
-					$statement2 = $classroom->runQuery($sql2);
-							
-					$result2 = $statement2->execute();
 
-					if(!empty($result2))
+				 $sqlxc = "SELECT *,REPLACE(UPPER(section_Name),\" \",\"_\") `secName` FROM `ref_section` WHERE `class_ID` = '".$class_ID."' HAVING `secName` = '".$class_Section."'";
+				$statementxc = $classroom->runQuery($sqlxc);
+				$statementxc->execute();
+				$result3 = $statementxc->fetchAll();
+				//IF SECTION IS EXIST
+				if ($statementxc->rowCount() > 0)
+				{
+					foreach($result3 as $row)
 					{
-						echo 'Successfully Join Wait For Approval';
+						$section_ID = $row["section_ID"];
 					}
+					// //CHECK IF STUDENT IS ALREADY IN CLASS
+					$sqlx = "SELECT * FROM `class_room_student`
+					WHERE 
+					rsd_ID = '$rsd_ID' and 
+					class_ID  = '$class_ID' and
+					section_ID  = '$section_ID' 
+					LIMIT 1";
+					$statementx = $classroom->runQuery($sqlx);
+					$statementx->execute();
+					if ($statementx->rowCount() > 0)
+					{
+						echo 'You already join to this room';
+					}
+					else
+					{
+						//INSERT STUDENT IN CLASS
+						$sql2 = "INSERT INTO `class_room_student` 
+						(`crs_ID`, `class_ID`, `rsd_ID`, `status_ID`,`section_ID`) 
+						VALUES (NULL, '$class_ID', '$rsd_ID', '3','$section_ID');";
+						$statement2 = $classroom->runQuery($sql2);
+								
+						$result2 = $statement2->execute();
+
+						if(!empty($result2))
+						{
+							echo 'Successfully Join Wait For Approval';
+						}
+					}
+
+					
 				}
+				//
+				else{
+					echo 'Section Don\'t Exist';
+				}
+
+
+				
 			}
 			catch (PDOException $e)
 			{	

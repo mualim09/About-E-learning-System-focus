@@ -127,6 +127,8 @@ if(isset($_POST["q_operation"]))
 		$output["msg"] = "submit complete";
 
 		echo json_encode($output);
+
+		unset($_SESSION["timmer".$test_ID]);
 		
 
 	}
@@ -139,6 +141,8 @@ if(isset($_POST["q_operation"]))
 		$new_count = --$retake_count;
 		$stmt1 = $room->runQuery("UPDATE `class_room_test_attemp` SET `count` = '".$new_count."' WHERE `atmp_ID` = ".$atmp_ID."");
 		$stmt1->execute();
+		
+		unset($_SESSION["timmer".$test_ID]);
 		// echo $test_ID
 		
 	}

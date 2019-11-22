@@ -22,9 +22,10 @@ LEFT JOIN `user_level` `ul` ON `ul`.`lvl_ID` = `ua`.`lvl_ID`
 ";
 
 
-if (isset($_REQUEST['post_ID'])) {
+if (isset($_REQUEST['post_ID']) || isset($_REQUEST['section_ID'])) {
 	$post_ID = $_REQUEST['post_ID'];
- 	$query .= '  WHERE crc.post_ID =  '.$post_ID.' AND';
+	$section_ID = $_REQUEST['section_ID'];
+ 	$query .= '  WHERE crc.post_ID =  '.$post_ID.' AND crc.section_ID = '.$section_ID.' AND';
 }
 else{
 	 $query .= ' WHERE';

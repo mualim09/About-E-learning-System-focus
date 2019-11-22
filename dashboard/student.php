@@ -57,7 +57,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Student Record</h1>
+        <h1 class="h2"  style="font-size:16px;">Manage Student Record</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -67,7 +67,7 @@ include('x-nav.php');
         </ol>
       </nav>
       <div class="table-responsive">
-          <button type="button" class="btn btn-sm btn-success add" >
+          <button type="button" class="btn btn-sm btn-outline-success add" >
             Add 
           </button>
          <br><br>
@@ -113,20 +113,20 @@ include('x-nav.php');
                   
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="student_lrn">LRN ID<span class="text-danger">*</span></label>
+                  <label for="student_lrn">Student ID<span class="text-danger">*</span></label>
                   <input type="number" class="form-control" id="student_lrn" name="student_lrn" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="student_fname">First Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="student_fname" name="student_fname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="student_fname" name="student_fname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="student_mname">Middle Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="student_mname" name="student_mname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="student_mname" name="student_mname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="student_lname">Last Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="student_lname" name="student_lname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="student_lname" name="student_lname" placeholder="" value="" required="">
                 </div>
                   <div class="form-group col-md-3">
                   <label for="student_suffix">Suffix<span class="text-danger">*</span></label>
@@ -170,9 +170,9 @@ include('x-nav.php');
       <div class="modal-footer">
           <input type="hidden" name="student_ID" id="student_ID" />
           <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group" id='sbtng'>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_student">Submit</button>
+        <div class="" id='sbtng'>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-primary submit" id="submit_input" value="submit_student">Submit</button>
         </div>
       </div>
       </form>
@@ -277,9 +277,9 @@ include('x-script.php');
             $('#student_modal').modal('show');
             $('#student_form')[0].reset();
 
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
 
             $('#s_img').attr('src', "../assets/img/users/default.jpg");
             $("#student_lrn").prop("disabled", false);
@@ -309,9 +309,9 @@ include('x-script.php');
             
 
             $('#submit_input').hide();
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\bbtn-group\b/g, "");
-            btng.classList.add("btng_null");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\bbtn-group\b/g, "");
+            // btng.classList.add("btng_null");
 
                 
                 $("#student_img").hide();
@@ -366,9 +366,9 @@ include('x-script.php');
             $('#student_modal').modal('show');
             
 
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
 
                 
                 $("#student_img").show();

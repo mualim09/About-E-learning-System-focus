@@ -13,14 +13,32 @@ LEFT JOIN `ref_test_type`  `rtt` ON `rtt`.`tstt_ID` = `crt`.`tstt_ID`";
 
 if($account->student_level()) 
 {
-	$cxza = "AND rs.status_ID = 1 ";
+	$cxza = " AND rs.status_ID = 1 ";
+	
 }
 else{
 	$cxza ="";
 }
-if (isset($_REQUEST['class_ID'])) {
+
+
+
+
+
+if (isset($_REQUEST['class_ID']) || isset($_REQUEST['section_ID']) ) {
 	$class_ID = $_REQUEST['class_ID'];
- 	$query .= '  WHERE crt.class_ID = '.$class_ID.' '.$cxza.'AND';
+	$section_ID = $_REQUEST['section_ID'];
+	if(isset($_REQUEST['type']))
+	{
+			$cxzax = " AND crt.tstt_ID = '".$_REQUEST['type']."'";
+			
+	}
+	else
+	{
+		$cxzax  ="";
+
+	}
+
+ 	$query .= '  WHERE crt.class_ID = '.$class_ID.' '.$cxza.' '.$cxzax.' AND crt.section_ID = '.$section_ID.'   AND';
 }
 else{
 	 $query .= ' WHERE';
@@ -54,6 +72,7 @@ $statement->execute();
 $result = $statement->fetchAll();
 $data = array();
 $filtered_rows = $statement->rowCount();
+$xzz =1;
 foreach($result as $row)
 {
 	
@@ -85,18 +104,27 @@ foreach($result as $row)
 	 $micro_timeexp = strtotime($test_Expired);
 
 
+	 if(isset($_REQUEST['type'])){
+	 	if($_REQUEST['type'] == 1){
+		$zxczz  = "Quiz";
+		}
+		if($_REQUEST['type'] == 3){
+			$zxczz  = "Assignment";
+		}
+	 }
+	
 	
 	
 
 	if ($atmp_count == 2 || $atmp_count == 1)
 	{
 		$takex = '
-  	<a class="btn btn-secondary btn-sm "   href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Retake Test</a>
+  	<a class="btn btn-outline-secondary btn-sm "   href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Retake '.$zxczz.'</a>
 		';
 
 	}
 	else{
-		$takex = '<a class="btn btn-secondary btn-sm "  href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Take Test</a>';
+		$takex = '<a class="btn btn-outline-secondary btn-sm "  href="take?test_ID='.$row["test_ID"].'&classroom_ID='.$class_ID.'" target="_BLANK">Take '.$zxczz.'</a>';
 	}
 	if ($micro_timenow > $micro_timeexp){
 		
@@ -110,18 +138,18 @@ foreach($result as $row)
 
 	if($account->student_level()){
 	$btnx = '
-    <a class="dropdown-item studview_score" id="'.$row["test_ID"].'">View Scores</a>
+    <a class="btn btn-outline-info studview_score" id="'.$row["test_ID"].'">View Scores</a>
     '.$takex;
 	}
 	
 	
 	if($account->admin_level() || $account->instructor_level()){
 	$btnx = '
-  	<a  class="btn btn-secondary btn-sm "   href="questionaire?test_ID='.$row["test_ID"].'" target="_BLANK">View Questionaire</a>
-  	<button type="button" class="btn btn-info btn-sm view_score"  id="'.$row["test_ID"].'">View Scores</button>
+  	<a  class="btn btn-outline-secondary btn-sm "   href="questionaire?test_ID='.$row["test_ID"].'" target="_BLANK">View Questionaire</a>
+  	<button type="button" class="btn btn-outline-info btn-sm view_score"  id="'.$row["test_ID"].'">View Scores</button>
      '.$takex.'
-  	<button type="button" class="btn btn-primary btn-sm edit"  id="'.$row["test_ID"].'">Edit</button>
-  	<button type="button" class="btn btn-danger btn-sm delete"  id="'.$row["test_ID"].'">Delete</button>
+  	<button type="button" class="btn btn-outline-primary btn-sm edit"  id="'.$row["test_ID"].'">Edit</button>
+  	<button type="button" class="btn btn-outline-danger btn-sm delete"  id="'.$row["test_ID"].'">Delete</button>
 
     ';
 	}
@@ -135,7 +163,7 @@ foreach($result as $row)
 	$format_date_expired = date_format($format_date_expired,"Y/m/d h:i a");
 
 	$sub_array = array();
-	$sub_array[] = $row["test_ID"];
+	$sub_array[] = $xzz;
 	// $sub_array[] = $row["class_ID"];
 	$sub_array[] = $row["test_Name"];
 	$sub_array[] = $row["tstt_Name"];
@@ -154,12 +182,13 @@ foreach($result as $row)
 	$sub_array[] = $span;
 
 		$sub_array[] = '
-		<div class="btn-group" role="group" aria-label="Basic example">
+		<div class="" role="group" aria-label="Basic example">
 		'.$btnx.'
 		</div>
 
 		';
 	$data[] = $sub_array;
+	$xzz++;
 }
 
 $q = "SELECT * FROM `class_room_test`";

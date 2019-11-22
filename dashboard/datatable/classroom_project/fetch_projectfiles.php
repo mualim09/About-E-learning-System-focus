@@ -7,7 +7,6 @@ $query = '';
 $output = array();
 $query .= "SELECT 
 `crs`.`crs_ID`,
-
 `rsd`.`rsd_ID`,
 `rsd`.`rsd_StudNum`,
 `rsd`.`rsd_FName`,
@@ -15,7 +14,27 @@ $query .= "SELECT
 `rsd`.`rsd_LName`,
 `sn`.`suffix`,
 `sx`.`sex_Name`,
-`crs`.`status_ID`
+`crs`.`status_ID`,
+(
+    SELECT `crpa`.`attachment_Name` FROM `class_room_project` `crp` 
+    LEFT JOIN `class_room_project_attachment` `crpa` ON `crpa`.`proj_ID` = `crp`.`proj_ID`
+    WHERE `crp`.`proj_ID` = ".$_REQUEST['proj_ID']." AND `crp`.`section_ID`  = ".$_REQUEST['section_ID']." AND `crpa`.`user_ID` = `rsd`.`user_ID`
+) `proj_SubFileName`,
+(
+    SELECT `crpa`.`attachment_MIME` FROM `class_room_project` `crp` 
+    LEFT JOIN `class_room_project_attachment` `crpa` ON `crpa`.`proj_ID` = `crp`.`proj_ID`
+    WHERE `crp`.`proj_ID` = ".$_REQUEST['proj_ID']." AND  `crp`.`section_ID`  = ".$_REQUEST['section_ID']." AND `crpa`.`user_ID` = `rsd`.`user_ID` 
+) `proj_SubFileMime`,
+(
+    SELECT `crpa`.`attachment_Data` FROM `class_room_project` `crp` 
+    LEFT JOIN `class_room_project_attachment` `crpa` ON `crpa`.`proj_ID` = `crp`.`proj_ID`
+    WHERE `crp`.`proj_ID` = ".$_REQUEST['proj_ID']." AND  `crp`.`section_ID`  = ".$_REQUEST['section_ID']." AND `crpa`.`user_ID` = `rsd`.`user_ID` 
+) `proj_SubFileData`,
+(
+    SELECT `crpa`.`attachment_ID` FROM `class_room_project` `crp` 
+    LEFT JOIN `class_room_project_attachment` `crpa` ON `crpa`.`proj_ID` = `crp`.`proj_ID`
+    WHERE `crp`.`proj_ID` = ".$_REQUEST['proj_ID']." AND  `crp`.`section_ID`  = ".$_REQUEST['section_ID']." AND `crpa`.`user_ID` = `rsd`.`user_ID` 
+) `proj_SubFileID`
 ";
 
 $query .= " FROM `class_room_student` `crs`
@@ -25,7 +44,7 @@ LEFT JOIN `ref_sex` `sx` ON `sx`.`sex_ID` = `rsd`.`sex_ID`
 
 ";
 
-if (isset($_REQUEST['classroom_ID']) ||  isset($_REQUEST['section_ID'])) {
+if (isset($_REQUEST['classroom_ID']) ||  isset($_REQUEST['section_ID']) ||  isset($_REQUEST['proj_ID'])) {
 	$classroom_ID = $_REQUEST['classroom_ID'];
 	$section_ID = $_REQUEST['section_ID'];
  	$query .= '  WHERE `crs`.`class_ID` =  '.$classroom_ID.'  AND crs.section_ID  = '.$section_ID.' AND';
@@ -84,63 +103,32 @@ foreach($result as $row)
 			$mname = $row["rsd_MName"].'. ';
 		}
 
-		
-		if($row["status_ID"] == "1")
-		{
-			$zxcd = "Approve";
-			$zxc = '<button type="button" class="btn btn-info "  style="min-width:84px">
-					    Pending
-					  </button>';
-			$zx = "student_approve";
-		}
-		else if($row["status_ID"] == "2")
-		{
-			//if Enable
-			$zxcd = "Disabled";
-			$zxc = '<button type="button" class="btn btn-success" style="min-width:84px" >
-					    Enable
-					  </button>
-					  ';
-					  
-			$zx = "student_disable";
-		}
-		else
-		{	
-			//if Disable
-			$zxcd = "Enable";
-			$zxc = '<button type="button" class="btn btn-danger "  style="min-width:84px">
-					    Disabled
-					  </button>';
-			$zx = "student_enable";
-		}
+
 
 		$sub_array = array();
 	
 		
-		
+		$proj_SubFileName = json_decode($row["proj_SubFileName"]);
+
+		$dl = 'href="data:'.$row["proj_SubFileMime"].';base64,'.base64_encode($row['proj_SubFileData']).'"';
+		$dlx = 'data:'.$row["proj_SubFileMime"].';base64,'.base64_encode($row['proj_SubFileData']).'';
+
 
 		$sub_array[] = $xz1d;
 		// $sub_array[] = $row["crs_ID"];
 		$sub_array[] = $row["rsd_StudNum"];
 		$sub_array[] =  addslashes(ucwords(strtolower(htmlspecialchars($row["rsd_LName"]).', '.$row["rsd_FName"].' '.$mname.' '.$suffix)));
 		$sub_array[] = $row["sex_Name"];
-		if($room->student_level()) { 
+		$sub_array[] = $proj_SubFileName[0];
+		if($proj_SubFileName[0] == NULL){
+			$sub_array[] = '';
 		}
 		else{
-			$sub_array[] = '
-			<div class="btn-group">
-			'.$zxc.'
-			  <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			    Action
-			  </button>
-			  <div class="dropdown-menu">
-			    
-			    <a class="dropdown-item '.$zx.'" id="'.$row["crs_ID"].'">'.$zxcd.'</a>
-			     <div class="dropdown-divider"></div>
-			    <a class="dropdown-item delete" id="'.$row["crs_ID"].'">Remove</a>
-			  </div>
-			</div>';
+			
+		$sub_array[] = '
+		<a class="btn btn-outline-success btn-sm "  '.$dl.' download="">Download</a>';
 		}
+		
 		$xz1d++;
 		
 

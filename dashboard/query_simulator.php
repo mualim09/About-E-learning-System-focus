@@ -57,7 +57,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Query Simulator</h1>
+        <h1 class="h2"  style="font-size:16px;">Query Simulator</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -66,14 +66,14 @@ include('x-nav.php');
           <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page" >Query Simulator</li>
         </ol>
       </nav>
-                     <div class="col-sm-12 sql_simulator">
-     <link rel="stylesheet" href="../assets/plugins/sql_simulator/css/codemirror.css">
+  <div class="col-sm-12 sql_simulator">
+  <link rel="stylesheet" href="../assets/plugins/sql_simulator/css/codemirror.css">
   <link rel="stylesheet" href="../assets/plugins/sql_simulator/css/demo.css">
   <script src="../assets/plugins/sql_simulator/css/codemirror.js"></script>            
                <main>
    <label for='commands'>Enter some SQL</label> 
    <div class="btn-group float-right">
-    <a class="btn btn-info " href="query_simulator?req_sample=1">Load sample</a>
+    <a class="btn btn-outline-info " href="query_simulator?req_sample=1">Load sample</a>
   </div>
    <br>   <br>
 <style type="text/css">
@@ -106,30 +106,54 @@ table th {
     <textarea id="commands" >
       <?php 
       if (isset($_REQUEST["req_sample"])) {
-        ?>
-DROP TABLE IF EXISTS employees;
-CREATE TABLE employees( id          integer,  name    text,
-                          designation text,     manager integer,
-                          hired_on    date,     salary  integer,
-                          commission  float,    dept    integer);
+        ?>DROP TABLE IF EXISTS cvsu_college;
+DROP TABLE IF EXISTS cvsu_course;
+DROP TABLE IF EXISTS cvsu_department;
+CREATE TABLE `cvsu_college` (
+  `college_ID` int(11)  NOT NULL,
+  `college_Name` varchar(150) DEFAULT NULL,
+  `college_Acronym` varchar(25) DEFAULT NULL
+) ;
 
-  INSERT INTO employees VALUES (1,'JOHNSON','ADMIN',6,'1990-12-17',18000,NULL,4);
-  INSERT INTO employees VALUES (2,'HARDING','MANAGER',9,'1998-02-02',52000,300,3);
-  INSERT INTO employees VALUES (3,'TAFT','SALES I',2,'1996-01-02',25000,500,3);
-  INSERT INTO employees VALUES (4,'HOOVER','SALES I',2,'1990-04-02',27000,NULL,3);
-  INSERT INTO employees VALUES (5,'LINCOLN','TECH',6,'1994-06-23',22500,1400,4);
-  INSERT INTO employees VALUES (6,'GARFIELD','MANAGER',9,'1993-05-01',54000,NULL,4);
-  INSERT INTO employees VALUES (7,'POLK','TECH',6,'1997-09-22',25000,NULL,4);
-  INSERT INTO employees VALUES (8,'GRANT','ENGINEER',10,'1997-03-30',32000,NULL,2);
-  INSERT INTO employees VALUES (9,'JACKSON','CEO',NULL,'1990-01-01',75000,NULL,4);
-  INSERT INTO employees VALUES (10,'FILLMORE','MANAGER',9,'1994-08-09',56000,NULL,2);
-  INSERT INTO employees VALUES (11,'ADAMS','ENGINEER',10,'1996-03-15',34000,NULL,2);
-  INSERT INTO employees VALUES (12,'WASHINGTON','ADMIN',6,'1998-04-16',18000,NULL,4);
-  INSERT INTO employees VALUES (13,'MONROE','ENGINEER',10,'2000-12-03',30000,NULL,2);
-  INSERT INTO employees VALUES (14,'ROOSEVELT','CPA',9,'1995-10-12',35000,NULL,1);
+INSERT INTO `cvsu_college` (`college_ID`, `college_Name`, `college_Acronym`) VALUES
+(1, 'College of Engineering and Information Technology', 'CEIT'),
+(2, 'College of Art and Sciences', 'CAS');
 
-SELECT designation,COUNT(*) AS nbr, (AVG(salary)) AS avg_salary FROM employees GROUP BY designation ORDER BY avg_salary DESC;
-SELECT name,hired_on FROM employees ORDER BY hired_on;
+
+
+CREATE TABLE `cvsu_course` (
+  `course_ID` int(11)  NOT NULL,
+  `department_ID` int(11)  DEFAULT NULL,
+  `course_Name` varchar(100) DEFAULT NULL,
+  `course_Acronym` varchar(10) DEFAULT NULL
+) ;
+
+
+INSERT INTO `cvsu_course` (`course_ID`, `department_ID`, `course_Name`, `course_Acronym`) VALUES
+(1, 2, 'Bachelor of Science in Information Technology', 'BSIT'),
+(2, 2, 'Bachelor of Science in Computer Science', 'BSCS'),
+(3, 2, 'Bachelor of Science in Office Administration', 'BSOA');
+
+
+
+CREATE TABLE `cvsu_department` (
+  `department_ID` int(11)  NOT NULL,
+  `college_ID` int(11)  DEFAULT NULL,
+  `department_name` varchar(100) DEFAULT NULL,
+  `department_acronym` varchar(25) DEFAULT NULL
+);
+
+
+
+INSERT INTO `cvsu_department` (`department_ID`, `college_ID`, `department_name`, `department_acronym`) VALUES
+(1, 1, 'Computer Science', 'COMSCI'),
+(2, 1, 'Information Technology', 'IT'),
+(3, 1, 'Office Administration', 'OA');
+
+SELECT cc.course_ID, cd.department_name as Department, ccc.college_Name as College FROM cvsu_course cc
+LEFT JOIN cvsu_department cd ON cd.department_ID = cc.department_ID
+LEFT JOIN cvsu_college ccc ON ccc.college_ID = cd.college_ID
+;
         <?php
       }
       ?>
@@ -140,10 +164,10 @@ SELECT name,hired_on FROM employees ORDER BY hired_on;
   <br>
 <div class="form-inline ">
     <div class="btn-toolbar mb-3" role="toolbar" aria-label="Toolbar with button groups">
-      <div class="btn-group mr-2" role="group" aria-label="First group">
-        <button type="button" id="execute" class="btn btn-secondary">Execute</button>
-        <button type="button" class="btn btn-danger"  id="clear_textarea">Clear</button>
-        <button type="button" id="savedb" class="btn btn-success">Save DB</button>
+      <div class=" mr-2" role="group" aria-label="First group">
+        <button type="button" id="execute" class="btn btn-outline-secondary">Execute</button>
+        <button type="button" class="btn btn-outline-danger"  id="clear_textarea">Clear</button>
+        <button type="button" id="savedb" class="btn btn-outline-success">Save DB</button>
       </div>
      
     </div>

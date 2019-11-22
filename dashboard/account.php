@@ -57,7 +57,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Account Record</h1>
+        <h1 class="h2"  style="font-size:16px;">Manage Account Record</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -116,9 +116,9 @@ include('x-nav.php');
       <div class="modal-footer">
         <input type="hidden" id="account_ID" name="account_ID" value="">
         <input type="hidden" name="operation" value="change_password">
-         <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" id="btn_change_password" value="Save changes">
+         <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-outline-primary" id="btn_change_password" value="Save changes">
       </div>
       </div>
       </form>
