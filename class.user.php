@@ -212,7 +212,13 @@ class USER
 		
 		foreach($result as $row)
 		{
-			echo '<option value="'.$row["tstt_ID"].'">'.$row["tstt_Name"].'</option>';
+			if($row["tstt_ID"] == 2){
+
+			}
+			else{
+
+				echo '<option value="'.$row["tstt_ID"].'">'.$row["tstt_Name"].'</option>';
+			}
 		}
 	}
 	public function user_suffix_option()
@@ -266,6 +272,19 @@ class USER
 		return $result;
 		
 	}
+	public function get_section($section_ID)
+	{
+		$query ="SELECT * FROM `ref_section` WHERE section_ID = $section_ID";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+
+		
+		return $result;
+		
+	}
+
+	
 	public function user_sex_option()
 	{
 		$query ="SELECT * FROM `ref_sex`";
@@ -621,6 +640,41 @@ WHERE `cr`.class_ID  = '".$classroom_ID."'
 		if($this->admin_level() ){
 			echo "<br><small>(Admin)</small>";
 		}
+	}
+
+	 public function notification(){
+
+
+		$query = "SELECT * FROM `notification` WHERE user_ID = ".$_SESSION['user_ID']." 
+		ORDER BY `notification`.`notif_Date`  DESC LIMIT 25";
+		$stmt = $this->conn->prepare($query);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+		if($stmt->rowCount() > 0){
+			foreach($result as $row){
+
+
+			    $ndate = strtotime($row["notif_Date"]);
+				$ndate =  date("Y-m-d h:i:sa",$ndate);
+			?>
+			<div class="p-2 bd-highlight border-bottom">
+                  <small class=""><?php echo $row["notif_Msg"]?></small>
+                  <br>
+                  <small class="text-muted float-right"><?php echo  $ndate?></small>
+            </div>
+			<?php
+			}
+		}
+		else{
+			?>
+			<div class="p-2 bd-highlight border-bottom"><small>No Notification Available</small></div>
+			<?php
+
+
+		}
+		
+		
+		
 	}
 
 

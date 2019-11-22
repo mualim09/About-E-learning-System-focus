@@ -10,8 +10,8 @@ if($_POST["operation"] == "studentlist_submit")
 		{
 			$rsd_ID = $_POST["rsd_ID"];
 			$class_ID = $_POST["class_ID"];
-
-			$sql = "INSERT INTO `class_room_student` (`crs_ID`, `class_ID`, `rsd_ID`) VALUES (NULL, :class_ID, :rsd_ID);";
+			$section_ID = $_POST['section_ID'];
+			$sql = "INSERT INTO `class_room_student` (`crs_ID`, `class_ID`, `rsd_ID`,`section_ID`) VALUES (NULL, :class_ID, :rsd_ID,:section_ID);";
 				$statement = $room->runQuery($sql);
 					
 				$result = $statement->execute(
@@ -19,6 +19,7 @@ if($_POST["operation"] == "studentlist_submit")
 
 						':rsd_ID'		=>	$rsd_ID ,
 						':class_ID'		=>	$class_ID ,
+						':section_ID'		=>	$section_ID ,
 
 					)
 				);

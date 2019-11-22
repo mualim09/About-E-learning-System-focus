@@ -1,5 +1,5 @@
 
-<button type="button" class="btn btn-sm btn-success add" >
+<button type="button" class="btn btn-sm btn-outline-success add" >
             Add Post
           </button>
          <br><br>
@@ -55,10 +55,11 @@
       <div class="modal-footer">
         <input type="hidden" name="post_ID" id="post_ID" />
         <input type="hidden" name="class_ID" id="class_ID" value="<?php echo $classroom_ID?>"/>
+        <input type="hidden" name="section_ID" id="section_ID" value="<?php echo $section_ID?>"/>
         <input type="hidden" name="operation" id="operation" />
         <div class="">
-        <button type="button" class="btn btn-secondary" id="submit_x" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_section">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" id="submit_x" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-primary submit" id="submit_input" value="submit_section">Submit</button>
         </div>
       </div>
        </form>
@@ -74,6 +75,7 @@
           <form method="post" id="comment_form" enctype="multipart/form-data">
             <div class="input-group mb-2 mr-sm-2">
               <input type="text" class="form-control" id="comment_box" placeholder="Type here to comment">
+              <input type="hidden" name="section_ID" id="section_ID" value="<?php echo $section_ID?>"/>
               <div class="input-group-prepend ">
              <!--    <div class="input-group-text btn-primary" id="send_comment" style="background-color:#007bff !important; color:white!important;">SEND</div> -->
                 <input type="submit" class="input-group-text btn-primary" id="send_comment" style="background-color:#007bff !important; color:white!important;"type="" value="SEND">
@@ -132,7 +134,7 @@ include('x-script.php');
             "serverSide":true,
             "order":[],
             "ajax":{
-              url:"datatable/classroom_stream/fetch.php?class_ID=<?php echo $classroom_ID?>",
+              url:"datatable/classroom_stream/fetch.php?class_ID=<?php echo $classroom_ID?>"+"&section_ID="+<?php echo $section_ID?>,
               type:"POST"
             },
             "columnDefs":[
@@ -144,14 +146,14 @@ include('x-script.php');
 
           });
 
-            function comment_data(post_ID){
+            function comment_data(post_ID,section_ID){
                   var comment_dataTable = $('#comment_data').DataTable({
                 "processing":true,
                 "serverSide":true,
                 "bAutoWidth": false,
                 "order":[],
                 "ajax":{
-                  url:"datatable/classroom_comment/fetch.php?post_ID="+post_ID,
+                  url:"datatable/classroom_comment/fetch.php?post_ID="+post_ID+"&section_ID="+section_ID,
                   type:"POST"
                 },
                 "columnDefs":[
@@ -234,7 +236,7 @@ include('x-script.php');
                   $('#submit_input').val('post_view');
                   $('#operation').val("post_view");
 
-                  comment_data(post_ID);
+                  comment_data(post_ID,data.section_ID);
                   $('#comment_data').DataTable().destroy();
                   
                   
@@ -311,13 +313,14 @@ include('x-script.php');
               
               var comment_box = $('#comment_box').val();
               var post_ID = $('#post_ID').val();
+              var section_ID = $('#section_ID').val();
                $.ajax({
                   url:"datatable/classroom_stream/insert.php",
                   method:'POST',
-                  data:{operation:"post_comment",comment:comment_box,post_ID:post_ID},
+                  data:{operation:"post_comment",comment:comment_box,post_ID:post_ID,"section_ID":section_ID},
                   dataType    :   'json',
                   complete     :   function(data) {
-                  comment_data(post_ID);
+                  comment_data(post_ID,section_ID);
                   $('#comment_data').DataTable().destroy();
                   }
                 });

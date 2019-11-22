@@ -17,6 +17,8 @@ if (isset($_POST['operation'])) {
 		$output["post_ID"] = $row["post_ID"];
 		$output["post_Name"] = $row["post_Name"];
 		$output["post_Description"] = $row["post_Description"];
+		$output["section_ID"] = $row["section_ID"];
+		
 	
 	}
 	

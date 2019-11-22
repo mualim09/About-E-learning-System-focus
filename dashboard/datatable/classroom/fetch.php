@@ -21,7 +21,7 @@ LEFT JOIN `ref_status` `rs` ON `rs`.`status_ID` = `cr`.`status_ID`";
 
 	if (isset($_SESSION['user_ID'])) {
 		$user_ID = $_SESSION['user_ID'];
-	 	$query .= '  WHERE `rsd`.`user_ID` = '.$user_ID.' AND ';
+	 	$query .= '  WHERE `rsd`.`user_ID` = '.$user_ID.' AND crs.`status_ID` = 2 AND ';
 	}
 	else{
 		 $query .= ' WHERE';
@@ -156,12 +156,23 @@ foreach($result as $row)
 		</div>';
 
     }
+
+	  // <a href="classroom_content?classroom_ID='.$row["class_ID"].'&type=stream">'.$row["class_Name"].'</a>
+    // '.$crsx_count.'
+
+    if($account->student_level()) { 
+    	
+    	$za = '<a href="classroom_content?classroom_ID='.$row["class_ID"].'&type=stream&section='.$row["section_ID"].'">'.$row["class_Name"].'</a>';
+    }
+    else{
+    	$za = '<a href="classroom_section?classroom_ID='.$row["class_ID"].'">'.$row["class_Name"].'</a>';
+    }
 	$sub_array[] = '
 	<div class="card " id="rm_card">
 	  <div class="card-header text-white" style="background-color:#495057">
-	  <a href="classroom_content?classroom_ID='.$row["class_ID"].'&type=stream">'.$row["class_Name"].'</a>
+	  	'.$za.'
 	   <br>
-	 '.$crsx_count.'
+	 
 
 		 '.$fbtn.'
 

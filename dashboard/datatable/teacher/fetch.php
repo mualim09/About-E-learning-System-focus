@@ -22,6 +22,7 @@ $query .= "FROM `record_instructor_details` `rid`
 LEFT JOIN `ref_marital` `rm` ON `rm`.`marital_ID` = `rid`.`marital_ID`
 LEFT JOIN `ref_sex` `rs` ON `rs`.`sex_ID` = `rid`.`sex_ID`
 LEFT JOIN `ref_suffixname` `sf` ON `sf`.`suffix_ID` = `rid`.`suffix_ID`";
+
 if(isset($_POST["search"]["value"]))
 {
  $query .= 'WHERE rid_ID LIKE "%'.$_POST["search"]["value"].'%" ';
@@ -96,9 +97,9 @@ foreach($result as $row)
 		$sub_array[] =  $reg;
 	
 		$sub_array[] = '
-		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-info btn-sm view"  id="'.$row["rid_ID"].'">View</button>
-		  <button type="button" class="btn btn-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rid_ID"].'">Edit</button>
+		<div class="" role="group" aria-label="Basic example">
+		  <button type="button" class="btn btn-outline-info btn-sm view"  id="'.$row["rid_ID"].'">View</button>
+		  <button type="button" class="btn btn-outline-primary btn-sm edit"  acreg="'.$acreg.'"  id="'.$row["rid_ID"].'">Edit</button>
 		  '.$btnrg.'
 		</div>
 		';

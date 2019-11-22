@@ -73,6 +73,12 @@ include('x-nav.php');
     if(isset($_GET["classroom_ID"])){
         $classroom_ID = $_GET["classroom_ID"];
       }
+      
+      if(isset($_GET["section"])){
+        $section_ID = $_GET["section"];
+      }
+
+
     if(isset($_GET["type"])){
       $type = $_GET["type"];
       if ($type == "stream"){

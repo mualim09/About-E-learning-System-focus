@@ -8,9 +8,10 @@ $output = array();
 $query .= "SELECT *";
 $query .= "FROM `class_room_attachment` ";
 
-if (isset($_REQUEST['class_ID'])) {
+if (isset($_REQUEST['class_ID']) || isset($_REQUEST['section_ID']) ) {
 	$class_ID = $_REQUEST['class_ID'];
- 	$query .= '  WHERE class_ID = '.$class_ID.' AND';
+	$section_ID = $_REQUEST['section_ID'];
+ 	$query .= '  WHERE class_ID = '.$class_ID.' AND section_ID = '.$section_ID.' AND';
 }
 else{
 	 $query .= ' WHERE';
@@ -41,29 +42,30 @@ $statement->execute();
 $result = $statement->fetchAll();
 $data = array();
 $filtered_rows = $statement->rowCount();
+$iz = 1;
 foreach($result as $row)
 {
 	
      $attachment_Name = json_decode($row["attachment_Name"]);
 
 	$sub_array = array();
-	$sub_array[] = $row["attachment_ID"];
+	$sub_array[] = $iz;
 	$sub_array[] = $attachment_Name[0];
 	$sub_array[] = $row["attachment_MIME"];
 	$dl = 'href="data:'.$row["attachment_MIME"].';base64,'.base64_encode($row['attachment_Data']).'"';
 	$dlx = 'data:'.$row["attachment_MIME"].';base64,'.base64_encode($row['attachment_Data']).'';
 	// $dl = 'href="view_file?data='.$row["attachment_ID"].'"';
 	  if($account->student_level()){
-    	$btnac = '<a class="btn btn-success btn-sm"  '.$dl.' download="">Download</a>
-    <a class="btn btn-info btn-sm"  href="preview?attachment='.$row["attachment_ID"].'" target="_BLANK">Preview</a>
+    	$btnac = '<a class="btn btn-outline-success btn-sm"  '.$dl.' download="">Download</a>
+    <a class="btn btn-outline-info btn-sm"  href="preview?attachment='.$row["attachment_ID"].'" target="_BLANK">Preview</a>
 
     ';
     }
     else{
-    	$btnac = '<a class="btn btn-success btn-sm "  '.$dl.' download="">Download</a>
-    <a class="btn btn-info btn-sm"  href="preview?attachment='.$row["attachment_ID"].'" target="_BLANK">Preview</a>
+    	$btnac = '<a class="btn btn-outline-success btn-sm "  '.$dl.' download="">Download</a>
+    <a class="btn btn-outline-info btn-sm"  href="preview?attachment='.$row["attachment_ID"].'" target="_BLANK">Preview</a>
 
-    <button type="button" class="btn btn-danger btn-sm delete_material" id="'.$row["attachment_ID"].'">Delete</button>';
+    <button type="button" class="btn btn-outline-danger btn-sm delete_material" id="'.$row["attachment_ID"].'">Delete</button>';
     }
 	$sub_array[] = '
 	<div class="btn-group" role="group" aria-label="Basic example">
@@ -71,6 +73,7 @@ foreach($result as $row)
 	</div>
 	';
 	$data[] = $sub_array;
+	$iz++;
 }
 
 $q = "SELECT * FROM `class_room_test`";

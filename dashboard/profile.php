@@ -19,9 +19,14 @@ $pageTitle = "Dashboard";
 
 
     <!-- Bootstrap core CSS -->
-    <link href="../assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<!--     <link href="../assets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+ -->
 
+  <?php 
+  include('x-css.php');
+  ?>
+ 
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -69,7 +74,7 @@ include('x-nav.php');
                     <img id="p_img" src="<?php $auth_user->getUserPic();?>" alt="Profile Image"  runat="server"  height="125" width="125" class="rounded-circle" style="border:1px solid; border-color: #ad1455;"/>
                     </div>
                     <h6><?php $auth_user->getUsername();?></h6>
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_picture">Change</button>
+                    <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#change_picture">Change</button>
                   </div>
                 </div>
               </div>
@@ -112,16 +117,17 @@ include('x-nav.php');
                         <tr>
                           <th scope="row">Address:</th>
                           <td><?php  $auth_user->profile_address()?></td>
+                          <td  colspan="1"></td>
                         </tr>
                         <tr>
                           <th scope="row">Email:</th>
                           <td id="profile_email"><?php  $auth_user->profile_email()?></td>
-                          <td  colspan="1"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_email">Change</button></td>
+                          <td  colspan="1"><button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#change_email">Change</button></td>
                         </tr>
                         <tr>
                           <th scope="row">Password:</th>
                           <td>********</td>
-                          <td colspan="1"><button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#change_password">Change</button></td>
+                          <td colspan="1"><button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#change_password">Change</button></td>
                         </tr>
                       </tbody>
                     </table>
@@ -147,9 +153,9 @@ include('x-nav.php');
         ...
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -169,9 +175,9 @@ include('x-nav.php');
         ...
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-outline-primary">Save changes</button>
         </div>
       </div>
     </div>
@@ -197,9 +203,9 @@ include('x-nav.php');
             </div>
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" id="btn_change_email" value="Save changes">
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-outline-primary" id="btn_change_email" value="Save changes">
         </div>
       </div>
       </form>
@@ -238,9 +244,9 @@ include('x-nav.php');
             </div>
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <input type="submit" class="btn btn-primary" id="btn_change_password" value="Save changes">
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <input type="submit" class="btn btn-outline-primary" id="btn_change_password" value="Save changes">
         </div>
       </div>
       </form>
@@ -269,26 +275,28 @@ include('x-nav.php');
             </div>
       </div>
       <div class="modal-footer">
-        <div class="btn-group">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-         <input type="submit" class="btn btn-primary" id="btn_change_picture" value="Save changes">
+        <div class="">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+         <input type="submit" class="btn btn-outline-primary" id="btn_change_picture" value="Save changes">
         </div>
       </div>
       </form>
     </div>
   </div>
 </div>
-        <script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!--         <script src="../assets/js/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="../assets/js/jquery-3.3.1.min.js" ></script>
       <script>window.jQuery || document.write('<script src="../assets/js/jquery-slim.min.js"><\/script>')</script><script src="../assets/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
       <script src="../assets/plugins/alertifyjs/alertify.min.js"></script>
-        <script src="../assets/js/feather.min.js"></script>
+        <script src="../assets/js/feather.min.js"></script> -->
         <!-- <script src="../assets/js/Chart.min.js"></script> -->
         <!-- <script src="../assets/js/dashboard.js"></script> -->
 
+<?php 
+include('x-script.php');
+?>
 
-
-<script>
+<script type="text/javascript">
     feather.replace()
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -330,13 +338,16 @@ include('x-nav.php');
                 var newdata = JSON.parse(data);
 
                 if (newdata.success) {
-                    alert(newdata.success);
+                   
+                    alertify.alert(newdata.success).setHeader('Change Picture');
 
                 } else {
-                    alert(newdata.error);
+                    
+                    alertify.alert(newdata.error).setHeader('Change Picture');
                 }
 
                 $('#change_picture').modal('hide');
+                $('#change_picture_form')[0].reset();
             }
         });
 
@@ -356,12 +367,16 @@ include('x-nav.php');
             success: function(data) {
                 var newdata = JSON.parse(data);
                 // alert(newdata.user_ID);
+                 
                 if (newdata.success) {
-                    alert(newdata.success);
+                    
                     $('#change_password').modal('hide');
+                    alertify.alert(newdata.success).setHeader('Change Password');
+                    $('#change_password_form')[0].reset();
 
                 } else {
-                    alert(newdata.error);
+                    
+                    alertify.alert(newdata.error).setHeader('Change Password');
                 }
 
             }
@@ -384,14 +399,13 @@ include('x-nav.php');
                 var newdata = JSON.parse(data);
                 // alert(newdata.user_ID);
                 if (newdata.success) {
-                    alert(newdata.success);
-
+                    alertify.alert(newdata.success).setHeader('Change Email');
                     var update_email = $('#update_email').val();
                     $('#change_email').modal('hide');
                     $('#profile_email').html(update_email);
 
                 } else {
-                    alert(newdata.error);
+                     alertify.alert(newdata.error).setHeader('Change Email');
                 }
 
             }

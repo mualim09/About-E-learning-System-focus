@@ -4,7 +4,7 @@
               {
               }
                else{
-                ?><button type="button" class="btn btn-sm btn-success add" >
+                ?><button type="button" class="btn btn-sm btn-outline-success add" >
             Add 
           </button><?php
                }
@@ -52,14 +52,14 @@
         </button>
       </div>
       <div class="modal-body" id="product_modal_content">
-      <button type="button" class="btn btn-sm float-right btn-success " data-toggle="modal" data-target="#browse_student">
+      <button type="button" class="btn btn-sm float-right btn-outline-success " data-toggle="modal" data-target="#browse_student">
             Browse Student 
         </button>
         <br><br>
       <form method="post" id="studentlist_form" enctype="multipart/form-data">
             <div class="form-row">
             <div class="form-group col-md-12">
-              <label for="studentlist_name">Title<span class="text-danger">*</span></label>
+              <label for="studentlist_name">Name<span class="text-danger">*</span></label>
               <input type="text" class="form-control" id="studentlist_name" name="studentlist_name" placeholder="" value="" required="">
             </div>
           
@@ -69,10 +69,11 @@
         <input type="hidden" name="rsd_ID" id="rsd_ID" />
         <input type="hidden" name="crs_ID" id="crs_ID" />
         <input type="hidden" name="class_ID" id="class_ID" value="<?php echo $classroom_ID?>"/>
+        <input type="hidden" name="section_ID" id="section_ID" value="<?php echo $section_ID?>"/>
         <input type="hidden" name="operation" id="operation" />
         <div class="">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary submit" id="submit_input" value="studentlist_submit">Submit</button>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-outline-primary submit" id="submit_input" value="studentlist_submit">Submit</button>
         </div>
       </div>
        </form>
@@ -94,7 +95,7 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>LRN ID</th>
+                <th>Student ID</th>
                 <th >Name</th>
                 <th>Sex</th>
               </tr>
@@ -158,8 +159,12 @@ include('x-script.php');
             "processing":true,
             "serverSide":true,
             "order":[],
+            "searching": true,
+            "paging":   false,
+            "ordering": false,
+            "info":     false,
             "ajax":{
-              url:"datatable/classroom_student/fetch.php?classroom_ID="+<?php echo $classroom_ID?>,
+              url:"datatable/classroom_student/fetch.php?classroom_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>,
               type:"POST"
             },
             "columnDefs":[

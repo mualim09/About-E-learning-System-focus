@@ -57,7 +57,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2">Manage Admin Record</h1>
+        <h1 class="h2"  style="font-size:16px;">Manage Admin Record</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -67,7 +67,7 @@ include('x-nav.php');
         </ol>
       </nav>
       <div class="table-responsive">
-          <button type="button" class="btn btn-sm btn-success add" >
+          <button type="button" class="btn btn-sm btn-outline-success add" >
             Add 
           </button>
          <br><br>
@@ -75,7 +75,7 @@ include('x-nav.php');
           <thead>
             <tr>
               <th>#</th>
-              <th>Government ID</th>
+              <th>School ID</th>
               <th>Name</th>
               <th>Sex</th>
               <th>Marital</th>
@@ -113,20 +113,20 @@ include('x-nav.php');
                   
                 </div>
                 <div class="form-group col-md-4">
-                  <label for="admin_EmpID">Government ID<span class="text-danger">*</span></label>
-                  <input type="number" class="form-control" id="admin_EmpID" name="admin_EmpID" placeholder="" value="" required="">
+                  <label for="admin_EmpID">School ID<span class="text-danger">*</span></label>
+                  <input type="number" class="uctext form-control" id="admin_EmpID" name="admin_EmpID" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="admin_fname">First Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="admin_fname" name="admin_fname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="admin_fname" name="admin_fname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="admin_mname">Middle Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="admin_mname" name="admin_mname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="admin_mname" name="admin_mname" placeholder="" value="" required="">
                 </div>
                 <div class="form-group col-md-3">
                   <label for="admin_lname">Last Name<span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="admin_lname" name="admin_lname" placeholder="" value="" required="">
+                  <input type="text" class="uctext form-control" id="admin_lname" name="admin_lname" placeholder="" value="" required="">
                 </div>
                   <div class="form-group col-md-3">
                   <label for="admin_suffix">Suffix<span class="text-danger">*</span></label>
@@ -170,9 +170,9 @@ include('x-nav.php');
       <div class="modal-footer">
           <input type="hidden" name="admin_ID" id="admin_ID" />
           <input type="hidden" name="operation" id="operation" />
-        <div class="btn-group" id='sbtng'>
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary submit" id="submit_input" value="submit_admin">Submit</button>
+        <div class="" id='sbtng'>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-primary submit" id="submit_input" value="submit_admin">Submit</button>
         </div>
       </div>
       </form>
@@ -277,9 +277,9 @@ include('x-script.php');
             $('#admin_modal').modal('show');
             $('#admin_form')[0].reset();
 
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
 
             $('#s_img').attr('src', "../assets/img/users/default.jpg");
             $("#admin_EmpID").prop("disabled", false);
@@ -309,9 +309,9 @@ include('x-script.php');
             
 
             $('#submit_input').hide();
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\bbtn-group\b/g, "");
-            btng.classList.add("btng_null");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\bbtn-group\b/g, "");
+            // btng.classList.add("btng_null");
 
                 
                 $("#admin_img").hide();
@@ -366,9 +366,9 @@ include('x-script.php');
             $('#admin_modal').modal('show');
             
 
-            var btng = document.getElementById("sbtng");
-            btng.className = btng.className.replace(/\btng_null\b/g, "");
-            btng.classList.add("btn-group");
+            // var btng = document.getElementById("sbtng");
+            // btng.className = btng.className.replace(/\btng_null\b/g, "");
+            // btng.classList.add("btn-group");
 
                 
                 $("#admin_img").show();

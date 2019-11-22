@@ -51,6 +51,8 @@ if(isset($_POST["search"]["value"]))
 {
  $query .= 'WHERE user_ID LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR user_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR lvl_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    
 }
 
 
@@ -86,7 +88,7 @@ foreach($result as $row)
 		$sub_array[] =  $row["user_Registered"];
 		$sub_array[] = '
 		<div class="btn-group" role="group" aria-label="Basic example">
-		  <button type="button" class="btn btn-primary btn-sm change"    id="'.$row["user_ID"].'">Change Pass</button>
+		  <button type="button" class="btn btn-outline-primary btn-sm change"    id="'.$row["user_ID"].'">Change Pass</button>
 		</div>
 		';
 		// <div class="dropdown-divider"></div>
