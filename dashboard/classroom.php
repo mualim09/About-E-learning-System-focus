@@ -8,7 +8,7 @@ require_once("../class.user.php");
 $auth_user = new USER();
 // $page_level = 3;
 // $auth_user->check_accesslevel($page_level);
-$pageTitle = "Manage Classroom";
+$pageTitle = "Manage Topic";
 ?>
 <!doctype html>
 <html lang="en">
@@ -64,7 +64,7 @@ include('x-nav.php');
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
       <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2" style="font-size:16px;">Manage Classroom</h1>
+        <h1 class="h2" style="font-size:16px;">Manage Topic</h1>
         
       </div>
       <nav aria-label="breadcrumb" >
@@ -85,7 +85,7 @@ include('x-nav.php');
         <?php 
          if($auth_user->student_level()) { 
             ?>
-            <button type="button" class="btn btn-sm btn-outline-success float-right join_classroom" data-toggle="modal" data-target="#join_classroom_modal">Manage Topic</button>
+            <button type="button" class="btn btn-sm btn-outline-success float-right join_classroom" data-toggle="modal" data-target="#join_classroom_modal">Join Topic</button>
             <?php
           }
           else{

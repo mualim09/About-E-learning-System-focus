@@ -100,7 +100,7 @@ foreach($result as $row)
 	$data[] = $sub_array;
 }
 
-$q = "SELECT * FROM `class_room_test`";
+$q = "SELECT * FROM `class_room_test_questions`  WHERE test_ID = ".$test_ID."";
 $filtered_rec = $account->get_total_all_records($q);
 
 $output = array(
