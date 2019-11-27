@@ -76,7 +76,7 @@ foreach($result as $row)
 	$iz++;
 }
 
-$q = "SELECT * FROM `class_room_test`";
+$q = "SELECT * FROM `class_room_attachment`";
 $filtered_rec = $account->get_total_all_records($q);
 
 $output = array(

@@ -64,7 +64,7 @@ foreach($result as $row)
 	$data[] = $sub_array;
 }
 
-$q = "SELECT * FROM `record_student_details`";
+$q = "SELECT * FROM `ref_section`";
 $filtered_rec = $student->get_total_all_records($q);
 
 $output = array(
