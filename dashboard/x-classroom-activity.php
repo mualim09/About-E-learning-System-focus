@@ -53,7 +53,7 @@
               {
               }
                else{
-                ?> <button type="button" class="btn btn-sm btn-outline-success add ass" data-toggle="modal" data-target="#test_modal">Add Assignment</button><?php
+                ?> <button type="button" class="btn btn-sm btn-outline-success add_ass" data-toggle="modal" data-target="#assignment_modal">Add Assignment</button><?php
                }
               ?>
     <br><br>
@@ -63,11 +63,8 @@
             <tr>
               <th>#</th>
               <th>Name</th>
-              <th>Type</th>
               <th>Date Added</th>
               <th>Date Expired</th>
-              <th>Timer</th>
-              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -172,112 +169,6 @@
   </div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="questionaire_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Question and Answer</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-           <button type="button" class="btn btn-sm btn-success add_question" >Add Q&A</button>
-          <table class="table table-borderless table-sm" id="questionaire_data">
-           <thead>
-            <tr>
-              <th>Question ID</th>
-              <th>Choice_ID</th>
-              <th>is_correct</th>
-              <th>Choice</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            
-     
-          </tbody>
-        </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
-    </div>
-</div>
-</div>
-
-
-<!-- Modal -->
-<div class="modal fade" id="question_modal" tabindex="1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Add Question</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-       <form method="post" id="question_form" enctype="multipart/form-data">
-      <div class="modal-body">
-              <div class="form-group row">
-              <label for="q_question" class="col-sm-2 col-form-label">Question:</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="q_question" name="q_question" >
-              </div>
-            </div>
-             <div class="form-group row">
-              <label for="q_choice_a" class="col-sm-2 col-form-label">A.</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="q_choice_a" name="q_choice_a" >
-              </div>
-            </div>
-
-             <div class="form-group row">
-              <label for="q_choice_b" class="col-sm-2 col-form-label">B.</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="q_choice_b" name="q_choice_b" >
-              </div>
-            </div>
-             <div class="form-group row">
-              <label for="q_choice_b" class="col-sm-2 col-form-label">C.</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="q_choice_b" name="q_choice_b" >
-              </div>
-            </div>
-
-            <div class="form-group row">
-              <label for="q_choice_b" class="col-sm-2 col-form-label">D.</label>
-              <div class="col-sm-10">
-                <input type="text" class="form-control" id="q_choice_b" name="q_choice_b" >
-              </div>
-            </div>
-            <div class="form-group row">
-              <label for="q_choice_b" class="col-sm-2 col-form-label">Correct</label>
-              <div class="col-sm-10">
-                <select class="form-control" id="q_is_correct" name="q_is_correct">
-                  <option value="A">A</option>
-                  <option value="B">B</option>
-                  <option value="C">C</option>
-                  <option value="D">D</option>
-                </select>
-              </div>
-            </div>
-
-      </div>
-      <div class="modal-footer">
-        <input type="hidden" name="question_ID" id="question_ID" />
-        <input type="hidden" name="q_operation" id="q_operation" />
-        <div class="" id="sbtng">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-outline-primary submit" id="submit_input_q" value="question_submit">Submit</button>
-        </div>
-      </div>
-      </form>
-    </div>
-  </div>
-</div>
 
 <!-- Modal -->
 <div class="modal fade" id="material_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -451,6 +342,40 @@
   </div>
 </div>
 
+<div class="modal fade" id="student_assignments" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Student Assignments</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body table-responsive">
+            <table class="table table-striped table-sm" id="assignmentstudent_data">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Student ID</th>
+              <th>Name</th>
+              <th>Name</th>
+              <th>Submitted File</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            
+     
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <!-- Modal -->
 <div class="modal fade" id="projectx" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -495,7 +420,49 @@
     </div>
   </div>
 </div>
+<!-- Modal -->
+<div class="modal fade" id="assignment_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="assignemtnx_modal_title">Add Assignment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+     
+        <form method="post" id="assignment_form" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-12">
+            <label for="assg_name">Assignment Name:</label>
+            <input type="text" class="form-control" id="assg_name" name="assg_name" placeholder="" value=""  required="">
+          </div>
+          <div class="form-group col-md-12">
+            <label for="assg_desc">Assignment Description:</label>
+            
 
+          <textarea class="form-control" id="assg_desc" name="assg_desc" placeholder="" value=""  required=""></textarea>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="assg_expired">Expired</label>
+            <input type="datetime-local" class="form-control" id="assg_expired" name="assg_expired"  value=""  required="">
+          </div>
+        </div>
+      </div>
+        <div class="modal-footer">
+        <input type="hidden" name="ca_ID" id="ca_ID" value=""/>
+        <input type="hidden" name="attachment_IDca" id="attachment_IDca" value=""/>
+        <input type="hidden" name="class_ID" id="class_ID" value="<?php echo $classroom_ID?>"/>
+        <input type="hidden" name="operation" id="a_operation" value="submit_assignment"/>
+        <input type="hidden" name="section_ID" id="section_ID" value="<?php echo $section_ID?>"/>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-primary submit" id="submit_input_a" value="submit_assignment">Submit</button>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
 
 
 
@@ -547,6 +514,56 @@
 </div>
 </div>
 
+
+
+<!-- Modal -->
+<div class="modal fade" id="sa_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="sa_title">Submit Assignment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>  
+      <form method="post" id="sassignment_form" enctype="multipart/form-data">
+      <div class="modal-body">
+        <div class="form-group col-md-12">
+            <label for="sassg_name">Project Name:</label>
+            
+            <div id="sassg_namex"></div>
+          </div>
+          <div class="form-group col-md-12">
+            <label for="sassg_desc"> Description:</label>
+            <div id="sassg_descx"></div>
+          
+          </div>
+        <div class="form-group row">
+          <!-- <label for="sproj_Desc" class="col-sm-2 col-form-label">Description:</label> -->
+          <div class="col-sm-12">
+            <textarea class="form-control" id="sassg_Desc" name="sassg_Desc" ></textarea>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="sassg_file" class="col-sm-2 col-form-label">Attachment:</label>
+          <div class="col-sm-10">
+            <input type="file" class="form-control" id="sassg_file" name="sassg_file" >
+          </div>
+        </div>
+        <div id="sassgattachment_cont"></div>
+      </div>
+      <div class="modal-footer">
+        <input type="hidden" name="class_ID" id="class_ID" value="<?php echo $classroom_ID?>"/>
+        <input type="hidden" name="sa_operation" id="sa_operation" value="sassignment_submit"/>
+        <input type="hidden" name="sassg_ID" id="sassg_ID" value=""/>
+        <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-outline-primary submit" id="submit_input_sa" value="submit_input_sa">Submit</button>
+      </div>
+      </form>
+    </div>
+</div>
+</div>
+
     </main>
   </div>
 </div>
@@ -583,7 +600,7 @@ include('x-script.php');
             "bAutoWidth": false,
             "order":[],
             "ajax":{
-              url:"datatable/classroom_activity/fetch.php?class_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>+"&type=3",
+              url:"datatable/classroom_assignment/fetch.php?class_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>,
               type:"POST"
             },
             "columnDefs":[
@@ -660,7 +677,7 @@ include('x-script.php');
           }
 
             function projectstudent_files($proj_ID){
-              var scorestud_dataTable = $('#projectstudent_data').DataTable({
+              var projstud_dataTable = $('#projectstudent_data').DataTable({
               "processing":true,
               "serverSide":true,
               "order":[],
@@ -681,6 +698,8 @@ include('x-script.php');
 
             });
           }
+
+
 
           
           function qestionaire(test_ID){
@@ -762,6 +781,26 @@ include('x-script.php');
                   $('#project_form')[0].reset();
                   $('#projectx').modal('hide');
                   dataTable_proj.ajax.reload();
+                }
+              });
+           
+          });
+
+            $(document).on('submit', '#assignment_form', function(event){
+            event.preventDefault();
+
+              $.ajax({
+                url:"datatable/classroom_assignment/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alertify.alert(data).setHeader('Assignment');
+                  $('#assignment_form')[0].reset();
+                  $('#assignment_modal').modal('hide');
+                  dataTable_ass.ajax.reload();
                 }
               });
            
@@ -1238,8 +1277,115 @@ include('x-script.php');
          
             
             
+//NEWWWW 
 
 
+
+$(document).on('click', '.add_ass', function(){
+              
+              $("#assg_name").prop("disabled", false);
+              $("#assg_desc").prop("disabled", false);
+              $("#assg_expired").prop("disabled", false);
+
+              $('#assignemtnx_modal_title').html("Add Assignment");
+              $('#a_operation').val("submit_assignment");
+              $('#submit_input_a').val("submit_assignment");
+              $('#submit_input_a').text("Submit");
+               
+                  
+            });
+
+            $(document).on('click', '.view_assg', function(){
+            var ca_ID = $(this).attr("id");
+            $('#assignemtnx_modal_title').text('View Assignment');
+            $('#assignment_modal').modal('show');
+            
+             $.ajax({
+                url:"datatable/classroom_assignment/fetch_single.php",
+                method:'POST',
+                data:{action:"assignment_view",ca_ID:ca_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $("#assg_name").prop("disabled", true);
+                  $("#assg_desc").prop("disabled", true);
+                  $("#assg_expired").prop("disabled", true);
+
+                  $('#assg_name').val(data.assg_Name);
+                  $('#assg_desc').val(data.assg_Desc);
+                  $('#assg_expired').val(data.assg_expired);
+
+                  $('#a_operation').hide();
+                  $('#submit_input_a').hide();
+
+
+                  
+                }
+              });
+
+
+            });
+
+            $(document).on('click', '.edit_assg', function(){
+            var ca_ID = $(this).attr("id");
+            $('#assignemtnx_modal_title').text('View Assignment');
+            $('#assignment_modal').modal('show'); 
+
+              $.ajax({
+                url:"datatable/classroom_assignment/fetch_single.php",
+                method:'POST',
+                data:{action:"assignment_view",ca_ID:ca_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+                  $("#assg_name").prop("disabled", false);
+                  $("#assg_desc").prop("disabled", false);
+                  $("#assg_expired").prop("disabled", false);
+
+                  $('#assg_name').val(data.assg_Name);
+                  $('#assg_desc').val(data.assg_Desc);
+                  $('#assg_expired').val(data.assg_expired);
+                  $('#ca_ID').val(ca_ID);
+
+                  $('#ca_ID').show();
+                  $('#submit_input_a').show();
+                  $('#a_operation').val("edit_assg");
+                  $('#submit_input_a').val("edit_assg");
+                  $('#submit_input_a').text("Update");
+
+
+                  
+                }
+              });
+
+
+            });
+
+            $(document).on('click', '.delete_assg', function(){
+                var ca_ID = $(this).attr("id");
+        
+                 alertify.confirm('Are you sure you want to delete this assignment?', 
+                function(){
+                  $.ajax({
+                   type        :   'POST',
+                   url:"datatable/classroom_assignment/insert.php",
+                   data        :   {operation:"assignment_delete",ca_ID:ca_ID},
+                   dataType    :   'json',
+                   complete     :   function(data) {
+                     alertify.alert(data.responseText).setHeader('Assignment');
+                     dataTable_ass.ajax.reload();
+                      
+                   }
+                  })
+
+                  
+                   alertify.success('Ok') 
+                 },
+                function(){ 
+                  alertify.error('Cancel')
+                }).setHeader('Assignment');
+            
+            });
 
 
 
@@ -1248,7 +1394,154 @@ include('x-script.php');
           
           } );
 
+  $(document).on('click', '.view_subassg', function(){
+    var ca_IDc = $(this).attr("id");
 
+    $("#student_assignments").modal('show');
+      assgfiles(ca_IDc);
+    $('#assignmentstudent_data').DataTable().destroy();
+   });
+
+          function assgfiles(aaaaaaaaa)
+          {
+              var assignmentstudf_dataTable = $('#assignmentstudent_data').DataTable({
+              "processing":true,
+              "serverSide":true,
+              "order":[],
+              "ordering": false,
+              "bAutoWidth": false,
+              "searching": false,
+              "paging":     false,
+              "ajax":{
+                url:"datatable/classroom_assignment/fetch_assignmentfiles.php?ca_ID="+aaaaaaaaa+"&classroom_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>,
+                type:"POST"
+              },
+              "columnDefs":[
+                {
+                  "targets":[0],
+                  "orderable":false,
+                },
+              ],
+
+            });
+          }
+
+
+           $(document).on('submit', '#sassignment_form', function(event){
+            event.preventDefault();
+
+              $.ajax({
+                url:"datatable/classroom_assignment/insert.php",
+                method:'POST',
+                data:new FormData(this),
+                contentType:false,
+                processData:false,
+                success:function(data)
+                {
+                  alertify.alert(data).setHeader('Assignment');
+                  $('#sassignment_form')[0].reset();
+                  $('#sa_modal').modal('hide');
+                  dataTable_ass.ajax.reload();
+                }
+              });
+           
+          });
+        $(document).on('click', '.submit_assignment', function(){
+          var ca_ID = $(this).attr("id");
+          $("#sa_modal").modal('show');
+
+            $.ajax({
+                url:"datatable/classroom_assignment/fetch_single.php",
+                method:'POST',
+                data:{action:"assignment_view",ca_ID:ca_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+
+                  $('#sassg_namex').html(data.assg_Name);
+                  $('#sassg_descx').html(data.assg_Desc);
+                  $('#sassg_ID').val(ca_ID);
+
+                  
+                  $('#sassgattachment_cont').html('');
+                  $('#sa_operation').val("sassignment_submit");
+
+                  $('#submit_input_sa').val("submit_input_sa");
+                  $('#submit_input_sa').text("Submit");
+
+                  
+
+                  projectstudent_files(ca_ID);
+                  $('#assignmentstudent_data').DataTable().destroy();
+
+                  
+                }
+              });
+
+          
+          
+
+         });
+
+         $(document).on('click', '.update_assignment', function(){
+          var ca_ID = $(this).attr("id");
+
+          $("#sa_modal").modal('show');
+            $.ajax({
+                url:"datatable/classroom_assignment/fetch_single.php",
+                method:'POST',
+                data:{action:"assignment_view",ca_ID:ca_ID},
+                dataType    :   'json',
+                success:function(data)
+                {
+
+                  $('#sassg_namex').html(data.assg_Name);
+                  $('#sassg_descx').html(data.assg_Desc);
+                  $('#sassg_Desc').html(data.sassg_desc);
+                  
+                  $('#sassg_ID').val(ca_ID);
+                  $('#sassgattachment_cont').html(data.sassg_attch);
+                  
+                  $('#sa_operation').val("sassigment_update");
+                  
+                  $('#submit_input_sa').val("submit_input_sa");
+                  $('#submit_input_sa').text("Update");
+
+
+                  
+                }
+              });
+
+          
+          
+
+         });
+
+         $(document).on('click', '.delete_sassigment_s', function(){
+          // alert("delete");
+           var attch_ID = $(this).attr("id");
+           alertify.confirm('Are you sure you want to remove this attachment?', 
+              function(){
+                $.ajax({
+                 type        :   'POST',
+                 url:"datatable/classroom_assignment/insert.php",
+                 data        :   {sa_operation:"sassignment_delete",attch_ID:attch_ID},
+                 dataType    :   'json',
+                 complete     :   function(data) {
+                   alertify.alert(data.responseText).setHeader('Assignment Attachment');
+                  
+                   $("#sa_modal").modal('hide');
+                    
+                 }
+                })
+
+                
+                 alertify.success('Ok') 
+               },
+              function(){ 
+                alertify.error('Cancel')
+              }).setHeader('Assignment Attachment');
+         });
 
         </script>
         </body>
