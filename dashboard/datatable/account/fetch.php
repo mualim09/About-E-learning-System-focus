@@ -47,11 +47,20 @@ end)  fullname
 ";
 $query .= " FROM `user_account`ua
 LEFT JOIN `user_level` `ul` ON `ul`.`lvl_ID` = `ua`.`lvl_ID`";
+if($_POST["length"] != -1)
+{
+
+ $query .= 'WHERE ua.lvl_ID  = "'.$_POST["length"].'" AND ';
+}
+else{
+
+ $query .= 'WHERE   ';
+}
 if(isset($_POST["search"]["value"]))
 {
- $query .= 'WHERE user_ID LIKE "%'.$_POST["search"]["value"].'%" ';
+ $query .= '( user_ID LIKE "%'.$_POST["search"]["value"].'%" ';
     $query .= 'OR user_Name LIKE "%'.$_POST["search"]["value"].'%" ';
-    $query .= 'OR lvl_Name LIKE "%'.$_POST["search"]["value"].'%" ';
+    $query .= 'OR lvl_Name LIKE "%'.$_POST["search"]["value"].'%" )';
     
 }
 
@@ -64,10 +73,8 @@ else
 {
 	$query .= 'ORDER BY user_ID DESC ';
 }
-if($_POST["length"] != -1)
-{
-	$query .= 'LIMIT ' . $_POST['start'] . ', ' . $_POST['length'];
-}
+
+
 $statement = $student->runQuery($query);
 $statement->execute();
 $result = $statement->fetchAll();

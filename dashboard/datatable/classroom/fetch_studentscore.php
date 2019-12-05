@@ -111,12 +111,15 @@ foreach($result as $row)
 		
 		    if($score >= $percent_over){
 		    	$remarks = "Passed";
+		    	$rmx = "Passed";
 		    }
 		    else if ($score == "No Score"){
 		    	$remarks = "Not Yet Taken";
+		    	$rmx = "NotYet";
 		    }
 		    else{
 		    	$remarks = "Failed";
+		    	$rmx = "Failed";
 		    }
 
 		} catch(DivisionByZeroError $e){
@@ -125,20 +128,39 @@ foreach($result as $row)
 			catch(ErrorException $e) {
 		    $remarks = "Failed";
 		}
+		if(isset($_REQUEST["filterx"])){
+			if($_REQUEST["filterx"] == "All" || $_REQUEST["filterx"] == ""){
 
-		$sub_array[] = $i;
-		$sub_array[] = $row["rsd_StudNum"];
-		$sub_array[] =  $row["rsd_FName"].' '.$mname.$row["rsd_LName"].' '.$suffix;
-		$sub_array[] = $score;
-		$sub_array[] = $remarks;
+				$sub_array[] = $i;
+				$sub_array[] = $row["rsd_StudNum"];
+				$sub_array[] =  $row["rsd_FName"].' '.$mname.$row["rsd_LName"].' '.$suffix;
+				$sub_array[] = $score;
+				$sub_array[] = $remarks;
+				$i++;
+				$data[] = $sub_array;
+
+			}
+			if($_REQUEST["filterx"] == $rmx){
+
+				$sub_array[] = $i;
+				$sub_array[] = $row["rsd_StudNum"];
+				$sub_array[] =  $row["rsd_FName"].' '.$mname.$row["rsd_LName"].' '.$suffix;
+				$sub_array[] = $score;
+				$sub_array[] = $remarks;
+				$i++;
+				$data[] = $sub_array;
+			}
+
+		}
 		
 	
 
 		    // <a class="dropdown-item view"  id="'.$row["res_ID"].'">View</a>
 		    //  <div class="dropdown-divider"></div>
-		 $i++;
-	$data[] = $sub_array;
+	
 }
+
+
 
 $q = "SELECT * FROM `class_room_student`";
 $filtered_rec = $room->get_total_all_records($q);

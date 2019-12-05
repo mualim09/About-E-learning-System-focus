@@ -113,7 +113,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="test_modal_title">Add New Test</h5>
+        <h5 class="modal-title" id="test_modal_title">Add New Quiz</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -255,7 +255,7 @@
     <div class="modal-dialog modal-lg" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="test_modal_title">Delete this Activity</h5>
+          <h5 class="modal-title" id="test_modal_title">Delete this Quiz</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -292,7 +292,15 @@
               <th>Student ID</th>
               <th>Name</th>
               <th>Score</th>
-              <th>Remarks</th>
+              <th>
+              <select id="score_filter">
+                  <option value="All">All</option>
+                  <option value="NotYet">Not Yet Taken</option>
+                  <option value="Failed">Failed</option>
+                  <option value="Passed">Passed</option>
+              </select>
+            </th>
+      
             </tr>
           </thead>
           <tbody>
@@ -653,7 +661,7 @@ include('x-script.php');
             ],
 
           });
-            function scorestudent_test($test_ID){
+            function scorestudent_test($test_ID,$filter){
               var scorestud_dataTable = $('#scorestudent_data').DataTable({
               "processing":true,
               "serverSide":true,
@@ -663,7 +671,7 @@ include('x-script.php');
               "searching": false,
               "paging":     false,
               "ajax":{
-                url:"datatable/classroom/fetch_studentscore.php?test_ID="+$test_ID+"&class_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>,
+                url:"datatable/classroom/fetch_studentscore.php?test_ID="+$test_ID+"&class_ID="+<?php echo $classroom_ID?>+"&section_ID="+<?php echo $section_ID?>+"&filterx="+$filter,
                 type:"POST"
               },
               "columnDefs":[
@@ -674,7 +682,16 @@ include('x-script.php');
               ],
 
             });
+         
+    
           }
+           $("#score_filter").change(function () {
+              var filter = this.value;
+              var test_ID = $('#test_ID').val();
+             scorestudent_test(test_ID,filter);
+             $('#scorestudent_data').DataTable().destroy();
+             
+          });
 
             function projectstudent_files($proj_ID){
               var projstud_dataTable = $('#projectstudent_data').DataTable({
@@ -736,7 +753,7 @@ include('x-script.php');
                 processData:false,
                 success:function(data)
                 {
-                  alertify.alert(data).setHeader('Test');
+                  alertify.alert(data).setHeader('Quiz');
                   $('#test_form')[0].reset();
                   $('#test_modal').modal('hide');
                   dataTable.ajax.reload();
@@ -757,7 +774,7 @@ include('x-script.php');
                 processData:false,
                 success:function(data)
                 {
-                  alertify.alert(data).setHeader('Test');
+                  alertify.alert(data).setHeader('Material');
                   $('#material_form')[0].reset();
                   $('#material_submit_modal').modal('hide');
                   materials_dataTable.ajax.reload();
@@ -830,7 +847,7 @@ include('x-script.php');
 
           $(document).on('click', '.view', function(){
             var test_ID = $(this).attr("id");
-            $('#test_modal_title').text('View Activity');
+            $('#test_modal_title').text('View Quiz');
             $('#test_modal').modal('show');
      
 
@@ -872,7 +889,7 @@ include('x-script.php');
             });
           $(document).on('click', '.edit', function(){
             var test_ID = $(this).attr("id");
-            $('#test_modal_title').text('Edit Activity');
+            $('#test_modal_title').text('Edit Quiz');
             $('#test_modal').modal('show');
           
             $('#submit_input').show();
@@ -931,11 +948,11 @@ include('x-script.php');
             });
             $(document).on('click', '.view_score', function(){
             var test_ID = $(this).attr("id");
-            
+             $('#test_ID').val(test_ID);
              $('#student_scores').modal('show');
        
          
-             scorestudent_test(test_ID);
+             scorestudent_test(test_ID,"");
              $('#scorestudent_data').DataTable().destroy();
          
           
@@ -1006,7 +1023,7 @@ include('x-script.php');
              dataType    :   'json',
              complete     :   function(data) {
                $('#deltest_modal').modal('hide');
-               alertify.alert(data.responseText).setHeader('Delete this Account');
+               alertify.alert(data.responseText).setHeader('Delete this Quiz');
                
                 dataTable.ajax.reload();
                 dataTable_ass.ajax.reload();

@@ -11,9 +11,15 @@ function roomtablist($req_name,$name,$link,$id,$section){
      $active_ul_rnav = '';
       $active_ul_rnav_span = '';
   }
+ 
   ?>
     <li class="page-item <?php echo $active_ul_rnav;?>">
-      <a class="page-link" href="<?php echo $link ?>?classroom_ID=<?php echo $id?>&type=<?php echo $name?>&section=<?php echo $section?>" ><?php echo ucfirst($name).' '.$active_ul_rnav_span;?></a>
+      <a class="page-link" href="<?php echo $link ?>?classroom_ID=<?php echo $id?>&type=<?php echo $name?>&section=<?php echo $section?>" ><?php 
+       if($name == "stream"){
+          $name = "Announcement";
+       }
+      echo ucfirst($name).' '.$active_ul_rnav_span;
+      ?></a>
     </li>
   <?php
 }
@@ -23,8 +29,8 @@ $crd = $auth_user->classroom_details($classroom_ID);
 
 <nav aria-label="breadcrumb" >
         <ol class="breadcrumb bcrum">
-          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Dashboard</a></li>
-          <li class="breadcrumb-item "><a href="classroom" class="bcrum_i_a">Classroom</a></li>
+          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Home</a></li>
+          <li class="breadcrumb-item "><a href="classroom" class="bcrum_i_a">Topic</a></li>
           <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page"><?php echo ucfirst($rtab_c)?></li>
         </ol>
       </nav>

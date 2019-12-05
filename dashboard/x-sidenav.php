@@ -87,7 +87,7 @@ function navlist($pagefile_name,$name,$link,$icon){
     padding: 8px 16px;">MAIN NAVIGATION</div>
           <?php 
        
-          navlist($pagefile_name,"Dashboard","index",'home');
+          navlist($pagefile_name,"Home","index",'home');
           if($auth_user->student_level() || $auth_user->instructor_level() ) { 
           navlist($pagefile_name,"Topics","classroom",'monitor');
           navlist($pagefile_name,"Query Simulator","query_simulator","database");

@@ -83,8 +83,8 @@ include('x-nav.php');
       $type = $_GET["type"];
       if ($type == "stream"){
           $rtab = "room_stream";
-          $rtab_c = "Stream";
-      $rhz = "Announcement Board";
+          $rtab_c = "Announcement";
+          $rhz = "Announcement Board";
       }
       if ($type == "student"){
           $rtab = "room_student";
@@ -100,7 +100,7 @@ include('x-nav.php');
     else{
       $type = "stream";
       $rtab = "room_stream";
-      $rtab_c = "Stream";
+      $rtab_c = "Announcement";
       $rhz = "Announcement Board";
     }
     ?>

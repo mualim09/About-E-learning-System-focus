@@ -62,7 +62,7 @@ include('x-nav.php');
       </div>
       <nav aria-label="breadcrumb" >
         <ol class="breadcrumb bcrum">
-          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Dashboard</a></li>
+          <li class="breadcrumb-item "><a href="index" class="bcrum_i_a">Home</a></li>
           <li class="breadcrumb-item  active bcrum_i_ac" aria-current="page">Student Record Management</li>
         </ol>
       </nav>
