@@ -10,6 +10,12 @@ Installation
 ----------------
 You can choose one from multiple ways for installation.
 
+**Download**
+
+[![1](https://img.shields.io/badge/PHP7%20(Bootstrap4.zip)-CvSU__E--Learning__b4--v2.1.11-green?logo=php)](https://github.com/rhalp10/CvSU-E-Learning/archive/b4-v2.1.11.zip)
+
+[![2](https://img.shields.io/badge/PHP5%20(Bootstrap3.zip)-CvSU__E--Learning__b3--v1.0-yellowgreen?logo=php)](https://github.com/rhalp10/CvSU-E-Learning/archive/v1.0.zip)
+
 **GitHub**
 - Fork the repository ([here is the guide](https://help.github.com/articles/fork-a-repo/)).
 - Clone to your machine
